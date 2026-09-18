@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fluent30 Day 29 — C1 Mock Test" />
+  <title>Fluent30 — Day 29 C1 Mock Test</title>
+
+  <style>
+    :root{
+      --bg:#f5f5f6; --surface:#fff; --surface-2:#fafafa; --text:#111; --muted:#6b7280;
+      --line:#e5e7eb; --red:#8f1027; --red-dark:#6f0b1e; --black:#171717;
+      --green:#166534; --green-bg:#ecfdf3; --amber:#92400e; --amber-bg:#fffbeb;
+      --blue:#1d4ed8; --blue-bg:#eff6ff; --shadow:0 18px 50px rgba(17,24,39,.08);
+      --r-xl:24px; --r-lg:17px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text)
+    }
+
+    button,input,textarea,select{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    .shell{width:min(1160px,calc(100% - 38px));margin:0 auto}
+
+    header{
+      position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);
+      border-bottom:1px solid var(--line);backdrop-filter:blur(14px)
+    }
+
+    .topnav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.04em}
+    .brand-mark{
+      width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
+      background:var(--red);color:#fff;font-size:.88rem
+    }
+    .brand span span{color:var(--red)}
+    .toplinks{display:flex;align-items:center;gap:9px}
+    .navbtn{
+      display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;
+      border:1px solid var(--line);border-radius:10px;background:#fff;color:#333;
+      font-size:.88rem;font-weight:700
+    }
+
+    main{padding:34px 0 70px}
+
+    .phase-banner{
+      background:var(--black);color:#fff;border-radius:16px;padding:15px 18px;margin-bottom:18px;
+      display:flex;justify-content:space-between;gap:16px;align-items:center
+    }
+    .phase-banner strong{font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
+    .phase-banner span{color:#c2c6cd;font-size:.82rem}
+
+    .hero{
+      display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.55fr);gap:20px
+    }
+    .hero-main,.hero-side{border-radius:var(--r-xl);box-shadow:var(--shadow)}
+    .hero-main{
+      background:linear-gradient(135deg,#fff 0%,#fbfbfc 72%,#f2f2f3 100%);
+      border:1px solid var(--line);padding:38px
+    }
+    .hero-side{
+      background:var(--black);color:#fff;padding:28px;display:flex;flex-direction:column;justify-content:space-between;gap:20px
+    }
+
+    .eyebrow{
+      color:var(--red);font-weight:850;font-size:.76rem;letter-spacing:.12em;
+      text-transform:uppercase;margin-bottom:12px
+    }
+    h1{margin:0;font-size:clamp(2.4rem,5vw,4.8rem);line-height:.96;letter-spacing:-.06em}
+    .hero-copy{max-width:870px;color:var(--muted);line-height:1.65;margin:18px 0 0}
+    .hero-side .muted{color:#b9bec7}
+
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .meta-card{background:#202020;border:1px solid #343434;border-radius:12px;padding:14px}
+    .meta-card strong{display:block;font-size:1.2rem;margin-bottom:2px}
+    .meta-card span{font-size:.78rem;color:#afb4bd}
+    .progress-track{height:9px;border-radius:999px;background:#343434;overflow:hidden;margin-top:13px}
+    .progress-fill{height:100%;width:0%;background:#fff;transition:.25s ease}
+
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) 292px;gap:22px;margin-top:24px}
+    .lesson-card{
+      background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+      padding:26px;margin-bottom:18px
+    }
+    .lesson-card h2{margin:0;font-size:1.42rem;letter-spacing:-.035em}
+    .lesson-card h3{margin:18px 0 8px;font-size:1rem}
+    .lesson-card p{line-height:1.62}
+    .muted{color:var(--muted)}
+
+    .step-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px}
+    .step-label{
+      color:var(--red);font-size:.74rem;font-weight:850;letter-spacing:.1em;
+      text-transform:uppercase;margin-bottom:6px
+    }
+    .time-pill{
+      flex:0 0 auto;padding:6px 9px;background:#f3f4f6;border-radius:999px;
+      color:#5b616c;font-size:.76rem;font-weight:750
+    }
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:43px;
+      padding:0 15px;border-radius:11px;border:1px solid transparent;font-weight:800
+    }
+    .btn.primary{background:var(--red);color:#fff}
+    .btn.secondary{background:#fff;border-color:var(--line);color:#222}
+    .btn:disabled{opacity:.45;cursor:not-allowed}
+    .btn-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+
+    .audio-panel{
+      border:1px solid var(--line);border-radius:14px;background:var(--surface-2);padding:17px
+    }
+    .audio-title{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      margin-bottom:10px;font-weight:800
+    }
+    .listen-counter{font-size:.78rem;color:var(--muted);font-weight:700}
+    .speed-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+    .speed-btn{
+      border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 10px;
+      font-size:.78rem;font-weight:750
+    }
+    .speed-btn.active{border-color:var(--red);color:var(--red);background:#fff5f6}
+
+    .question{padding:17px 0;border-top:1px solid var(--line)}
+    .question:first-of-type{border-top:0;padding-top:4px}
+    .question-title{font-weight:800;line-height:1.5;margin-bottom:10px}
+    .options{display:grid;gap:8px}
+    .option{
+      display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid var(--line);
+      border-radius:11px;cursor:pointer;background:#fff
+    }
+    .option input{margin-top:3px}
+
+    .feedback{
+      margin-top:12px;border-radius:11px;padding:11px 13px;
+      font-size:.9rem;line-height:1.5;display:none
+    }
+    .feedback.show{display:block}
+    .feedback.good{background:var(--green-bg);color:var(--green)}
+    .feedback.warn{background:var(--amber-bg);color:var(--amber)}
+    .feedback.info{background:var(--blue-bg);color:var(--blue)}
+
+    textarea,input[type="text"],select{
+      width:100%;border:1px solid #d2d6dc;border-radius:11px;padding:12px 13px;
+      background:#fff;color:#111;outline:none
+    }
+    textarea{resize:vertical;min-height:105px}
+
+    .setup-grid,.vocab-grid,.precision-grid,.synthesis-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px
+    }
+    .setup-card,.vocab-card,.precision-card,.synthesis-card{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff
+    }
+    .setup-card strong,.vocab-card strong,.precision-card strong,.synthesis-card strong{display:block;margin-bottom:6px}
+    .setup-card .example,.vocab-card .example,.synthesis-card .example{color:var(--red);font-weight:850;margin-bottom:6px}
+    .setup-card span,.vocab-card span,.precision-card span,.synthesis-card span{
+      font-size:.86rem;color:var(--muted);line-height:1.45
+    }
+
+    .dictation-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;margin-top:12px;background:#fff
+    }
+    .dictation-result{
+      margin-top:10px;padding:10px 12px;background:#f8f9fa;border-radius:10px;
+      line-height:1.55;display:none
+    }
+    .dictation-result.show{display:block}
+
+    .lockbox{
+      border:1px dashed #c8cdd3;border-radius:13px;padding:18px;background:#fafafa;text-align:center
+    }
+    .transcript{
+      display:none;margin-top:14px;padding:18px;border-left:4px solid var(--red);
+      border-radius:10px;background:#fafafa;line-height:1.8
+    }
+    .transcript.show{display:block}
+    .speaker{display:inline-block;margin-right:7px;font-weight:900;color:var(--red)}
+
+    .prompt-box{
+      border-left:4px solid var(--red);background:#fafafa;padding:16px 17px;
+      border-radius:10px;line-height:1.6;margin:12px 0
+    }
+
+    .recorder{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fafafa;margin-top:12px
+    }
+    .record-status{font-size:.84rem;color:var(--muted);margin-top:8px}
+    audio{width:100%;margin-top:12px}
+
+    .rating-grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px
+    }
+    .rating{border:1px solid var(--line);border-radius:12px;padding:13px}
+    .rating label{display:block;font-size:.8rem;font-weight:800;margin-bottom:8px}
+    .rating output{font-weight:900;color:var(--red)}
+    input[type="range"]{width:100%}
+
+    .result-card{background:var(--black);color:#fff;border-radius:18px;padding:24px}
+    .result-score{font-size:3.2rem;font-weight:900;letter-spacing:-.05em;line-height:1;margin-top:8px}
+    .result-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:18px}
+    .result-box{
+      background:#202020;border:1px solid #353535;border-radius:12px;padding:13px
+    }
+    .result-box strong{display:block;font-size:1.15rem}
+    .result-box span{color:#b8bdc6;font-size:.76rem}
+
+    .report-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px
+    }
+    .report-card{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff
+    }
+    .report-card strong{display:block;margin-bottom:6px}
+    .report-card span{font-size:.86rem;color:var(--muted);line-height:1.45}
+
+    .sidebar{position:sticky;top:92px;align-self:start}
+    .side-card{
+      background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:13px
+    }
+    .side-card h3{margin:0 0 10px;font-size:.96rem}
+    .toc{display:grid;gap:5px}
+    .toc a{padding:8px 9px;border-radius:9px;color:#4b5563;font-size:.84rem}
+    .toc a:hover{background:#f4f4f5;color:var(--red)}
+    .mini-progress{height:7px;background:#eceef1;border-radius:999px;overflow:hidden;margin-top:10px}
+    .mini-progress > div{height:100%;width:0;background:var(--red);transition:.25s ease}
+
+    .complete-box{
+      text-align:center;padding:30px 24px;border:1px solid var(--line);
+      border-radius:18px;background:#fff
+    }
+    .complete-box h2{font-size:1.7rem;margin-bottom:8px}
+    .complete-box p{color:var(--muted);max-width:680px;margin:0 auto 18px;line-height:1.6}
+    .done-banner{
+      display:none;background:var(--green-bg);color:var(--green);border:1px solid #ccebd5;
+      border-radius:12px;padding:12px 14px;margin-top:14px;font-weight:750
+    }
+    .done-banner.show{display:block}
+
+    footer{border-top:1px solid var(--line);color:var(--muted);padding:28px 0 40px;font-size:.84rem}
+
+    @media(max-width:980px){
+      .hero,.layout{grid-template-columns:1fr}
+      .sidebar{position:static}
+      .setup-grid,.vocab-grid,.precision-grid,.synthesis-grid{grid-template-columns:1fr}
+      .result-grid{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media(max-width:720px){
+      .shell{width:min(100% - 26px,1160px)}
+      .hero-main,.hero-side{padding:25px}
+      .lesson-card{padding:20px}
+      .rating-grid,.result-grid,.report-grid{grid-template-columns:1fr}
+      .toplinks .hide-mobile{display:none}
+      .phase-banner{align-items:flex-start;flex-direction:column}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="shell topnav">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">F30</span>
+      <span>Fluent<span>30</span></span>
+    </a>
+
+    <div class="toplinks">
+      <a href="lesson-day-28.html" class="navbtn">← Day 28</a>
+      <a href="index.html" class="navbtn hide-mobile">Roadmap</a>
+      <a href="lesson-day-30.html" class="navbtn">Day 30 →</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="shell">
+
+  <div class="phase-banner">
+    <strong>Final Sprint · C1 Assessment</strong>
+    <span>Day 29 · integrated mock test · listening · vocabulary · synthesis · extended speaking</span>
+  </div>
+
+  <section class="hero">
+    <div class="hero-main">
+      <div class="eyebrow">Day 29 · C1 Mock Test</div>
+
+      <h1>Less coaching.<br>More performance.</h1>
+
+      <p class="hero-copy">
+        This is the first full integrated mock. You will process one social-life analysis and one business discussion,
+        then complete vocabulary-in-context, precision, synthesis and extended speaking with limited support.
+        The score is a <b>Fluent30 training measure</b>, not an official CEFR certification.
+      </p>
+    </div>
+
+    <aside class="hero-side">
+      <div>
+        <div class="eyebrow" style="color:#e9a6b4">Mock-test target</div>
+        <h2 style="margin:0;font-size:1.55rem">Integrated C1 listening & speaking performance</h2>
+        <p class="muted" style="line-height:1.55">
+          main idea · inference · vocabulary · detail · synthesis · extended response
+        </p>
+      </div>
+
+      <div>
+        <div class="meta-grid">
+          <div class="meta-card"><strong>90</strong><span>minutes</span></div>
+          <div class="meta-card"><strong>2</strong><span>major listening texts</span></div>
+        </div>
+
+        <div class="progress-track"><div class="progress-fill" id="topProgress"></div></div>
+        <div class="muted" id="topProgressText" style="font-size:.82rem;margin-top:6px">0% complete</div>
+      </div>
+    </aside>
+  </section>
+
+  <div class="layout">
+    <div>
+
+      <!-- 1 -->
+      <section class="lesson-card" id="setup">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 1 · Test Setup</div>
+            <h2>Rules before you start</h2>
+          </div>
+          <div class="time-pill">5 min</div>
+        </div>
+
+        <div class="setup-grid">
+          <div class="setup-card">
+            <strong>Listening A</strong>
+            <div class="example">Everyday / abstract</div>
+            <span>One analytical monologue. Focus on mechanism, qualification and implication.</span>
+          </div>
+
+          <div class="setup-card">
+            <strong>Listening B</strong>
+            <div class="example">Business / strategic</div>
+            <span>One senior-level discussion. Track assumptions, risk and action.</span>
+          </div>
+
+          <div class="setup-card">
+            <strong>Test mode</strong>
+            <div class="example">Limited replay</div>
+            <span>Try to answer after two listens maximum before using transcript.</span>
+          </div>
+
+          <div class="setup-card">
+            <strong>Speaking</strong>
+            <div class="example">3–4 minute response</div>
+            <span>Integrate both listening texts and add a reasoned position only after summarizing them accurately.</span>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="markTouched('setup')">Ready to begin</button>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="lesson-card" id="listening-a">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 2 · Listening A</div>
+            <h2>Attention is shaped by defaults</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <p class="muted">
+          Listen without transcript. This passage is about how environment design can influence attention without removing personal agency.
+        </p>
+
+        <div class="audio-panel">
+          <div class="audio-title">
+            <span>🎧 Listening A · The invisible architecture of attention</span>
+            <span class="listen-counter">Listens: <span id="listenACount">0</span></span>
+          </div>
+
+          <button class="btn primary" id="playABtn" type="button">▶ Play Listening A</button>
+          <button class="btn secondary" id="stopABtn" type="button">■ Stop</button>
+
+          <div class="speed-row">
+            <button class="speed-btn" data-rate="0.92" data-group="a" type="button">0.92×</button>
+            <button class="speed-btn active" data-rate="1.00" data-group="a" type="button">1.00×</button>
+            <button class="speed-btn" data-rate="1.08" data-group="a" type="button">1.08×</button>
+          </div>
+        </div>
+
+        <div id="aQuestions"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeA()">Check Listening A</button>
+          <span class="muted" id="aScoreText"></span>
+        </div>
+
+        <div class="feedback" id="aFeedback"></div>
+      </section>
+
+      <!-- 3 -->
+      <section class="lesson-card" id="listening-b">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 3 · Listening B</div>
+            <h2>Planning when the forecast is unreliable</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <p class="muted">
+          Listen to a strategy discussion between an interviewer and an operating executive.
+          Track what the executive thinks forecasts are useful for — and what they are not useful for.
+        </p>
+
+        <div class="audio-panel">
+          <div class="audio-title">
+            <span>🎧 Listening B · Strategic planning under uncertainty</span>
+            <span class="listen-counter">Listens: <span id="listenBCount">0</span></span>
+          </div>
+
+          <button class="btn primary" id="playBBtn" type="button">▶ Play Listening B</button>
+          <button class="btn secondary" id="stopBBtn" type="button">■ Stop</button>
+
+          <div class="speed-row">
+            <button class="speed-btn" data-rate="0.92" data-group="b" type="button">0.92×</button>
+            <button class="speed-btn active" data-rate="1.00" data-group="b" type="button">1.00×</button>
+            <button class="speed-btn" data-rate="1.08" data-group="b" type="button">1.08×</button>
+          </div>
+        </div>
+
+        <div id="bQuestions"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeB()">Check Listening B</button>
+          <span class="muted" id="bScoreText"></span>
+        </div>
+
+        <div class="feedback" id="bFeedback"></div>
+      </section>
+
+      <!-- 4 -->
+      <section class="lesson-card" id="vocabulary">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 4 · Vocabulary in Context</div>
+            <h2>Interpret meaning from use, not memorized definitions.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="vocab-grid" id="vocabGrid"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeVocab()">Check vocabulary</button>
+          <span class="muted" id="vocabScoreText"></span>
+        </div>
+
+        <div class="feedback" id="vocabFeedback"></div>
+      </section>
+
+      <!-- 5 -->
+      <section class="lesson-card" id="precision">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 5 · Precision & Dictation</div>
+            <h2>Protect the high-risk details.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div class="precision-grid" id="precisionGrid"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradePrecision()">Check precision</button>
+          <span class="muted" id="precisionScoreText"></span>
+        </div>
+
+        <div class="feedback" id="precisionFeedback"></div>
+
+        <div id="dictationList" style="margin-top:18px"></div>
+      </section>
+
+      <!-- 6 -->
+      <section class="lesson-card" id="synthesis">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 6 · Synthesis</div>
+            <h2>Connect two texts without forcing them together.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="synthesis-grid" id="synthesisGrid"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeSynthesis()">Check synthesis</button>
+          <span class="muted" id="synthesisScoreText"></span>
+        </div>
+
+        <div class="feedback" id="synthesisFeedback"></div>
+
+        <div class="prompt-box">
+          <strong>Short written synthesis · 80–120 words</strong><br>
+          What common principle links the two listening texts?
+          Summarize the connection without claiming they are about the same topic.
+        </div>
+
+        <textarea id="synthesisText" placeholder="Both texts suggest that..."></textarea>
+      </section>
+
+      <!-- 7 -->
+      <section class="lesson-card" id="speaking">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 7 · Extended Speaking</div>
+            <h2>3–4 minute integrated response</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div class="prompt-box">
+          <strong>Integrated speaking task</strong><br>
+          First, summarize Listening A and Listening B accurately.
+          Then answer: <b>When is it useful to design the environment around human behavior instead of relying only on individual discipline or prediction?</b>
+          Use one example from each listening and one original example of your own.
+        </div>
+
+        <textarea id="speakingOutline" placeholder="A summary / B summary / common principle / my view / example / qualification / conclusion"></textarea>
+
+        <div class="recorder">
+          <strong>🎙 Record your 3–4 minute response</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="speakRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="speakStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="speakRecordStatus">
+            Separate source summary from your own view. Do not blend them together.
+          </div>
+
+          <audio id="speakPlayback" controls style="display:none"></audio>
+        </div>
+
+        <h3>Self-check</h3>
+
+        <div class="rating-grid">
+          <div class="rating">
+            <label>Source accuracy · <output id="accuracyOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="accuracyRate">
+          </div>
+
+          <div class="rating">
+            <label>Synthesis · <output id="synthSelfOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="synthSelfRate">
+          </div>
+
+          <div class="rating">
+            <label>Argument quality · <output id="argumentOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="argumentRate">
+          </div>
+
+          <div class="rating">
+            <label>Natural delivery · <output id="naturalOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="naturalRate">
+          </div>
+        </div>
+      </section>
+
+      <!-- 8 -->
+      <section class="lesson-card" id="report">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 8 · Mock Test Report</div>
+            <h2>Your Day 29 training result</h2>
+          </div>
+          <div class="time-pill">5 min</div>
+        </div>
+
+        <div class="result-card">
+          <div class="muted" style="color:#b8bdc6">Objective test score</div>
+
+          <div class="result-score">
+            <span id="overallScore">—</span><span style="font-size:1.3rem">%</span>
+          </div>
+
+          <div class="muted" id="scoreInterpretation" style="color:#b8bdc6;margin-top:7px">
+            Complete Listening A, Listening B, vocabulary, precision/dictation and synthesis.
+          </div>
+
+          <div class="result-grid">
+            <div class="result-box">
+              <strong id="aResult">—</strong>
+              <span>Listening A</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="bResult">—</strong>
+              <span>Listening B</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="vocabResult">—</strong>
+              <span>Vocabulary</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="precisionResult">—</strong>
+              <span>Precision + dictation</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="synthesisResult">—</strong>
+              <span>Synthesis</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="report-grid">
+          <div class="report-card">
+            <strong>Listening control</strong>
+            <span id="listeningReport">Complete both listening tests to see this result.</span>
+          </div>
+
+          <div class="report-card">
+            <strong>Language precision</strong>
+            <span id="languageReport">Complete vocabulary and precision tasks to see this result.</span>
+          </div>
+
+          <div class="report-card">
+            <strong>Integrated speaking</strong>
+            <span id="speakingReport">Use the self-ratings after your recorded response.</span>
+          </div>
+        </div>
+
+        <div class="lockbox" id="transcriptLock" style="margin-top:18px">
+          <strong>Answer transcripts locked</strong>
+          <p class="muted" style="margin:7px 0 12px">
+            Complete at least two listens of both A and B before revealing the transcripts.
+          </p>
+          <button class="btn secondary" id="revealBtn" type="button" disabled>Reveal both transcripts</button>
+        </div>
+
+        <div class="transcript" id="transcriptBox">
+          <strong>Listening A — The invisible architecture of attention</strong>
+
+          <p>
+            We often talk about attention as if it were a private resource that each person either manages well or wastes.
+            That framing is useful up to a point because individual habits matter. But it can hide the extent to which attention is shaped by defaults.
+          </p>
+
+          <p>
+            A default is simply what happens when we do nothing.
+            If notifications are on by default, silence requires a decision.
+            If a phone is on the desk, ignoring it requires repeated inhibition.
+            If every meeting is scheduled for an hour, shorter meetings require someone to actively challenge the template.
+          </p>
+
+          <p>
+            None of these things remove personal responsibility.
+            They change the number of small decisions a person has to make in order to protect the behavior they already prefer.
+          </p>
+
+          <p>
+            That matters because self-control is not usually tested once.
+            It is tested repeatedly.
+            A person may genuinely want to focus for ninety minutes, but if the environment creates twenty small invitations to switch attention,
+            the task becomes less about one strong intention and more about resisting twenty separate prompts.
+          </p>
+
+          <p>
+            This is why environmental design can sometimes outperform motivation.
+            Turning off nonessential notifications, keeping distracting apps off the home screen, or creating a default focus block does not guarantee deep work.
+            It simply reduces the number of moments at which the desired behavior must defeat an easier alternative.
+          </p>
+
+          <p>
+            There is an important limit, though.
+            Defaults can support behavior, but they can also become paternalistic if they are difficult to change or if the designer assumes everyone wants the same outcome.
+            A good default reduces friction without removing meaningful choice.
+          </p>
+
+          <p>
+            So the broader point is not that people lack agency.
+            It is that agency is exercised inside an environment.
+            If we care about a behavior, it is reasonable to ask not only whether people are motivated,
+            but also how often the environment asks them to overcome unnecessary resistance.
+          </p>
+
+          <strong style="display:block;margin-top:24px">Listening B — Strategic planning under uncertainty</strong>
+
+          <p><span class="speaker">Interviewer:</span>When the forecast is unreliable, what is the point of planning?</p>
+
+          <p><span class="speaker">Executive:</span>The mistake is to assume that a plan is valuable because it predicts the future accurately. In volatile conditions, that is often impossible. I think planning is more useful as a way to expose assumptions and prepare decisions in advance.</p>
+
+          <p><span class="speaker">Interviewer:</span>Can you give an example?</p>
+
+          <p><span class="speaker">Executive:</span>Suppose we have a base case that assumes demand grows six percent, a downside case where it falls four percent, and an upside case where it grows twelve. I am not claiming one of those numbers is “the truth.” I want to know what changes operationally across the cases.</p>
+
+          <p><span class="speaker">Interviewer:</span>So the scenarios are less about probability?</p>
+
+          <p><span class="speaker">Executive:</span>Exactly. We may assign probabilities, but the useful question is what would cause us to act differently. If demand falls below a certain level, do we slow hiring? If collections weaken, when do we protect liquidity? If the upside case appears, which constraint becomes the bottleneck first?</p>
+
+          <p><span class="speaker">Interviewer:</span>How do you stop scenario planning from becoming a huge theoretical exercise?</p>
+
+          <p><span class="speaker">Executive:</span>By limiting the number of variables that actually drive the decision. A scenario with fifty assumptions is difficult to use. We usually want three to five critical drivers and a small number of trigger points.</p>
+
+          <p><span class="speaker">Interviewer:</span>Trigger points meaning thresholds?</p>
+
+          <p><span class="speaker">Executive:</span>Yes. A threshold that changes the action. The value is that when the environment moves, you are not inventing the response under pressure. You have already discussed what matters, what you would do, and what information would justify the move.</p>
+
+          <p><span class="speaker">Interviewer:</span>Does that make plans more flexible?</p>
+
+          <p><span class="speaker">Executive:</span>It should. The irony is that people sometimes make rigid plans because they want certainty. A better plan can actually be more adaptive because it is explicit about where the assumptions may fail.</p>
+
+          <p><span class="speaker">Interviewer:</span>So planning is not the opposite of flexibility?</p>
+
+          <p><span class="speaker">Executive:</span>Not if it is done well. The plan should reduce decision latency, not pretend uncertainty has disappeared.</p>
+        </div>
+      </section>
+
+      <section class="complete-box" id="complete">
+        <h2>Complete Day 29</h2>
+
+        <p>
+          Save your mock-test result and continue to Day 30: Final C1 Challenge.
+          Day 30 should be completed after reviewing where Day 29 felt unstable.
+        </p>
+
+        <button class="btn primary" id="completeDayBtn" type="button">✓ Mark Day 29 complete</button>
+        <a href="lesson-day-30.html" class="btn secondary">Go to Day 30 →</a>
+
+        <div class="done-banner" id="doneBanner">
+          Day 29 is saved as completed in this browser.
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="sidebar">
+      <div class="side-card">
+        <h3>Day 29</h3>
+        <div class="muted" style="font-size:.84rem">C1 Mock Test</div>
+
+        <div class="mini-progress"><div id="sideProgress"></div></div>
+        <div class="muted" id="sideProgressText" style="font-size:.78rem;margin-top:7px">
+          0/8 sections touched
+        </div>
+      </div>
+
+      <div class="side-card">
+        <h3>Jump to</h3>
+        <nav class="toc">
+          <a href="#setup">1. Test Setup</a>
+          <a href="#listening-a">2. Listening A</a>
+          <a href="#listening-b">3. Listening B</a>
+          <a href="#vocabulary">4. Vocabulary</a>
+          <a href="#precision">5. Precision</a>
+          <a href="#synthesis">6. Synthesis</a>
+          <a href="#speaking">7. Extended Speaking</a>
+          <a href="#report">8. Report</a>
+        </nav>
+      </div>
+
+      <div class="side-card">
+        <h3>Test rule</h3>
+        <p class="muted" style="font-size:.84rem;line-height:1.55;margin:0">
+          Day 29 is for diagnosis, not perfection.
+          <b>Do the task before opening the transcript.</b>
+        </p>
+      </div>
+    </aside>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="shell">Fluent30 · Day 29 · C1 Mock Test</div>
+</footer>
+
+<script>
+  const COURSE_KEY = "fluent30-progress-v1";
+  const DAY_KEY = "fluent30-day-29-result";
+
+  const audioA = `We often talk about attention as if it were a private resource that each person either manages well or wastes. That framing is useful up to a point because individual habits matter. But it can hide the extent to which attention is shaped by defaults.
+
+A default is simply what happens when we do nothing. If notifications are on by default, silence requires a decision. If a phone is on the desk, ignoring it requires repeated inhibition. If every meeting is scheduled for an hour, shorter meetings require someone to actively challenge the template.
+
+None of these things remove personal responsibility. They change the number of small decisions a person has to make in order to protect the behavior they already prefer.
+
+That matters because self-control is not usually tested once. It is tested repeatedly. A person may genuinely want to focus for ninety minutes, but if the environment creates twenty small invitations to switch attention, the task becomes less about one strong intention and more about resisting twenty separate prompts.
+
+This is why environmental design can sometimes outperform motivation. Turning off nonessential notifications, keeping distracting apps off the home screen, or creating a default focus block does not guarantee deep work. It simply reduces the number of moments at which the desired behavior must defeat an easier alternative.
+
+There is an important limit, though. Defaults can support behavior, but they can also become paternalistic if they are difficult to change or if the designer assumes everyone wants the same outcome. A good default reduces friction without removing meaningful choice.
+
+So the broader point is not that people lack agency. It is that agency is exercised inside an environment. If we care about a behavior, it is reasonable to ask not only whether people are motivated, but also how often the environment asks them to overcome unnecessary resistance.`;
+
+  const audioB = [
+    "When the forecast is unreliable, what is the point of planning?",
+    "The mistake is to assume that a plan is valuable because it predicts the future accurately. In volatile conditions, that is often impossible. I think planning is more useful as a way to expose assumptions and prepare decisions in advance.",
+    "Can you give an example?",
+    "Suppose we have a base case that assumes demand grows six percent, a downside case where it falls four percent, and an upside case where it grows twelve. I am not claiming one of those numbers is the truth. I want to know what changes operationally across the cases.",
+    "So the scenarios are less about probability?",
+    "Exactly. We may assign probabilities, but the useful question is what would cause us to act differently. If demand falls below a certain level, do we slow hiring? If collections weaken, when do we protect liquidity? If the upside case appears, which constraint becomes the bottleneck first?",
+    "How do you stop scenario planning from becoming a huge theoretical exercise?",
+    "By limiting the number of variables that actually drive the decision. A scenario with fifty assumptions is difficult to use. We usually want three to five critical drivers and a small number of trigger points.",
+    "Trigger points meaning thresholds?",
+    "Yes. A threshold that changes the action. The value is that when the environment moves, you are not inventing the response under pressure. You have already discussed what matters, what you would do, and what information would justify the move.",
+    "Does that make plans more flexible?",
+    "It should. The irony is that people sometimes make rigid plans because they want certainty. A better plan can actually be more adaptive because it is explicit about where the assumptions may fail.",
+    "So planning is not the opposite of flexibility?",
+    "Not if it is done well. The plan should reduce decision latency, not pretend uncertainty has disappeared."
+  ];
+
+  const questionsA = [
+    {
+      q:"What is the speaker's main claim?",
+      options:[
+        "Attention is partly shaped by environmental defaults, not only by individual motivation.",
+        "People have no control over their attention.",
+        "All notifications should be permanently disabled."
+      ],
+      answer:0
+    },
+    {
+      q:"Why does the speaker mention repeated inhibition?",
+      options:[
+        "To show that self-control may be taxed many times rather than once.",
+        "To argue that phones are addictive by definition.",
+        "To claim that focus is impossible."
+      ],
+      answer:0
+    },
+    {
+      q:"What does environmental design do in the speaker's account?",
+      options:[
+        "It reduces how often the desired behavior must defeat an easier alternative.",
+        "It guarantees deep work.",
+        "It removes the need for personal agency."
+      ],
+      answer:0
+    },
+    {
+      q:"What is the important qualification about defaults?",
+      options:[
+        "They should reduce friction without making meaningful choice difficult.",
+        "They should always be hard to change.",
+        "Everyone should have the same default."
+      ],
+      answer:0
+    },
+    {
+      q:"What does the speaker mean by saying agency is exercised inside an environment?",
+      options:[
+        "Personal choice still matters, but the surrounding design can make some choices easier or harder.",
+        "Choice is an illusion.",
+        "Environment determines behavior completely."
+      ],
+      answer:0
+    }
+  ];
+
+  const questionsB = [
+    {
+      q:"What does the executive think planning is most useful for in volatile conditions?",
+      options:[
+        "Exposing assumptions and preparing decisions in advance.",
+        "Predicting one exact future.",
+        "Eliminating uncertainty."
+      ],
+      answer:0
+    },
+    {
+      q:"What are the three demand scenarios in the example?",
+      options:[
+        "Base +6%, downside -4%, upside +12%.",
+        "Base +4%, downside -6%, upside +10%.",
+        "Base 0%, downside -12%, upside +6%."
+      ],
+      answer:0
+    },
+    {
+      q:"What makes a scenario operationally useful?",
+      options:[
+        "It clarifies what would cause the team to act differently.",
+        "It contains as many assumptions as possible.",
+        "It predicts the most likely number exactly."
+      ],
+      answer:0
+    },
+    {
+      q:"How many critical drivers does the executive usually want?",
+      options:[
+        "Three to five.",
+        "Ten to fifteen.",
+        "Fifty."
+      ],
+      answer:0
+    },
+    {
+      q:"What is a trigger point?",
+      options:[
+        "A threshold that changes the action.",
+        "A number used only for reporting.",
+        "A target that never changes."
+      ],
+      answer:0
+    },
+    {
+      q:"What does the executive mean by reducing decision latency?",
+      options:[
+        "Respond faster because the relevant actions were considered in advance.",
+        "Make decisions with less information.",
+        "Avoid making decisions."
+      ],
+      answer:0
+    }
+  ];
+
+  const vocabItems = [
+    {
+      phrase:"“repeated inhibition”",
+      context:"Ignoring a phone on the desk requires repeated inhibition.",
+      options:["Repeatedly resisting an impulse","Repeatedly forgetting a task","Repeating the same habit automatically"],
+      answer:0
+    },
+    {
+      phrase:"“paternalistic”",
+      context:"Defaults can become paternalistic if they are difficult to change.",
+      options:["Overly controlling while claiming to act for someone's benefit","Highly personalized","Completely neutral"],
+      answer:0
+    },
+    {
+      phrase:"“expose assumptions”",
+      context:"Planning can expose assumptions.",
+      options:["Make hidden assumptions visible for examination","Remove all assumptions","Replace assumptions with certainty"],
+      answer:0
+    },
+    {
+      phrase:"“bottleneck”",
+      context:"Which constraint becomes the bottleneck first?",
+      options:["The limiting point that restricts the system","The final result","The easiest part of the process"],
+      answer:0
+    },
+    {
+      phrase:"“decision latency”",
+      context:"The plan should reduce decision latency.",
+      options:["Delay between recognizing a situation and taking a decision","Accuracy of a forecast","The cost of a decision"],
+      answer:0
+    }
+  ];
+
+  const precisionItems = [
+    {label:"Listening A · focus duration", target:"90 minutes", aliases:["90 minutes","ninety minutes","90"]},
+    {label:"Listening A · number of prompts", target:"20", aliases:["20","twenty"]},
+    {label:"Listening B · base demand case", target:"+6%", aliases:["6%","+6%","six percent","6 percent"]},
+    {label:"Listening B · downside case", target:"-4%", aliases:["-4%","4% decline","minus four percent","falls four percent","fall four percent"]},
+    {label:"Listening B · upside case", target:"+12%", aliases:["12%","+12%","twelve percent","12 percent"]},
+    {label:"Listening B · critical drivers", target:"3 to 5", aliases:["3 to 5","three to five","3-5","3–5"]}
+  ];
+
+  const dictationItems = [
+    "A good default reduces friction without removing meaningful choice.",
+    "The plan should reduce decision latency, not pretend uncertainty has disappeared."
+  ];
+
+  const synthesisItems = [
+    {
+      q:"What principle best links the two texts?",
+      options:[
+        "Good systems reduce avoidable decision friction while preserving flexibility and agency.",
+        "People should stop making individual decisions.",
+        "Uncertainty can be eliminated through better design."
+      ],
+      answer:0
+    },
+    {
+      q:"How are the texts different?",
+      options:[
+        "A focuses on attention and behavioral defaults; B focuses on strategic planning and trigger points.",
+        "They are about exactly the same operational problem.",
+        "Both argue against planning."
+      ],
+      answer:0
+    },
+    {
+      q:"What would be an overstatement of both texts?",
+      options:[
+        "Design can replace judgment entirely.",
+        "Environment influences behavior.",
+        "Preparing decisions can reduce future friction."
+      ],
+      answer:0
+    }
+  ];
+
+  let rateA = 1.00;
+  let rateB = 1.00;
+  let listenACount = Number(localStorage.getItem("fluent30-day29-listens-a") || 0);
+  let listenBCount = Number(localStorage.getItem("fluent30-day29-listens-b") || 0);
+
+  let aScore = null;
+  let bScore = null;
+  let vocabScore = null;
+  let precisionOnlyScore = null;
+  let dictationScores = [null,null];
+  let synthesisScore = null;
+  let touched = new Set();
+
+  function getVoices(){
+    if(!("speechSynthesis" in window)) return [];
+    return speechSynthesis.getVoices();
+  }
+
+  function getVoice(){
+    const voices = getVoices();
+    const us = voices.filter(v => /en-US/i.test(v.lang));
+    const en = voices.filter(v => /^en/i.test(v.lang));
+
+    const preferred = [
+      /Google US English/i,
+      /Samantha/i,
+      /Jenny/i,
+      /Aria/i,
+      /Joanna/i,
+      /Ava/i
+    ];
+
+    for(const pattern of preferred){
+      const match = us.find(v => pattern.test(v.name)) || en.find(v => pattern.test(v.name));
+      if(match) return match;
+    }
+
+    return us[0] || en[0] || null;
+  }
+
+  function speak(text,rate=1,onEnd=null){
+    if(!("speechSynthesis" in window)){
+      alert("Speech synthesis is not supported in this browser.");
+      return;
+    }
+
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US";
+    u.rate = rate;
+    u.pitch = 1.0;
+
+    const v = getVoice();
+    if(v) u.voice = v;
+    if(onEnd) u.onend = onEnd;
+
+    speechSynthesis.speak(u);
+  }
+
+  function stopSpeech(){
+    if("speechSynthesis" in window) speechSynthesis.cancel();
+  }
+
+  function speakSequence(lines,rate=1){
+    stopSpeech();
+    let i = 0;
+
+    const next = ()=>{
+      if(i >= lines.length) return;
+      speak(lines[i],rate,()=>{
+        i++;
+        setTimeout(next,160);
+      });
+    };
+    next();
+  }
+
+  document.getElementById("playABtn").addEventListener("click",()=>{
+    listenACount++;
+    localStorage.setItem("fluent30-day29-listens-a",String(listenACount));
+    updateListenUI();
+    markTouched("a");
+    stopSpeech();
+    speak(audioA,rateA);
+  });
+
+  document.getElementById("stopABtn").addEventListener("click",stopSpeech);
+
+  document.getElementById("playBBtn").addEventListener("click",()=>{
+    listenBCount++;
+    localStorage.setItem("fluent30-day29-listens-b",String(listenBCount));
+    updateListenUI();
+    markTouched("b");
+    speakSequence(audioB,rateB);
+  });
+
+  document.getElementById("stopBBtn").addEventListener("click",stopSpeech);
+
+  document.querySelectorAll(".speed-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const group = btn.dataset.group;
+      const rate = Number(btn.dataset.rate);
+
+      if(group === "a") rateA = rate;
+      if(group === "b") rateB = rate;
+
+      document.querySelectorAll(`.speed-btn[data-group="${group}"]`).forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+
+  function updateListenUI(){
+    document.getElementById("listenACount").textContent = listenACount;
+    document.getElementById("listenBCount").textContent = listenBCount;
+
+    document.getElementById("revealBtn").disabled =
+      !(listenACount >= 2 && listenBCount >= 2);
+
+    if(listenACount >= 2 && listenBCount >= 2){
+      const lock = document.getElementById("transcriptLock");
+      lock.querySelector("strong").textContent = "Transcripts ready";
+      lock.querySelector("p").textContent =
+        "You have completed at least two listens of both texts. Reveal only after finishing the objective sections.";
+    }
+  }
+
+  document.getElementById("revealBtn").addEventListener("click",()=>{
+    document.getElementById("transcriptBox").classList.add("show");
+    document.getElementById("transcriptLock").style.display = "none";
+    markTouched("report");
+  });
+
+  function renderQuestions(items,containerId,prefix){
+    const container = document.getElementById(containerId);
+
+    container.innerHTML = items.map((item,index)=>`
+      <div class="question">
+        <div class="question-title">${index+1}. ${item.q}</div>
+        <div class="options">
+          ${item.options.map((option,optIndex)=>`
+            <label class="option">
+              <input type="radio" name="${prefix}${index}" value="${optIndex}">
+              <span>${option}</span>
+            </label>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function gradeGeneric(items,prefix){
+    let correct = 0;
+    let answered = 0;
+
+    items.forEach((item,index)=>{
+      const selected = document.querySelector(`input[name="${prefix}${index}"]:checked`);
+      if(selected){
+        answered++;
+        if(Number(selected.value) === item.answer) correct++;
+      }
+    });
+
+    return {correct,answered,score:Math.round((correct/items.length)*100)};
+  }
+
+  function gradeA(){
+    const result = gradeGeneric(questionsA,"a");
+    const box = document.getElementById("aFeedback");
+    box.className = "feedback show";
+
+    if(result.answered < questionsA.length){
+      box.classList.add("warn");
+      box.textContent = `You answered ${result.answered}/${questionsA.length}. Complete all questions first.`;
+      return;
+    }
+
+    aScore = result.score;
+    document.getElementById("aScoreText").textContent =
+      `${result.correct}/${questionsA.length} correct · ${aScore}%`;
+
+    box.classList.add(aScore >= 80 ? "good" : "info");
+    box.textContent = aScore >= 80
+      ? "Strong control of abstract everyday listening."
+      : "Review the distinction between personal agency and environmental friction.";
+
+    markTouched("a");
+    updateResults();
+  }
+
+  function gradeB(){
+    const result = gradeGeneric(questionsB,"b");
+    const box = document.getElementById("bFeedback");
+    box.className = "feedback show";
+
+    if(result.answered < questionsB.length){
+      box.classList.add("warn");
+      box.textContent = `You answered ${result.answered}/${questionsB.length}. Complete all questions first.`;
+      return;
+    }
+
+    bScore = result.score;
+    document.getElementById("bScoreText").textContent =
+      `${result.correct}/${questionsB.length} correct · ${bScore}%`;
+
+    box.classList.add(bScore >= 84 ? "good" : "info");
+    box.textContent = bScore >= 84
+      ? "Strong control of strategic reasoning and conditional planning language."
+      : "Review scenario purpose, critical drivers and trigger points.";
+
+    markTouched("b");
+    updateResults();
+  }
+
+  function renderVocab(){
+    const container = document.getElementById("vocabGrid");
+
+    container.innerHTML = vocabItems.map((item,index)=>`
+      <div class="vocab-card">
+        <strong>${index+1}. ${item.phrase}</strong>
+        <span style="display:block;margin-bottom:10px">${item.context}</span>
+        <select id="vocabSelect${index}">
+          <option value="">Choose meaning...</option>
+          ${item.options.map((option,optIndex)=>`
+            <option value="${optIndex}">${option}</option>
+          `).join("")}
+        </select>
+      </div>
+    `).join("");
+  }
+
+  function gradeVocab(){
+    let correct = 0;
+    let answered = 0;
+
+    vocabItems.forEach((item,index)=>{
+      const value = document.getElementById(`vocabSelect${index}`).value;
+      if(value !== ""){
+        answered++;
+        if(Number(value) === item.answer) correct++;
+      }
+    });
+
+    const box = document.getElementById("vocabFeedback");
+    box.className = "feedback show";
+
+    if(answered < vocabItems.length){
+      box.classList.add("warn");
+      box.textContent = `You completed ${answered}/${vocabItems.length}. Finish all five first.`;
+      return;
+    }
+
+    vocabScore = Math.round((correct/vocabItems.length)*100);
+    document.getElementById("vocabScoreText").textContent =
+      `${correct}/${vocabItems.length} correct · ${vocabScore}%`;
+
+    box.classList.add(vocabScore >= 80 ? "good" : "info");
+    box.textContent = vocabScore >= 80
+      ? "Good contextual vocabulary inference."
+      : "Focus on function in context rather than dictionary-style recall.";
+
+    markTouched("vocab");
+    updateResults();
+  }
+
+  function normalizeSimple(text){
+    return text
+      .toLowerCase()
+      .replace(/[’‘]/g,"'")
+      .replace(/[^a-z0-9%+\-\s]/g,"")
+      .replace(/\s+/g," ")
+      .trim();
+  }
+
+  function renderPrecision(){
+    const container = document.getElementById("precisionGrid");
+
+    container.innerHTML = precisionItems.map((item,index)=>`
+      <div class="precision-card">
+        <strong>${index+1}. ${item.label}</strong>
+        <span>Enter the exact detail.</span>
+        <input type="text" id="precisionInput${index}" style="margin-top:10px" placeholder="Your answer">
+      </div>
+    `).join("");
+  }
+
+  function gradePrecision(){
+    let correct = 0;
+    let answered = 0;
+
+    precisionItems.forEach((item,index)=>{
+      const value = normalizeSimple(document.getElementById(`precisionInput${index}`).value);
+      if(value){
+        answered++;
+        if(item.aliases.some(alias=>normalizeSimple(alias) === value)) correct++;
+      }
+    });
+
+    const box = document.getElementById("precisionFeedback");
+    box.className = "feedback show";
+
+    if(answered < precisionItems.length){
+      box.classList.add("warn");
+      box.textContent = `You completed ${answered}/${precisionItems.length}. Finish all six first.`;
+      return;
+    }
+
+    precisionOnlyScore = Math.round((correct/precisionItems.length)*100);
+    document.getElementById("precisionScoreText").textContent =
+      `${correct}/${precisionItems.length} correct · ${precisionOnlyScore}%`;
+
+    box.classList.add(precisionOnlyScore >= 84 ? "good" : "info");
+    box.textContent = precisionOnlyScore >= 84
+      ? "Strong high-risk detail retention."
+      : "Some numeric or threshold detail is still dropping under C1 load.";
+
+    markTouched("precision");
+    updateResults();
+  }
+
+  function renderDictation(){
+    const container = document.getElementById("dictationList");
+
+    container.innerHTML = dictationItems.map((sentence,index)=>`
+      <div class="dictation-item">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+          <strong>Dictation ${index+1}</strong>
+          <button class="btn secondary" type="button" onclick="playDictation(${index})">▶ Play</button>
+        </div>
+
+        <input
+          type="text"
+          id="dictInput${index}"
+          style="margin-top:12px"
+          placeholder="Type exactly what you hear"
+          autocomplete="off"
+        >
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="checkDictation(${index})">Check</button>
+        </div>
+
+        <div class="dictation-result" id="dictResult${index}"></div>
+      </div>
+    `).join("");
+  }
+
+  function playDictation(index){
+    stopSpeech();
+    speak(dictationItems[index],1.00);
+    markTouched("precision");
+  }
+
+  function normalize(text){
+    return text
+      .toLowerCase()
+      .replace(/[’‘]/g,"'")
+      .replace(/[^a-z0-9'\s-]/g,"")
+      .replace(/\s+/g," ")
+      .trim();
+  }
+
+  function wordSimilarity(userText,targetText){
+    const a = normalize(userText).split(" ").filter(Boolean);
+    const b = normalize(targetText).split(" ").filter(Boolean);
+
+    const dp = Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));
+
+    for(let i=1;i<=a.length;i++){
+      for(let j=1;j<=b.length;j++){
+        if(a[i-1] === b[j-1]){
+          dp[i][j] = dp[i-1][j-1] + 1;
+        }else{
+          dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+        }
+      }
+    }
+
+    return b.length ? Math.round((dp[a.length][b.length]/b.length)*100) : 0;
+  }
+
+  function checkDictation(index){
+    const input = document.getElementById(`dictInput${index}`);
+    const result = document.getElementById(`dictResult${index}`);
+
+    if(!input.value.trim()){
+      result.className = "dictation-result show";
+      result.textContent = "Type what you hear first.";
+      return;
+    }
+
+    const score = wordSimilarity(input.value,dictationItems[index]);
+    dictationScores[index] = score;
+
+    result.className = "dictation-result show";
+    result.innerHTML = `
+      <div><strong>${score}% match</strong></div>
+      <div style="margin-top:6px"><span class="muted">Target:</span> ${dictationItems[index]}</div>
+    `;
+
+    markTouched("precision");
+    updateResults();
+  }
+
+  function dictationAverage(){
+    if(dictationScores.some(v=>typeof v !== "number")) return null;
+    return Math.round(dictationScores.reduce((a,b)=>a+b,0)/dictationScores.length);
+  }
+
+  function precisionCombined(){
+    const d = dictationAverage();
+    if(precisionOnlyScore === null || d === null) return null;
+    return Math.round(precisionOnlyScore * 0.6 + d * 0.4);
+  }
+
+  function renderSynthesis(){
+    const container = document.getElementById("synthesisGrid");
+
+    container.innerHTML = synthesisItems.map((item,index)=>`
+      <div class="synthesis-card">
+        <strong>${index+1}. ${item.q}</strong>
+        <select id="synthesisSelect${index}" style="margin-top:8px">
+          <option value="">Choose...</option>
+          ${item.options.map((option,optIndex)=>`
+            <option value="${optIndex}">${option}</option>
+          `).join("")}
+        </select>
+      </div>
+    `).join("");
+  }
+
+  function gradeSynthesis(){
+    let correct = 0;
+    let answered = 0;
+
+    synthesisItems.forEach((item,index)=>{
+      const value = document.getElementById(`synthesisSelect${index}`).value;
+      if(value !== ""){
+        answered++;
+        if(Number(value) === item.answer) correct++;
+      }
+    });
+
+    const box = document.getElementById("synthesisFeedback");
+    box.className = "feedback show";
+
+    if(answered < synthesisItems.length){
+      box.classList.add("warn");
+      box.textContent = `You completed ${answered}/${synthesisItems.length}. Finish all three first.`;
+      return;
+    }
+
+    synthesisScore = Math.round((correct/synthesisItems.length)*100);
+    document.getElementById("synthesisScoreText").textContent =
+      `${correct}/${synthesisItems.length} correct · ${synthesisScore}%`;
+
+    box.classList.add(synthesisScore >= 67 ? "good" : "info");
+    box.textContent = synthesisScore >= 67
+      ? "Good. You connected the underlying principle without erasing the differences between the texts."
+      : "Synthesis is not similarity hunting. Preserve what each source is actually about.";
+
+    markTouched("synthesis");
+    updateResults();
+  }
+
+  function setupRecorder(){
+    const recordBtn = document.getElementById("speakRecordBtn");
+    const stopBtn = document.getElementById("speakStopBtn");
+    const status = document.getElementById("speakRecordStatus");
+    const playback = document.getElementById("speakPlayback");
+
+    let recorder = null;
+    let blobs = [];
+    let stream = null;
+    let startTime = null;
+
+    recordBtn.addEventListener("click",async()=>{
+      if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+        status.textContent = "Microphone recording is not supported in this browser.";
+        return;
+      }
+
+      try{
+        stream = await navigator.mediaDevices.getUserMedia({audio:true});
+        recorder = new MediaRecorder(stream);
+        blobs = [];
+        startTime = Date.now();
+
+        recorder.ondataavailable = e=>{
+          if(e.data.size > 0) blobs.push(e.data);
+        };
+
+        recorder.onstop = ()=>{
+          const blob = new Blob(blobs,{type:recorder.mimeType || "audio/webm"});
+          playback.src = URL.createObjectURL(blob);
+          playback.style.display = "block";
+
+          const seconds = Math.round((Date.now()-startTime)/1000);
+          status.textContent =
+            `Recorded ${seconds} seconds. Check source accuracy before evaluating your own argument.`;
+
+          if(stream) stream.getTracks().forEach(track=>track.stop());
+          markTouched("speaking");
+          updateSpeakingReport();
+        };
+
+        recorder.start();
+        recordBtn.disabled = true;
+        stopBtn.disabled = false;
+        status.textContent = "Recording…";
+      }catch(e){
+        status.textContent = "Microphone permission was not granted.";
+      }
+    });
+
+    stopBtn.addEventListener("click",()=>{
+      if(recorder && recorder.state !== "inactive") recorder.stop();
+      recordBtn.disabled = false;
+      stopBtn.disabled = true;
+    });
+  }
+
+  ["accuracy","synthSelf","argument","natural"].forEach(name=>{
+    const range = document.getElementById(`${name}Rate`);
+    const out = document.getElementById(`${name}Out`);
+
+    range.addEventListener("input",()=>{
+      out.value = range.value;
+      markTouched("speaking");
+      updateSpeakingReport();
+    });
+  });
+
+  function speakingAverage(){
+    const values = [
+      Number(document.getElementById("accuracyRate").value),
+      Number(document.getElementById("synthSelfRate").value),
+      Number(document.getElementById("argumentRate").value),
+      Number(document.getElementById("naturalRate").value)
+    ];
+    return values.reduce((a,b)=>a+b,0)/values.length;
+  }
+
+  function updateSpeakingReport(){
+    const avg = speakingAverage();
+    const el = document.getElementById("speakingReport");
+
+    if(avg >= 4.5){
+      el.textContent = "Self-rating suggests strong integrated speaking: accurate source handling plus sustained argument.";
+    }else if(avg >= 3.5){
+      el.textContent = "Self-rating suggests solid integrated speaking with one area to tighten before Day 30.";
+    }else{
+      el.textContent = "Use Day 29 to identify whether source accuracy, synthesis, argument or delivery is the main constraint.";
+    }
+  }
+
+  function overallObjective(){
+    const p = precisionCombined();
+    if([aScore,bScore,vocabScore,p,synthesisScore].some(v=>v===null)) return null;
+
+    return Math.round(
+      aScore * 0.25 +
+      bScore * 0.25 +
+      vocabScore * 0.15 +
+      p * 0.20 +
+      synthesisScore * 0.15
+    );
+  }
+
+  function updateResults(){
+    const p = precisionCombined();
+    const overall = overallObjective();
+
+    document.getElementById("aResult").textContent =
+      aScore === null ? "—" : `${aScore}%`;
+
+    document.getElementById("bResult").textContent =
+      bScore === null ? "—" : `${bScore}%`;
+
+    document.getElementById("vocabResult").textContent =
+      vocabScore === null ? "—" : `${vocabScore}%`;
+
+    document.getElementById("precisionResult").textContent =
+      p === null ? "—" : `${p}%`;
+
+    document.getElementById("synthesisResult").textContent =
+      synthesisScore === null ? "—" : `${synthesisScore}%`;
+
+    if(aScore !== null && bScore !== null){
+      const avg = Math.round((aScore+bScore)/2);
+      document.getElementById("listeningReport").textContent =
+        avg >= 85
+          ? "Strong across both abstract and business listening."
+          : avg >= 70
+            ? "Main ideas are stable; review where inference or detail dropped."
+            : "Listening load is still causing significant loss. Revisit the weaker text before Day 30.";
+    }
+
+    if(vocabScore !== null && p !== null){
+      const avg = Math.round((vocabScore+p)/2);
+      document.getElementById("languageReport").textContent =
+        avg >= 85
+          ? "Strong contextual vocabulary and detail accuracy."
+          : avg >= 70
+            ? "Generally solid, with some precision loss under load."
+            : "Language precision needs review before the final challenge.";
+    }
+
+    if(overall !== null){
+      document.getElementById("overallScore").textContent = overall;
+
+      let interpretation = "";
+
+      if(overall >= 88){
+        interpretation =
+          "Very strong Fluent30 mock performance. You are handling integrated C1-style listening tasks with high stability.";
+      }else if(overall >= 78){
+        interpretation =
+          "Strong mock performance. One or two skill areas still need tightening before Day 30.";
+      }else if(overall >= 65){
+        interpretation =
+          "Developing C1 readiness. Main meaning is generally secure, but accuracy or synthesis drops under combined load.";
+      }else{
+        interpretation =
+          "The mock exposed meaningful instability. Review the lowest-scoring section before taking Day 30.";
+      }
+
+      document.getElementById("scoreInterpretation").textContent = interpretation;
+    }
+  }
+
+  function markTouched(section){
+    touched.add(section);
+    updateProgress();
+  }
+
+  function updateProgress(){
+    const count = touched.size;
+    const percent = Math.round((count/8)*100);
+
+    document.getElementById("topProgress").style.width = `${percent}%`;
+    document.getElementById("sideProgress").style.width = `${percent}%`;
+    document.getElementById("topProgressText").textContent = `${percent}% complete`;
+    document.getElementById("sideProgressText").textContent = `${count}/8 sections touched`;
+  }
+
+  function getCourseProgress(){
+    try{
+      return JSON.parse(localStorage.getItem(COURSE_KEY)) || {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }catch(e){
+      return {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }
+  }
+
+  function saveDayResult(){
+    const p = precisionCombined();
+    const overall = overallObjective();
+
+    const result = {
+      day:29,
+      listeningA:aScore,
+      listeningB:bScore,
+      vocabScore,
+      precisionScore:p,
+      precisionOnlyScore,
+      dictationScore:dictationAverage(),
+      dictationScores:[...dictationScores],
+      synthesisScore,
+      speakingSelf:Number(speakingAverage().toFixed(1)),
+      synthesisText:document.getElementById("synthesisText").value,
+      overall,
+      listensA:listenACount,
+      listensB:listenBCount,
+      savedAt:new Date().toISOString()
+    };
+
+    localStorage.setItem(DAY_KEY,JSON.stringify(result));
+  }
+
+  document.getElementById("completeDayBtn").addEventListener("click",()=>{
+    const progress = getCourseProgress();
+    const alreadyDone = progress.completed.includes(29);
+
+    if(!alreadyDone){
+      progress.completed.push(29);
+      progress.completed.sort((a,b)=>a-b);
+      progress.streak = Math.max(1,Number(progress.streak || 0)+1);
+      progress.minutes = Number(progress.minutes || 0)+90;
+      progress.lastDay = 29;
+      localStorage.setItem(COURSE_KEY,JSON.stringify(progress));
+    }
+
+    saveDayResult();
+
+    document.getElementById("doneBanner").classList.add("show");
+    document.getElementById("completeDayBtn").textContent = "✓ Day 29 completed";
+    document.getElementById("completeDayBtn").disabled = true;
+
+    touched = new Set([
+      "setup","a","b","vocab","precision","synthesis","speaking","report"
+    ]);
+
+    updateProgress();
+  });
+
+  function loadSavedState(){
+    updateListenUI();
+
+    const progress = getCourseProgress();
+
+    if(progress.completed.includes(29)){
+      document.getElementById("doneBanner").classList.add("show");
+      document.getElementById("completeDayBtn").textContent = "✓ Day 29 completed";
+      document.getElementById("completeDayBtn").disabled = true;
+
+      touched = new Set([
+        "setup","a","b","vocab","precision","synthesis","speaking","report"
+      ]);
+      updateProgress();
+    }
+
+    try{
+      const saved = JSON.parse(localStorage.getItem(DAY_KEY) || "null");
+
+      if(saved){
+        if(typeof saved.listeningA === "number") aScore = saved.listeningA;
+        if(typeof saved.listeningB === "number") bScore = saved.listeningB;
+        if(typeof saved.vocabScore === "number") vocabScore = saved.vocabScore;
+        if(typeof saved.precisionOnlyScore === "number") precisionOnlyScore = saved.precisionOnlyScore;
+        if(Array.isArray(saved.dictationScores)) dictationScores = saved.dictationScores;
+        if(typeof saved.synthesisScore === "number") synthesisScore = saved.synthesisScore;
+        if(typeof saved.synthesisText === "string") document.getElementById("synthesisText").value = saved.synthesisText;
+      }
+    }catch(e){}
+
+    updateResults();
+    updateSpeakingReport();
+  }
+
+  renderQuestions(questionsA,"aQuestions","a");
+  renderQuestions(questionsB,"bQuestions","b");
+  renderVocab();
+  renderPrecision();
+  renderDictation();
+  renderSynthesis();
+  setupRecorder();
+  loadSavedState();
+
+  if("speechSynthesis" in window){
+    speechSynthesis.onvoiceschanged = ()=>getVoice();
+  }
+</script>
+</body>
+</html>
