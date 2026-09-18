@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fluent30 Day 10 — Checkpoint 1" />
+  <title>Fluent30 — Day 10 Checkpoint 1</title>
+
+  <style>
+    :root{
+      --bg:#f5f5f6; --surface:#fff; --surface-2:#fafafa; --text:#111; --muted:#6b7280;
+      --line:#e5e7eb; --red:#8f1027; --red-dark:#6f0b1e; --black:#171717;
+      --green:#166534; --green-bg:#ecfdf3; --amber:#92400e; --amber-bg:#fffbeb;
+      --blue:#1d4ed8; --blue-bg:#eff6ff; --shadow:0 18px 50px rgba(17,24,39,.08);
+      --r-xl:24px; --r-lg:17px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text)
+    }
+
+    button,input,textarea{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    .shell{width:min(1160px,calc(100% - 38px));margin:0 auto}
+
+    header{
+      position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);
+      border-bottom:1px solid var(--line);backdrop-filter:blur(14px)
+    }
+
+    .topnav{
+      min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px
+    }
+
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.04em}
+    .brand-mark{
+      width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
+      background:var(--red);color:#fff;font-size:.88rem
+    }
+    .brand span span{color:var(--red)}
+
+    .toplinks{display:flex;align-items:center;gap:9px}
+    .navbtn{
+      display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;
+      border:1px solid var(--line);border-radius:10px;background:#fff;color:#333;
+      font-size:.88rem;font-weight:700
+    }
+    .navbtn:hover{border-color:#c8ccd2}
+
+    main{padding:34px 0 70px}
+
+    .checkpoint-banner{
+      margin-bottom:18px;
+      padding:16px 18px;
+      background:#111;
+      color:#fff;
+      border-radius:15px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px
+    }
+    .checkpoint-banner strong{font-size:.95rem}
+    .checkpoint-banner span{color:#c6c9cf;font-size:.84rem}
+
+    .hero{
+      display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.55fr);gap:20px
+    }
+
+    .hero-main,.hero-side{border-radius:var(--r-xl);box-shadow:var(--shadow)}
+
+    .hero-main{
+      background:linear-gradient(135deg,#fff 0%,#fbfbfc 72%,#f2f2f3 100%);
+      border:1px solid var(--line);padding:38px
+    }
+
+    .eyebrow{
+      color:var(--red);font-weight:850;font-size:.76rem;letter-spacing:.12em;
+      text-transform:uppercase;margin-bottom:12px
+    }
+
+    h1{
+      margin:0;font-size:clamp(2.4rem,5vw,4.8rem);line-height:.96;letter-spacing:-.06em
+    }
+
+    .hero-copy{
+      max-width:820px;color:var(--muted);line-height:1.65;margin:18px 0 0
+    }
+
+    .hero-side{
+      background:var(--black);color:#fff;padding:28px;display:flex;
+      flex-direction:column;justify-content:space-between;gap:20px
+    }
+
+    .hero-side .muted{color:#b9bec7}
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .meta-card{background:#202020;border:1px solid #343434;border-radius:12px;padding:14px}
+    .meta-card strong{display:block;font-size:1.2rem;margin-bottom:2px}
+    .meta-card span{font-size:.78rem;color:#afb4bd}
+    .progress-track{height:9px;border-radius:999px;background:#343434;overflow:hidden;margin-top:13px}
+    .progress-fill{height:100%;width:0%;background:#fff;transition:.25s ease}
+
+    .layout{
+      display:grid;grid-template-columns:minmax(0,1fr) 292px;gap:22px;margin-top:24px
+    }
+
+    .lesson-card{
+      background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+      padding:26px;margin-bottom:18px
+    }
+
+    .lesson-card h2{margin:0;font-size:1.42rem;letter-spacing:-.035em}
+    .lesson-card h3{margin:18px 0 8px;font-size:1rem}
+    .lesson-card p{line-height:1.62}
+    .muted{color:var(--muted)}
+
+    .step-head{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px
+    }
+
+    .step-label{
+      color:var(--red);font-size:.74rem;font-weight:850;letter-spacing:.1em;
+      text-transform:uppercase;margin-bottom:6px
+    }
+
+    .time-pill{
+      flex:0 0 auto;padding:6px 9px;background:#f3f4f6;border-radius:999px;
+      color:#5b616c;font-size:.76rem;font-weight:750
+    }
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:43px;
+      padding:0 15px;border-radius:11px;border:1px solid transparent;font-weight:800;transition:.18s ease
+    }
+
+    .btn.primary{background:var(--red);color:#fff}
+    .btn.primary:hover{background:var(--red-dark);transform:translateY(-1px)}
+    .btn.secondary{background:#fff;border-color:var(--line);color:#222}
+    .btn.secondary:hover{border-color:#c9cdd3}
+    .btn.dark{background:var(--black);color:#fff}
+    .btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
+
+    .btn-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+
+    .rules-grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px
+    }
+
+    .rule{
+      border:1px solid var(--line);border-radius:13px;padding:14px;background:#fff
+    }
+    .rule strong{display:block;margin-bottom:5px}
+    .rule span{font-size:.84rem;color:var(--muted);line-height:1.45}
+
+    .audio-panel{
+      border:1px solid var(--line);border-radius:14px;background:var(--surface-2);
+      padding:17px;margin-top:12px
+    }
+
+    .audio-title{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      margin-bottom:10px;font-weight:800
+    }
+
+    .listen-counter{font-size:.78rem;color:var(--muted);font-weight:700}
+    .speed-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+
+    .speed-btn{
+      border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 10px;
+      font-size:.78rem;font-weight:750
+    }
+
+    .speed-btn.active{border-color:var(--red);color:var(--red);background:#fff5f6}
+
+    .question{padding:17px 0;border-top:1px solid var(--line)}
+    .question:first-of-type{border-top:0;padding-top:4px}
+    .question-title{font-weight:800;line-height:1.5;margin-bottom:10px}
+    .options{display:grid;gap:8px}
+
+    .option{
+      display:flex;gap:10px;align-items:flex-start;padding:11px 12px;
+      border:1px solid var(--line);border-radius:11px;cursor:pointer;background:#fff
+    }
+
+    .option:hover{border-color:#c9cdd3}
+    .option input{margin-top:3px}
+
+    .feedback{
+      margin-top:12px;border-radius:11px;padding:11px 13px;
+      font-size:.9rem;line-height:1.5;display:none
+    }
+
+    .feedback.show{display:block}
+    .feedback.good{background:var(--green-bg);color:var(--green)}
+    .feedback.warn{background:var(--amber-bg);color:var(--amber)}
+    .feedback.info{background:var(--blue-bg);color:var(--blue)}
+
+    textarea,input[type="text"]{
+      width:100%;border:1px solid #d2d6dc;border-radius:11px;padding:12px 13px;
+      background:#fff;color:#111;outline:none
+    }
+
+    textarea:focus,input[type="text"]:focus{
+      border-color:#ba6a7c;box-shadow:0 0 0 3px rgba(143,16,39,.08)
+    }
+
+    textarea{resize:vertical;min-height:100px}
+
+    .data-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:12px
+    }
+
+    .data-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;background:#fff
+    }
+
+    .data-item label{font-weight:800;display:block;margin-bottom:7px}
+
+    .data-result{
+      display:none;margin-top:9px;padding:9px 10px;background:#f8f9fa;
+      border-radius:9px;font-size:.88rem
+    }
+
+    .data-result.show{display:block}
+
+    .dictation-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;margin-top:12px;background:#fff
+    }
+
+    .dictation-result{
+      margin-top:10px;padding:10px 12px;background:#f8f9fa;border-radius:10px;
+      line-height:1.55;display:none
+    }
+
+    .dictation-result.show{display:block}
+    .miss{color:#b91c1c;text-decoration:underline;text-decoration-style:wavy}
+
+    .decode-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px
+    }
+
+    .decode-card{
+      border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff
+    }
+
+    .decode-card strong{display:block;margin-bottom:5px}
+    .decode-card span{font-size:.88rem;color:var(--muted);line-height:1.45}
+
+    .locked-review{
+      border:1px dashed #c8cdd3;border-radius:13px;padding:18px;background:#fafafa;text-align:center
+    }
+
+    .review-panel{display:none}
+    .review-panel.show{display:block}
+
+    .transcript{
+      margin-top:12px;padding:18px;border-left:4px solid var(--red);
+      border-radius:10px;background:#fafafa;line-height:1.8
+    }
+
+    .prompt-box{
+      border-left:4px solid var(--red);background:#fafafa;padding:16px 17px;
+      border-radius:10px;line-height:1.6;margin:12px 0
+    }
+
+    .recorder{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fafafa;margin-top:12px
+    }
+
+    .record-status{font-size:.84rem;color:var(--muted);margin-top:8px}
+    audio{width:100%;margin-top:12px}
+
+    .rating-grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px
+    }
+
+    .rating{
+      border:1px solid var(--line);border-radius:12px;padding:13px
+    }
+
+    .rating label{display:block;font-size:.8rem;font-weight:800;margin-bottom:8px}
+    .rating output{font-weight:900;color:var(--red)}
+    input[type="range"]{width:100%}
+
+    .result-card{
+      background:var(--black);color:#fff;border-radius:18px;padding:24px
+    }
+
+    .result-score{
+      font-size:3.3rem;font-weight:900;letter-spacing:-.05em;line-height:1;margin-top:8px
+    }
+
+    .profile-grid{
+      display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:18px
+    }
+
+    .profile-box{
+      background:#202020;border:1px solid #353535;border-radius:12px;padding:13px
+    }
+
+    .profile-box strong{display:block;font-size:1.15rem}
+    .profile-box span{color:#b8bdc6;font-size:.74rem;line-height:1.35}
+
+    .profile-bars{margin-top:18px;display:grid;gap:11px}
+    .profile-line{display:grid;grid-template-columns:155px 1fr 46px;gap:10px;align-items:center}
+    .profile-line span{font-size:.82rem;color:#c7cbd2}
+    .bar{height:8px;background:#333;border-radius:999px;overflow:hidden}
+    .bar > div{height:100%;width:0;background:#fff;transition:.3s ease}
+    .bar-score{text-align:right;font-weight:800;color:#fff!important}
+
+    .checkpoint-note{
+      margin-top:16px;padding:14px 15px;border:1px solid #333;border-radius:12px;
+      background:#1c1c1c;color:#d6d9de;font-size:.86rem;line-height:1.55
+    }
+
+    .recommendation{
+      margin-top:16px;border:1px solid var(--line);border-radius:14px;
+      padding:17px;background:#fff
+    }
+    .recommendation strong{display:block;margin-bottom:7px}
+    .recommendation p{margin:0;color:var(--muted);font-size:.9rem}
+
+    .sidebar{position:sticky;top:92px;align-self:start}
+
+    .side-card{
+      background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:13px
+    }
+
+    .side-card h3{margin:0 0 10px;font-size:.96rem}
+
+    .toc{display:grid;gap:5px}
+    .toc a{padding:8px 9px;border-radius:9px;color:#4b5563;font-size:.84rem}
+    .toc a:hover{background:#f4f4f5;color:var(--red)}
+
+    .mini-progress{
+      height:7px;background:#eceef1;border-radius:999px;overflow:hidden;margin-top:10px
+    }
+
+    .mini-progress > div{height:100%;width:0;background:var(--red);transition:.25s ease}
+
+    .complete-box{
+      text-align:center;padding:30px 24px;border:1px solid var(--line);
+      border-radius:18px;background:#fff
+    }
+
+    .complete-box h2{font-size:1.7rem;margin-bottom:8px}
+
+    .complete-box p{
+      color:var(--muted);max-width:670px;margin:0 auto 18px;line-height:1.6
+    }
+
+    .done-banner{
+      display:none;background:var(--green-bg);color:var(--green);border:1px solid #ccebd5;
+      border-radius:12px;padding:12px 14px;margin-top:14px;font-weight:750
+    }
+
+    .done-banner.show{display:block}
+
+    footer{
+      border-top:1px solid var(--line);color:var(--muted);padding:28px 0 40px;font-size:.84rem
+    }
+
+    @media(max-width:1060px){
+      .profile-grid{grid-template-columns:repeat(3,1fr)}
+      .rules-grid{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media(max-width:980px){
+      .hero,.layout{grid-template-columns:1fr}
+      .sidebar{position:static}
+      .decode-grid,.data-grid{grid-template-columns:1fr}
+    }
+
+    @media(max-width:720px){
+      .shell{width:min(100% - 26px,1160px)}
+      .hero-main,.hero-side{padding:25px}
+      .lesson-card{padding:20px}
+      .rating-grid,.profile-grid{grid-template-columns:1fr}
+      .rules-grid{grid-template-columns:1fr}
+      .profile-line{grid-template-columns:1fr}
+      .bar-score{text-align:left}
+      .toplinks .hide-mobile{display:none}
+      .checkpoint-banner{align-items:flex-start;flex-direction:column}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="shell topnav">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">F30</span>
+      <span>Fluent<span>30</span></span>
+    </a>
+
+    <div class="toplinks">
+      <a href="lesson-day-09.html" class="navbtn">← Day 09</a>
+      <a href="index.html" class="navbtn hide-mobile">Roadmap</a>
+      <a href="lesson-day-11.html" class="navbtn">Day 11 →</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="shell">
+
+  <div class="checkpoint-banner">
+    <strong>CHECKPOINT MODE · DAYS 01–09</strong>
+    <span>Less teaching. More testing. Complete the objective sections before opening the review.</span>
+  </div>
+
+  <section class="hero">
+    <div class="hero-main">
+      <div class="eyebrow">Day 10 · Checkpoint 1</div>
+
+      <h1>Can you keep up<br>at B2 speed?</h1>
+
+      <p class="hero-copy">
+        This checkpoint combines the skills from Days 1–9: connected speech, weak forms, linking,
+        high-risk details, fast casual conversation, storytelling, opinions and phone clarification.
+        Your result is a <b>training readiness profile</b>, not an official CEFR score.
+      </p>
+    </div>
+
+    <aside class="hero-side">
+      <div>
+        <div class="eyebrow" style="color:#e9a6b4">Checkpoint target</div>
+        <h2 style="margin:0;font-size:1.55rem">Understand, retain and respond</h2>
+        <p class="muted" style="line-height:1.55">
+          2 listening sets · 10 comprehension items · data capture · dictation · speaking
+        </p>
+      </div>
+
+      <div>
+        <div class="meta-grid">
+          <div class="meta-card"><strong>90</strong><span>minutes</span></div>
+          <div class="meta-card"><strong>145+</strong><span>target wpm feel</span></div>
+        </div>
+
+        <div class="progress-track"><div class="progress-fill" id="topProgress"></div></div>
+        <div class="muted" id="topProgressText" style="font-size:.82rem;margin-top:6px">0% complete</div>
+      </div>
+    </aside>
+  </section>
+
+  <div class="layout">
+    <div>
+
+      <!-- 1 RULES -->
+      <section class="lesson-card" id="rules">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 1 · Test Setup</div>
+            <h2>Use checkpoint rules.</h2>
+          </div>
+          <div class="time-pill">5 min</div>
+        </div>
+
+        <div class="rules-grid">
+          <div class="rule">
+            <strong>Listen 1</strong>
+            <span>Focus on main meaning. Do not pause to chase one missed word.</span>
+          </div>
+
+          <div class="rule">
+            <strong>Listen 2</strong>
+            <span>Capture detail, corrections, stance and numbers.</span>
+          </div>
+
+          <div class="rule">
+            <strong>No transcript</strong>
+            <span>Review unlocks only after the objective tests are submitted.</span>
+          </div>
+
+          <div class="rule">
+            <strong>Speak from notes</strong>
+            <span>Use keywords, not a full written script, for the final response.</span>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="markTouched('rules')">I'm ready</button>
+        </div>
+      </section>
+
+      <!-- 2 LISTENING A -->
+      <section class="lesson-card" id="listening-a">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 2 · Listening Test A</div>
+            <h2>Workplace update at natural speed.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <p class="muted">
+          Two colleagues discuss a client workshop. Listen for the final schedule, reason for the change,
+          the speaker's opinion and next action.
+        </p>
+
+        <div class="audio-panel">
+          <div class="audio-title">
+            <span>🎧 Test A · Client workshop</span>
+            <span class="listen-counter">Listens: <span id="listenCountA">0</span></span>
+          </div>
+
+          <button class="btn primary" id="playA" type="button">▶ Play Test A</button>
+          <button class="btn secondary" type="button" onclick="stopSpeech()">■ Stop</button>
+
+          <div class="speed-row" data-group="a">
+            <button class="speed-btn" data-rate="0.94" type="button">0.94×</button>
+            <button class="speed-btn active" data-rate="1.05" type="button">1.05×</button>
+            <button class="speed-btn" data-rate="1.12" type="button">1.12×</button>
+          </div>
+        </div>
+
+        <div id="questionsA"></div>
+      </section>
+
+      <!-- 3 LISTENING B -->
+      <section class="lesson-card" id="listening-b">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 3 · Listening Test B</div>
+            <h2>Fast casual story with a change of plan.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <p class="muted">
+          Listen to a casual story. Track the original plan, the problem, the correction and the final outcome.
+        </p>
+
+        <div class="audio-panel">
+          <div class="audio-title">
+            <span>🎧 Test B · Dinner reservation</span>
+            <span class="listen-counter">Listens: <span id="listenCountB">0</span></span>
+          </div>
+
+          <button class="btn primary" id="playB" type="button">▶ Play Test B</button>
+          <button class="btn secondary" type="button" onclick="stopSpeech()">■ Stop</button>
+
+          <div class="speed-row" data-group="b">
+            <button class="speed-btn" data-rate="0.94" type="button">0.94×</button>
+            <button class="speed-btn active" data-rate="1.05" type="button">1.05×</button>
+            <button class="speed-btn" data-rate="1.12" type="button">1.12×</button>
+          </div>
+        </div>
+
+        <div id="questionsB"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeComprehension()">Submit 10 comprehension answers</button>
+          <span class="muted" id="comprehensionScoreText"></span>
+        </div>
+
+        <div class="feedback" id="comprehensionFeedback"></div>
+      </section>
+
+      <!-- 4 PRECISION -->
+      <section class="lesson-card" id="precision">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 4 · Precision Test</div>
+            <h2>Capture exact details.</h2>
+          </div>
+          <div class="time-pill">12 min</div>
+        </div>
+
+        <p class="muted">
+          These details come from the two listening sets. Type the final corrected value, not the first version you heard.
+        </p>
+
+        <div class="data-grid" id="precisionGrid"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradePrecision()">Check precision</button>
+          <span class="muted" id="precisionScoreText"></span>
+        </div>
+
+        <div class="feedback" id="precisionFeedback"></div>
+      </section>
+
+      <!-- 5 DICTATION -->
+      <section class="lesson-card" id="dictation">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 5 · Dictation Test</div>
+            <h2>Decode natural speech exactly.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div id="dictationList"></div>
+      </section>
+
+      <!-- 6 DECODING -->
+      <section class="lesson-card" id="decoding">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 6 · Rapid Decoding</div>
+            <h2>What does the natural phrase mean?</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div id="decodingQuiz"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeDecoding()">Check decoding</button>
+          <span class="muted" id="decodingScoreText"></span>
+        </div>
+
+        <div class="feedback" id="decodingFeedback"></div>
+      </section>
+
+      <!-- 7 SPEAK -->
+      <section class="lesson-card" id="speaking">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 7 · Integrated Speaking</div>
+            <h2>Summarize + give your view.</h2>
+          </div>
+          <div class="time-pill">13 min</div>
+        </div>
+
+        <div class="prompt-box">
+          <strong>90-second checkpoint response</strong><br>
+          Summarize the workplace discussion from Test A in about 30–40 seconds.
+          Then give your own view: is the revised workshop plan sensible?
+          Mention one benefit, one risk and one practical condition.
+        </div>
+
+        <textarea id="speakOutline" placeholder="Keywords only: revised time / hybrid option / client concern / benefit / risk / condition"></textarea>
+
+        <div class="recorder">
+          <strong>🎙 Record your checkpoint response</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="speakRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="speakStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="speakRecordStatus">
+            Target 75–100 seconds. Do not read a full script.
+          </div>
+
+          <audio id="speakPlayback" controls style="display:none"></audio>
+        </div>
+
+        <h3>Self-check</h3>
+
+        <div class="rating-grid">
+          <div class="rating">
+            <label>Comprehension transfer · <output id="transferOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="transferRate">
+          </div>
+
+          <div class="rating">
+            <label>Fluency · <output id="fluencyOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="fluencyRate">
+          </div>
+
+          <div class="rating">
+            <label>Natural phrasing · <output id="naturalOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="naturalRate">
+          </div>
+
+          <div class="rating">
+            <label>Opinion structure · <output id="opinionOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="opinionRate">
+          </div>
+        </div>
+      </section>
+
+      <!-- 8 REPORT -->
+      <section class="lesson-card" id="report">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 8 · Checkpoint Report</div>
+            <h2>Your B2-speed readiness profile</h2>
+          </div>
+          <div class="time-pill">5 min</div>
+        </div>
+
+        <div class="result-card">
+          <div class="muted" style="color:#b8bdc6">Objective checkpoint score</div>
+
+          <div class="result-score">
+            <span id="overallScore">—</span><span style="font-size:1.3rem">%</span>
+          </div>
+
+          <div class="muted" id="scoreInterpretation" style="color:#b8bdc6;margin-top:7px">
+            Submit comprehension, precision, dictation and decoding to calculate your profile.
+          </div>
+
+          <div class="profile-grid">
+            <div class="profile-box">
+              <strong id="compResult">—</strong>
+              <span>Comprehension</span>
+            </div>
+
+            <div class="profile-box">
+              <strong id="precisionResult">—</strong>
+              <span>Precision</span>
+            </div>
+
+            <div class="profile-box">
+              <strong id="dictationResult">—</strong>
+              <span>Speech decoding</span>
+            </div>
+
+            <div class="profile-box">
+              <strong id="decodingResult">—</strong>
+              <span>Natural phrases</span>
+            </div>
+
+            <div class="profile-box">
+              <strong id="speakingResult">3.0/5</strong>
+              <span>Speaking self-check</span>
+            </div>
+          </div>
+
+          <div class="profile-bars">
+            <div class="profile-line">
+              <span>Main meaning + detail</span>
+              <div class="bar"><div id="barComp"></div></div>
+              <span class="bar-score" id="barCompText">—</span>
+            </div>
+
+            <div class="profile-line">
+              <span>Names / numbers / corrections</span>
+              <div class="bar"><div id="barPrecision"></div></div>
+              <span class="bar-score" id="barPrecisionText">—</span>
+            </div>
+
+            <div class="profile-line">
+              <span>Sound → word decoding</span>
+              <div class="bar"><div id="barDictation"></div></div>
+              <span class="bar-score" id="barDictationText">—</span>
+            </div>
+
+            <div class="profile-line">
+              <span>Connected-speech recognition</span>
+              <div class="bar"><div id="barDecoding"></div></div>
+              <span class="bar-score" id="barDecodingText">—</span>
+            </div>
+          </div>
+
+          <div class="checkpoint-note">
+            This is a Fluent30 training checkpoint. It does not certify B2 or C1 under CEFR.
+            It is designed to show whether the listening skills from Days 1–9 are stable enough
+            to handle faster and more workplace-focused material.
+          </div>
+        </div>
+
+        <div class="recommendation" id="recommendationBox">
+          <strong>Next focus</strong>
+          <p>Complete the objective sections to generate a recommendation.</p>
+        </div>
+
+        <div style="margin-top:18px">
+          <div class="locked-review" id="reviewLock">
+            <strong>Review locked</strong>
+            <p class="muted" style="margin:7px 0 12px">
+              Submit all four objective test sections before opening transcripts and answer explanations.
+            </p>
+            <button class="btn secondary" id="reviewBtn" type="button" disabled>Open checkpoint review</button>
+          </div>
+
+          <div class="review-panel" id="reviewPanel">
+            <div class="transcript">
+              <strong>Test A transcript — Client workshop</strong>
+
+              <p><b>Rachel:</b> Have you got a minute to go over Friday's client workshop?</p>
+              <p><b>Ben:</b> Yeah, sure. I thought we were pretty much set.</p>
+              <p><b>Rachel:</b> We were, but the client asked if we could push the start from nine-thirty to ten-fifteen. Their finance lead has another call first.</p>
+              <p><b>Ben:</b> Ten-fifteen? Okay. That actually might help us. I was a little worried the opening section was too rushed.</p>
+              <p><b>Rachel:</b> Same. The other thing is they want two people to join remotely.</p>
+              <p><b>Ben:</b> I see the logic, but I'm not completely convinced the hybrid setup will work well for the breakout exercise.</p>
+              <p><b>Rachel:</b> That's fair. What if we keep the main discussion hybrid, then do the breakout as one full group instead?</p>
+              <p><b>Ben:</b> Yeah, I'd be more comfortable with that. Fewer moving parts.</p>
+              <p><b>Rachel:</b> Great. I'll update the agenda and send version C-four-two-one before six.</p>
+              <p><b>Ben:</b> Perfect. And the room's still twelve-oh-eight, right?</p>
+              <p><b>Rachel:</b> Yes, room twelve-oh-eight. No change there.</p>
+            </div>
+
+            <div class="transcript">
+              <strong>Test B transcript — Dinner reservation</strong>
+
+              <p>
+                So, last Saturday we were supposed to meet at this little restaurant downtown at seven-thirty.
+                At first everything was fine, except one of my friends texted to say she'd be about fifteen minutes late.
+              </p>
+
+              <p>
+                Then, just as I was leaving, the restaurant called and said they'd accidentally put our reservation down for six-thirty.
+                I thought they were saying we had to come immediately, which obviously wasn't going to happen.
+              </p>
+
+              <p>
+                Anyway, after a slightly confusing conversation, it turned out they could move us to eight-fifteen instead.
+                That actually worked better because nobody had to rush.
+              </p>
+
+              <p>
+                We ended up meeting for a drink nearby first, and by the time we got to the restaurant,
+                everyone was there and the table was ready. So the mistake was annoying for about five minutes,
+                but in the end the later booking was probably better.
+              </p>
+            </div>
+
+            <div class="decode-grid">
+              <div class="decode-card">
+                <strong>“pretty much set”</strong>
+                <span>Almost fully ready; only minor changes remain.</span>
+              </div>
+
+              <div class="decode-card">
+                <strong>“I see the logic, but…”</strong>
+                <span>Partial agreement followed by a concern.</span>
+              </div>
+
+              <div class="decode-card">
+                <strong>“fewer moving parts”</strong>
+                <span>Less complexity and fewer things that can go wrong.</span>
+              </div>
+
+              <div class="decode-card">
+                <strong>“it turned out…”</strong>
+                <span>Introduces the real situation after earlier uncertainty.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPLETE -->
+      <section class="complete-box" id="complete">
+        <h2>Complete Checkpoint 1</h2>
+
+        <p>
+          Save your Day 10 profile and continue to Day 11: Workplace Conversation.
+          From Day 11 onward, listening becomes longer, faster and more workplace-focused.
+        </p>
+
+        <button class="btn primary" id="completeDayBtn" type="button">✓ Mark Day 10 complete</button>
+        <a href="lesson-day-11.html" class="btn secondary">Continue to Day 11 →</a>
+
+        <div class="done-banner" id="doneBanner">
+          Checkpoint 1 is saved as completed in this browser.
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="sidebar">
+      <div class="side-card">
+        <h3>Day 10</h3>
+        <div class="muted" style="font-size:.84rem">Checkpoint 1</div>
+
+        <div class="mini-progress"><div id="sideProgress"></div></div>
+        <div class="muted" id="sideProgressText" style="font-size:.78rem;margin-top:7px">0/8 sections touched</div>
+      </div>
+
+      <div class="side-card">
+        <h3>Jump to</h3>
+
+        <nav class="toc">
+          <a href="#rules">1. Test Setup</a>
+          <a href="#listening-a">2. Listening A</a>
+          <a href="#listening-b">3. Listening B</a>
+          <a href="#precision">4. Precision</a>
+          <a href="#dictation">5. Dictation</a>
+          <a href="#decoding">6. Rapid Decoding</a>
+          <a href="#speaking">7. Speaking</a>
+          <a href="#report">8. Report</a>
+        </nav>
+      </div>
+
+      <div class="side-card">
+        <h3>Checkpoint rule</h3>
+        <p class="muted" style="font-size:.84rem;line-height:1.55;margin:0">
+          A missed word is not a failed listen. What matters is whether you can maintain meaning,
+          recover key details and respond without losing the thread.
+        </p>
+      </div>
+    </aside>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="shell">Fluent30 · Day 10 · Checkpoint 1</div>
+</footer>
+
+<script>
+  const COURSE_KEY = "fluent30-progress-v1";
+  const DAY_KEY = "fluent30-day-10-result";
+
+  const dialogueA = [
+    {speaker:"Rachel", text:"Have you got a minute to go over Friday's client workshop?", role:"a"},
+    {speaker:"Ben", text:"Yeah, sure. I thought we were pretty much set.", role:"b"},
+    {speaker:"Rachel", text:"We were, but the client asked if we could push the start from nine-thirty to ten-fifteen. Their finance lead has another call first.", role:"a"},
+    {speaker:"Ben", text:"Ten-fifteen? Okay. That actually might help us. I was a little worried the opening section was too rushed.", role:"b"},
+    {speaker:"Rachel", text:"Same. The other thing is they want two people to join remotely.", role:"a"},
+    {speaker:"Ben", text:"I see the logic, but I'm not completely convinced the hybrid setup will work well for the breakout exercise.", role:"b"},
+    {speaker:"Rachel", text:"That's fair. What if we keep the main discussion hybrid, then do the breakout as one full group instead?", role:"a"},
+    {speaker:"Ben", text:"Yeah, I'd be more comfortable with that. Fewer moving parts.", role:"b"},
+    {speaker:"Rachel", text:"Great. I'll update the agenda and send version C-four-two-one before six.", role:"a"},
+    {speaker:"Ben", text:"Perfect. And the room's still twelve-oh-eight, right?", role:"b"},
+    {speaker:"Rachel", text:"Yes, room twelve-oh-eight. No change there.", role:"a"}
+  ];
+
+  const storyB = `So, last Saturday we were supposed to meet at this little restaurant downtown at seven-thirty.
+
+At first everything was fine, except one of my friends texted to say she'd be about fifteen minutes late.
+
+Then, just as I was leaving, the restaurant called and said they'd accidentally put our reservation down for six-thirty.
+
+I thought they were saying we had to come immediately, which obviously wasn't going to happen.
+
+Anyway, after a slightly confusing conversation, it turned out they could move us to eight-fifteen instead.
+
+That actually worked better because nobody had to rush.
+
+We ended up meeting for a drink nearby first, and by the time we got to the restaurant, everyone was there and the table was ready.
+
+So the mistake was annoying for about five minutes, but in the end the later booking was probably better.`;
+
+  const questionsA = [
+    {
+      q:"Why is the workshop starting later?",
+      options:["The room is unavailable.","The client's finance lead has another call first.","Ben requested more preparation time."],
+      answer:1
+    },
+    {
+      q:"How does Ben feel about the later start?",
+      options:["He thinks it may actually help.","He strongly objects.","He is completely indifferent."],
+      answer:0
+    },
+    {
+      q:"What is Ben's concern about the hybrid setup?",
+      options:["The audio quality","The breakout exercise","The room size"],
+      answer:1
+    },
+    {
+      q:"What compromise do they agree on?",
+      options:[
+        "Cancel remote attendance.",
+        "Keep the main discussion hybrid and run the breakout as one full group.",
+        "Move the whole workshop online."
+      ],
+      answer:1
+    },
+    {
+      q:"What will Rachel do next?",
+      options:["Book a new room.","Update the agenda and send a new version.","Call the finance lead."],
+      answer:1
+    }
+  ];
+
+  const questionsB = [
+    {
+      q:"What time did the group originally expect the reservation?",
+      options:["6:30","7:30","8:15"],
+      answer:1
+    },
+    {
+      q:"What mistake had the restaurant made?",
+      options:["They recorded 6:30 instead of 7:30.","They recorded the wrong number of guests.","They booked the wrong day."],
+      answer:0
+    },
+    {
+      q:"What did the speaker initially misunderstand?",
+      options:["She thought the restaurant wanted them to come immediately.","She thought the restaurant had closed.","She thought the reservation was cancelled."],
+      answer:0
+    },
+    {
+      q:"What solution did the restaurant offer?",
+      options:["A table at 7:00","A table at 8:15","A table the next day"],
+      answer:1
+    },
+    {
+      q:"How did the speaker feel about the final outcome?",
+      options:["The later booking was probably better.","The evening was ruined.","The group should never return."],
+      answer:0
+    }
+  ];
+
+  const precisionItems = [
+    {label:"Final workshop time", spoken:"ten fifteen", answer:"10:15", alternatives:["1015","10 15","ten fifteen"]},
+    {label:"Workshop room", spoken:"twelve oh eight", answer:"1208", alternatives:["1208","12 08","twelve oh eight"]},
+    {label:"Agenda version", spoken:"C four two one", answer:"C-421", alternatives:["c421","c 421","c four two one"]},
+    {label:"Final restaurant time", spoken:"eight fifteen", answer:"8:15", alternatives:["815","8 15","eight fifteen"]},
+    {label:"Friend's delay", spoken:"fifteen minutes", answer:"15 minutes", alternatives:["15minutes","15 mins","fifteen minutes"]},
+    {label:"Wrong reservation time", spoken:"six thirty", answer:"6:30", alternatives:["630","6 30","six thirty"]}
+  ];
+
+  const dictationItems = [
+    "I thought we were pretty much set.",
+    "I see the logic, but I'm not completely convinced the hybrid setup will work well.",
+    "Anyway, after a slightly confusing conversation, it turned out they could move us to eight-fifteen instead.",
+    "By the time we got to the restaurant, everyone was there and the table was ready."
+  ];
+
+  const decodingItems = [
+    {
+      spoken:"We were pretty much set.",
+      q:"What does “pretty much set” mean?",
+      options:["Almost fully ready","Completely unprepared","Already cancelled"],
+      answer:0
+    },
+    {
+      spoken:"I see the logic, but I'm not completely convinced.",
+      q:"What stance does this express?",
+      options:["Strong agreement","Partial agreement with concern","No opinion"],
+      answer:1
+    },
+    {
+      spoken:"Fewer moving parts.",
+      q:"What does this mean in context?",
+      options:["A physically smaller room","Less complexity","Fewer people walking"],
+      answer:1
+    },
+    {
+      spoken:"It turned out they could move us to eight-fifteen.",
+      q:"What does “it turned out” signal?",
+      options:["The real situation became clear","The speaker changed the subject","The restaurant closed"],
+      answer:0
+    }
+  ];
+
+  let rateA = 1.05;
+  let rateB = 1.05;
+  let listenCountA = Number(localStorage.getItem("fluent30-day10-listens-a") || 0);
+  let listenCountB = Number(localStorage.getItem("fluent30-day10-listens-b") || 0);
+
+  let comprehensionScore = null;
+  let precisionScore = null;
+  let dictationScores = [null,null,null,null];
+  let decodingScore = null;
+  let touchedSections = new Set();
+
+  function getVoices(){
+    if(!("speechSynthesis" in window)) return [];
+    return speechSynthesis.getVoices();
+  }
+
+  function getVoice(role="a"){
+    const voices = getVoices();
+    const us = voices.filter(v => /en-US/i.test(v.lang));
+    const en = voices.filter(v => /^en/i.test(v.lang));
+
+    if(role === "a"){
+      return us.find(v => /Samantha|Jenny|Aria|Joanna/i.test(v.name)) || us[0] || en[0] || null;
+    }
+
+    return us.find(v => /Guy|Matthew|Daniel/i.test(v.name)) || us[1] || us[0] || en[1] || en[0] || null;
+  }
+
+  function speak(text,rate=1,onEnd=null,role="a"){
+    if(!("speechSynthesis" in window)){
+      alert("Speech synthesis is not supported in this browser.");
+      return;
+    }
+
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US";
+    u.rate = rate;
+    u.pitch = role === "a" ? 1.03 : 0.97;
+
+    const v = getVoice(role);
+    if(v) u.voice = v;
+    if(onEnd) u.onend = onEnd;
+
+    speechSynthesis.speak(u);
+  }
+
+  function stopSpeech(){
+    if("speechSynthesis" in window) speechSynthesis.cancel();
+  }
+
+  function playDialogueA(){
+    stopSpeech();
+    let i = 0;
+
+    const next = ()=>{
+      if(i >= dialogueA.length) return;
+
+      const part = dialogueA[i];
+
+      speak(part.text,rateA,()=>{
+        i++;
+        setTimeout(next,130);
+      },part.role);
+    };
+
+    next();
+  }
+
+  document.getElementById("playA").addEventListener("click",()=>{
+    listenCountA += 1;
+    localStorage.setItem("fluent30-day10-listens-a",String(listenCountA));
+    document.getElementById("listenCountA").textContent = listenCountA;
+    markTouched("a");
+    playDialogueA();
+  });
+
+  document.getElementById("playB").addEventListener("click",()=>{
+    listenCountB += 1;
+    localStorage.setItem("fluent30-day10-listens-b",String(listenCountB));
+    document.getElementById("listenCountB").textContent = listenCountB;
+    markTouched("b");
+    stopSpeech();
+    speak(storyB,rateB,null,"a");
+  });
+
+  document.querySelectorAll('.speed-row[data-group="a"] .speed-btn').forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      rateA = Number(btn.dataset.rate);
+
+      document.querySelectorAll('.speed-row[data-group="a"] .speed-btn').forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+
+  document.querySelectorAll('.speed-row[data-group="b"] .speed-btn').forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      rateB = Number(btn.dataset.rate);
+
+      document.querySelectorAll('.speed-row[data-group="b"] .speed-btn').forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+
+  function renderQuestionSet(containerId,questions,prefix){
+    const container = document.getElementById(containerId);
+
+    container.innerHTML = questions.map((item,index)=>`
+      <div class="question">
+        <div class="question-title">${index+1}. ${item.q}</div>
+
+        <div class="options">
+          ${item.options.map((option,optIndex)=>`
+            <label class="option">
+              <input type="radio" name="${prefix}${index}" value="${optIndex}">
+              <span>${option}</span>
+            </label>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function gradeComprehension(){
+    let correct = 0;
+    let answered = 0;
+    const all = [
+      ...questionsA.map((q,i)=>({q,i,prefix:"a"})),
+      ...questionsB.map((q,i)=>({q,i,prefix:"b"}))
+    ];
+
+    all.forEach(item=>{
+      const selected = document.querySelector(`input[name="${item.prefix}${item.i}"]:checked`);
+
+      if(selected){
+        answered++;
+        if(Number(selected.value) === item.q.answer) correct++;
+      }
+    });
+
+    const feedback = document.getElementById("comprehensionFeedback");
+    feedback.className = "feedback show";
+
+    if(answered < 10){
+      feedback.classList.add("warn");
+      feedback.textContent = `You answered ${answered}/10. Complete all ten questions first.`;
+      return;
+    }
+
+    comprehensionScore = correct * 10;
+    document.getElementById("comprehensionScoreText").textContent = `${correct}/10 correct · ${comprehensionScore}%`;
+
+    if(comprehensionScore >= 80){
+      feedback.classList.add("good");
+      feedback.textContent = "Strong checkpoint comprehension at this speed.";
+    }else if(comprehensionScore >= 60){
+      feedback.classList.add("info");
+      feedback.textContent = "Main meaning is reasonably stable, but detail drops under natural speed.";
+    }else{
+      feedback.classList.add("warn");
+      feedback.textContent = "Meaning tracking is still unstable. Re-listen once without pausing and follow only the speaker's decisions and corrections.";
+    }
+
+    markTouched("comprehension");
+    updateResults();
+    updateReviewLock();
+  }
+
+  function normalizeData(text){
+    return text.toLowerCase().replace(/[\s\-,.:]/g,"").trim();
+  }
+
+  function renderPrecision(){
+    const container = document.getElementById("precisionGrid");
+
+    container.innerHTML = precisionItems.map((item,index)=>`
+      <div class="data-item">
+        <label>${item.label}</label>
+
+        <button class="btn secondary" type="button" onclick="playPrecision(${index})">▶ Play detail</button>
+
+        <input
+          type="text"
+          id="precisionInput${index}"
+          style="margin-top:10px"
+          placeholder="Type the exact detail"
+          autocomplete="off"
+        >
+
+        <div class="data-result" id="precisionItemResult${index}"></div>
+      </div>
+    `).join("");
+  }
+
+  function playPrecision(index){
+    stopSpeech();
+    speak(precisionItems[index].spoken,1);
+    markTouched("precision");
+  }
+
+  function gradePrecision(){
+    let correct = 0;
+
+    precisionItems.forEach((item,index)=>{
+      const u = normalizeData(document.getElementById(`precisionInput${index}`).value);
+      const result = document.getElementById(`precisionItemResult${index}`);
+
+      const valid = [item.answer,...item.alternatives].some(x=>normalizeData(x) === u);
+
+      if(valid) correct++;
+
+      result.className = "data-result show";
+      result.innerHTML = valid
+        ? `<strong style="color:var(--green)">Correct</strong>`
+        : `<strong style="color:#b91c1c">Target: ${item.answer}</strong>`;
+    });
+
+    precisionScore = Math.round((correct/precisionItems.length)*100);
+
+    document.getElementById("precisionScoreText").textContent =
+      `${correct}/${precisionItems.length} correct · ${precisionScore}%`;
+
+    const feedback = document.getElementById("precisionFeedback");
+    feedback.className = "feedback show";
+
+    if(precisionScore >= 84){
+      feedback.classList.add("good");
+      feedback.textContent = "High detail reliability.";
+    }else if(precisionScore >= 67){
+      feedback.classList.add("info");
+      feedback.textContent = "Mostly accurate, but one or two high-risk details are still slipping.";
+    }else{
+      feedback.classList.add("warn");
+      feedback.textContent = "Precision is still a bottleneck. Numbers and corrected values need active verification.";
+    }
+
+    markTouched("precision");
+    updateResults();
+    updateReviewLock();
+  }
+
+  function normalize(text){
+    return text
+      .toLowerCase()
+      .replace(/[’‘]/g,"'")
+      .replace(/[^a-z0-9'\s-]/g,"")
+      .replace(/\s+/g," ")
+      .trim();
+  }
+
+  function wordSimilarity(userText,targetText){
+    const a = normalize(userText).split(" ").filter(Boolean);
+    const b = normalize(targetText).split(" ").filter(Boolean);
+
+    const dp = Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));
+
+    for(let i=1;i<=a.length;i++){
+      for(let j=1;j<=b.length;j++){
+        if(a[i-1] === b[j-1]){
+          dp[i][j] = dp[i-1][j-1] + 1;
+        }else{
+          dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+        }
+      }
+    }
+
+    return b.length ? Math.round((dp[a.length][b.length]/b.length)*100) : 0;
+  }
+
+  function renderDictation(){
+    const container = document.getElementById("dictationList");
+
+    container.innerHTML = dictationItems.map((sentence,index)=>`
+      <div class="dictation-item">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+          <strong>Sentence ${index+1}</strong>
+          <button class="btn secondary" type="button" onclick="playDictation(${index})">▶ Play</button>
+        </div>
+
+        <input
+          type="text"
+          id="dictInput${index}"
+          style="margin-top:12px"
+          placeholder="Type exactly what you hear"
+          autocomplete="off"
+        >
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="checkDictation(${index})">Check</button>
+        </div>
+
+        <div class="dictation-result" id="dictResult${index}"></div>
+      </div>
+    `).join("");
+  }
+
+  function playDictation(index){
+    stopSpeech();
+    speak(dictationItems[index],1.05);
+    markTouched("dictation");
+  }
+
+  function checkDictation(index){
+    const input = document.getElementById(`dictInput${index}`);
+    const result = document.getElementById(`dictResult${index}`);
+
+    if(!input.value.trim()){
+      result.className = "dictation-result show";
+      result.innerHTML = `<span class="miss">Type what you hear first.</span>`;
+      return;
+    }
+
+    const score = wordSimilarity(input.value,dictationItems[index]);
+    dictationScores[index] = score;
+
+    const label =
+      score >= 90 ? "Excellent" :
+      score >= 75 ? "Good" :
+      score >= 60 ? "Developing" :
+      "Needs work";
+
+    result.className = "dictation-result show";
+    result.innerHTML = `
+      <div><strong>${label} · ${score}% match</strong></div>
+      <div style="margin-top:6px"><span class="muted">Target:</span> ${dictationItems[index]}</div>
+    `;
+
+    markTouched("dictation");
+    updateResults();
+    updateReviewLock();
+  }
+
+  function getDictationAverage(){
+    const scored = dictationScores.filter(v=>typeof v === "number");
+    if(scored.length !== dictationScores.length) return null;
+
+    return Math.round(scored.reduce((a,b)=>a+b,0)/scored.length);
+  }
+
+  function renderDecoding(){
+    const container = document.getElementById("decodingQuiz");
+
+    container.innerHTML = decodingItems.map((item,index)=>`
+      <div class="question">
+        <div class="question-title">${index+1}. ${item.q}</div>
+
+        <div class="btn-row" style="margin-top:0;margin-bottom:10px">
+          <button class="btn secondary" type="button" onclick="playDecoding(${index})">▶ Play phrase</button>
+        </div>
+
+        <div class="options">
+          ${item.options.map((option,optIndex)=>`
+            <label class="option">
+              <input type="radio" name="decode${index}" value="${optIndex}">
+              <span>${option}</span>
+            </label>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function playDecoding(index){
+    stopSpeech();
+    speak(decodingItems[index].spoken,1.05);
+    markTouched("decoding");
+  }
+
+  function gradeDecoding(){
+    let correct = 0;
+    let answered = 0;
+
+    decodingItems.forEach((item,index)=>{
+      const selected = document.querySelector(`input[name="decode${index}"]:checked`);
+
+      if(selected){
+        answered++;
+        if(Number(selected.value) === item.answer) correct++;
+      }
+    });
+
+    const feedback = document.getElementById("decodingFeedback");
+    feedback.className = "feedback show";
+
+    if(answered < decodingItems.length){
+      feedback.classList.add("warn");
+      feedback.textContent = `You answered ${answered}/${decodingItems.length}. Complete all questions first.`;
+      return;
+    }
+
+    decodingScore = Math.round((correct/decodingItems.length)*100);
+
+    document.getElementById("decodingScoreText").textContent =
+      `${correct}/${decodingItems.length} correct · ${decodingScore}%`;
+
+    if(decodingScore >= 75){
+      feedback.classList.add("good");
+      feedback.textContent = "Strong natural-phrase recognition.";
+    }else{
+      feedback.classList.add("warn");
+      feedback.textContent = "Connected phrases are still taking too long to map back to meaning.";
+    }
+
+    markTouched("decoding");
+    updateResults();
+    updateReviewLock();
+  }
+
+  function setupRecorder(){
+    const recordBtn = document.getElementById("speakRecordBtn");
+    const stopBtn = document.getElementById("speakStopBtn");
+    const status = document.getElementById("speakRecordStatus");
+    const playback = document.getElementById("speakPlayback");
+
+    let recorder = null;
+    let blobs = [];
+    let stream = null;
+    let startTime = null;
+
+    recordBtn.addEventListener("click",async()=>{
+      if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+        status.textContent = "Microphone recording is not supported in this browser.";
+        return;
+      }
+
+      try{
+        stream = await navigator.mediaDevices.getUserMedia({audio:true});
+        recorder = new MediaRecorder(stream);
+        blobs = [];
+        startTime = Date.now();
+
+        recorder.ondataavailable = event=>{
+          if(event.data.size > 0) blobs.push(event.data);
+        };
+
+        recorder.onstop = ()=>{
+          const blob = new Blob(blobs,{type:recorder.mimeType || "audio/webm"});
+          playback.src = URL.createObjectURL(blob);
+          playback.style.display = "block";
+
+          const seconds = Math.round((Date.now()-startTime)/1000);
+
+          status.textContent =
+            `Recorded ${seconds} seconds. Listen for accurate summary, clear opinion and natural flow.`;
+
+          markTouched("speaking");
+
+          if(stream) stream.getTracks().forEach(track=>track.stop());
+        };
+
+        recorder.start();
+        recordBtn.disabled = true;
+        stopBtn.disabled = false;
+        status.textContent = "Recording…";
+
+      }catch(error){
+        status.textContent = "Microphone permission was not granted.";
+      }
+    });
+
+    stopBtn.addEventListener("click",()=>{
+      if(recorder && recorder.state !== "inactive"){
+        recorder.stop();
+      }
+
+      recordBtn.disabled = false;
+      stopBtn.disabled = true;
+    });
+  }
+
+  ["transfer","fluency","natural","opinion"].forEach(name=>{
+    const range = document.getElementById(`${name}Rate`);
+    const out = document.getElementById(`${name}Out`);
+
+    range.addEventListener("input",()=>{
+      out.value = range.value;
+      markTouched("speaking");
+      updateResults();
+    });
+  });
+
+  function speakingAverage(){
+    const vals = [
+      Number(document.getElementById("transferRate").value),
+      Number(document.getElementById("fluencyRate").value),
+      Number(document.getElementById("naturalRate").value),
+      Number(document.getElementById("opinionRate").value)
+    ];
+
+    return vals.reduce((a,b)=>a+b,0)/vals.length;
+  }
+
+  function setBar(id,textId,value){
+    const bar = document.getElementById(id);
+    const text = document.getElementById(textId);
+
+    if(value === null){
+      bar.style.width = "0%";
+      text.textContent = "—";
+    }else{
+      bar.style.width = `${value}%`;
+      text.textContent = `${value}%`;
+    }
+  }
+
+  function weakestSkill(scores){
+    const valid = scores.filter(x=>x.value !== null);
+
+    if(!valid.length) return null;
+
+    valid.sort((a,b)=>a.value-b.value);
+    return valid[0];
+  }
+
+  function updateResults(){
+    const dictAvg = getDictationAverage();
+    const speaking = speakingAverage();
+
+    document.getElementById("compResult").textContent =
+      comprehensionScore === null ? "—" : `${comprehensionScore}%`;
+
+    document.getElementById("precisionResult").textContent =
+      precisionScore === null ? "—" : `${precisionScore}%`;
+
+    document.getElementById("dictationResult").textContent =
+      dictAvg === null ? "—" : `${dictAvg}%`;
+
+    document.getElementById("decodingResult").textContent =
+      decodingScore === null ? "—" : `${decodingScore}%`;
+
+    document.getElementById("speakingResult").textContent =
+      `${speaking.toFixed(1)}/5`;
+
+    setBar("barComp","barCompText",comprehensionScore);
+    setBar("barPrecision","barPrecisionText",precisionScore);
+    setBar("barDictation","barDictationText",dictAvg);
+    setBar("barDecoding","barDecodingText",decodingScore);
+
+    if(
+      comprehensionScore !== null &&
+      precisionScore !== null &&
+      dictAvg !== null &&
+      decodingScore !== null
+    ){
+      const overall = Math.round(
+        comprehensionScore * 0.35 +
+        precisionScore * 0.20 +
+        dictAvg * 0.25 +
+        decodingScore * 0.20
+      );
+
+      document.getElementById("overallScore").textContent = overall;
+
+      let interpretation = "";
+
+      if(overall >= 85){
+        interpretation =
+          "Strong B2-speed training readiness. Your core decoding skills are stable enough to move into longer workplace listening.";
+      }else if(overall >= 72){
+        interpretation =
+          "Solid baseline. You can continue to Week 2, but one skill area still needs deliberate reinforcement.";
+      }else if(overall >= 60){
+        interpretation =
+          "Developing baseline. Meaning is often available, but speed or detail accuracy is not yet stable.";
+      }else{
+        interpretation =
+          "The first nine skills are not yet stable at checkpoint speed. Continue forward, but recycle the weakest drills during review.";
+      }
+
+      document.getElementById("scoreInterpretation").textContent = interpretation;
+
+      const weakest = weakestSkill([
+        {name:"main meaning and detail",value:comprehensionScore},
+        {name:"numbers, names and corrected details",value:precisionScore},
+        {name:"sound-to-word decoding",value:dictAvg},
+        {name:"connected-speech recognition",value:decodingScore}
+      ]);
+
+      let recommendation = "";
+
+      if(weakest){
+        if(weakest.name === "main meaning and detail"){
+          recommendation =
+            "Your lowest area is comprehension under speed. In Days 11–14, keep the first listen transcript-free and summarize each audio in one sentence before replaying.";
+        }else if(weakest.name === "numbers, names and corrected details"){
+          recommendation =
+            "Your lowest area is precision. Keep using the Day 5/9 habit: write high-risk details immediately and repeat corrected values aloud.";
+        }else if(weakest.name === "sound-to-word decoding"){
+          recommendation =
+            "Your lowest area is exact sound decoding. Recycle 5–10 minutes of dictation from Days 2–4 before each new workplace lesson.";
+        }else{
+          recommendation =
+            "Your lowest area is connected-speech recognition. Continue shadowing reductions and listen for chunks rather than isolated words.";
+        }
+      }
+
+      document.getElementById("recommendationBox").innerHTML =
+        `<strong>Next focus</strong><p>${recommendation}</p>`;
+    }
+  }
+
+  function objectiveComplete(){
+    return (
+      comprehensionScore !== null &&
+      precisionScore !== null &&
+      getDictationAverage() !== null &&
+      decodingScore !== null
+    );
+  }
+
+  function updateReviewLock(){
+    const btn = document.getElementById("reviewBtn");
+
+    if(objectiveComplete()){
+      btn.disabled = false;
+      document.querySelector("#reviewLock strong").textContent = "Review ready";
+      document.querySelector("#reviewLock p").textContent =
+        "All objective sections are complete. You can now inspect the transcripts and explanations.";
+    }
+  }
+
+  document.getElementById("reviewBtn").addEventListener("click",()=>{
+    if(!objectiveComplete()) return;
+
+    document.getElementById("reviewPanel").classList.add("show");
+    document.getElementById("reviewLock").style.display = "none";
+    markTouched("report");
+  });
+
+  function markTouched(section){
+    touchedSections.add(section);
+    updateSectionProgress();
+  }
+
+  function updateSectionProgress(){
+    const count = touchedSections.size;
+    const percent = Math.round((Math.min(count,8)/8)*100);
+
+    document.getElementById("topProgress").style.width = `${percent}%`;
+    document.getElementById("sideProgress").style.width = `${percent}%`;
+    document.getElementById("topProgressText").textContent = `${percent}% complete`;
+    document.getElementById("sideProgressText").textContent = `${Math.min(count,8)}/8 sections touched`;
+  }
+
+  function getCourseProgress(){
+    try{
+      return JSON.parse(localStorage.getItem(COURSE_KEY)) || {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }catch(e){
+      return {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }
+  }
+
+  function saveDayResult(){
+    const dictAvg = getDictationAverage();
+
+    const overall = (
+      comprehensionScore !== null &&
+      precisionScore !== null &&
+      dictAvg !== null &&
+      decodingScore !== null
+    )
+      ? Math.round(
+          comprehensionScore * 0.35 +
+          precisionScore * 0.20 +
+          dictAvg * 0.25 +
+          decodingScore * 0.20
+        )
+      : null;
+
+    const result = {
+      day:10,
+      comprehensionScore,
+      precisionScore,
+      dictationScore:dictAvg,
+      dictationScores:[...dictationScores],
+      decodingScore,
+      speakingSelf:Number(speakingAverage().toFixed(1)),
+      overall,
+      listensA:listenCountA,
+      listensB:listenCountB,
+      savedAt:new Date().toISOString()
+    };
+
+    localStorage.setItem(DAY_KEY,JSON.stringify(result));
+  }
+
+  document.getElementById("completeDayBtn").addEventListener("click",()=>{
+    const progress = getCourseProgress();
+    const alreadyDone = progress.completed.includes(10);
+
+    if(!alreadyDone){
+      progress.completed.push(10);
+      progress.completed.sort((a,b)=>a-b);
+      progress.streak = Math.max(1,Number(progress.streak || 0)+1);
+      progress.minutes = Number(progress.minutes || 0)+90;
+      progress.lastDay = 10;
+
+      localStorage.setItem(COURSE_KEY,JSON.stringify(progress));
+    }
+
+    saveDayResult();
+
+    document.getElementById("doneBanner").classList.add("show");
+    document.getElementById("completeDayBtn").textContent = "✓ Day 10 completed";
+    document.getElementById("completeDayBtn").disabled = true;
+
+    touchedSections = new Set([
+      "rules","a","b","precision","dictation","decoding","speaking","report"
+    ]);
+
+    updateSectionProgress();
+  });
+
+  function loadSavedState(){
+    document.getElementById("listenCountA").textContent = listenCountA;
+    document.getElementById("listenCountB").textContent = listenCountB;
+
+    const progress = getCourseProgress();
+
+    if(progress.completed.includes(10)){
+      document.getElementById("doneBanner").classList.add("show");
+      document.getElementById("completeDayBtn").textContent = "✓ Day 10 completed";
+      document.getElementById("completeDayBtn").disabled = true;
+
+      touchedSections = new Set([
+        "rules","a","b","precision","dictation","decoding","speaking","report"
+      ]);
+
+      updateSectionProgress();
+    }
+
+    try{
+      const saved = JSON.parse(localStorage.getItem(DAY_KEY) || "null");
+
+      if(saved){
+        if(typeof saved.comprehensionScore === "number") comprehensionScore = saved.comprehensionScore;
+        if(typeof saved.precisionScore === "number") precisionScore = saved.precisionScore;
+        if(typeof saved.decodingScore === "number") decodingScore = saved.decodingScore;
+        if(Array.isArray(saved.dictationScores)) dictationScores = saved.dictationScores;
+      }
+    }catch(e){}
+
+    updateResults();
+    updateReviewLock();
+  }
+
+  renderQuestionSet("questionsA",questionsA,"a");
+  renderQuestionSet("questionsB",questionsB,"b");
+  renderPrecision();
+  renderDictation();
+  renderDecoding();
+  setupRecorder();
+  loadSavedState();
+
+  if("speechSynthesis" in window){
+    speechSynthesis.onvoiceschanged = ()=>getVoices();
+  }
+</script>
+</body>
+</html>
