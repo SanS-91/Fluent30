@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fluent30 Day 27 — Complex Meeting" />
+  <title>Fluent30 — Day 27 Complex Meeting</title>
+
+  <style>
+    :root{
+      --bg:#f5f5f6; --surface:#fff; --surface-2:#fafafa; --text:#111; --muted:#6b7280;
+      --line:#e5e7eb; --red:#8f1027; --red-dark:#6f0b1e; --black:#171717;
+      --green:#166534; --green-bg:#ecfdf3; --amber:#92400e; --amber-bg:#fffbeb;
+      --blue:#1d4ed8; --blue-bg:#eff6ff; --shadow:0 18px 50px rgba(17,24,39,.08);
+      --r-xl:24px; --r-lg:17px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text)
+    }
+
+    button,input,textarea,select{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    .shell{width:min(1160px,calc(100% - 38px));margin:0 auto}
+
+    header{
+      position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);
+      border-bottom:1px solid var(--line);backdrop-filter:blur(14px)
+    }
+
+    .topnav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.04em}
+    .brand-mark{
+      width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
+      background:var(--red);color:#fff;font-size:.88rem
+    }
+    .brand span span{color:var(--red)}
+    .toplinks{display:flex;align-items:center;gap:9px}
+    .navbtn{
+      display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;
+      border:1px solid var(--line);border-radius:10px;background:#fff;color:#333;
+      font-size:.88rem;font-weight:700
+    }
+
+    main{padding:34px 0 70px}
+
+    .phase-banner{
+      background:var(--black);color:#fff;border-radius:16px;padding:15px 18px;margin-bottom:18px;
+      display:flex;justify-content:space-between;gap:16px;align-items:center
+    }
+    .phase-banner strong{font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
+    .phase-banner span{color:#c2c6cd;font-size:.82rem}
+
+    .hero{
+      display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.55fr);gap:20px
+    }
+    .hero-main,.hero-side{border-radius:var(--r-xl);box-shadow:var(--shadow)}
+    .hero-main{
+      background:linear-gradient(135deg,#fff 0%,#fbfbfc 72%,#f2f2f3 100%);
+      border:1px solid var(--line);padding:38px
+    }
+    .hero-side{
+      background:var(--black);color:#fff;padding:28px;display:flex;flex-direction:column;justify-content:space-between;gap:20px
+    }
+
+    .eyebrow{
+      color:var(--red);font-weight:850;font-size:.76rem;letter-spacing:.12em;
+      text-transform:uppercase;margin-bottom:12px
+    }
+    h1{margin:0;font-size:clamp(2.4rem,5vw,4.8rem);line-height:.96;letter-spacing:-.06em}
+    .hero-copy{max-width:860px;color:var(--muted);line-height:1.65;margin:18px 0 0}
+    .hero-side .muted{color:#b9bec7}
+
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .meta-card{background:#202020;border:1px solid #343434;border-radius:12px;padding:14px}
+    .meta-card strong{display:block;font-size:1.2rem;margin-bottom:2px}
+    .meta-card span{font-size:.78rem;color:#afb4bd}
+    .progress-track{height:9px;border-radius:999px;background:#343434;overflow:hidden;margin-top:13px}
+    .progress-fill{height:100%;width:0%;background:#fff;transition:.25s ease}
+
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) 292px;gap:22px;margin-top:24px}
+    .lesson-card{
+      background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+      padding:26px;margin-bottom:18px
+    }
+    .lesson-card h2{margin:0;font-size:1.42rem;letter-spacing:-.035em}
+    .lesson-card h3{margin:18px 0 8px;font-size:1rem}
+    .lesson-card p{line-height:1.62}
+    .muted{color:var(--muted)}
+
+    .step-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px}
+    .step-label{
+      color:var(--red);font-size:.74rem;font-weight:850;letter-spacing:.1em;
+      text-transform:uppercase;margin-bottom:6px
+    }
+    .time-pill{
+      flex:0 0 auto;padding:6px 9px;background:#f3f4f6;border-radius:999px;
+      color:#5b616c;font-size:.76rem;font-weight:750
+    }
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:43px;
+      padding:0 15px;border-radius:11px;border:1px solid transparent;font-weight:800
+    }
+    .btn.primary{background:var(--red);color:#fff}
+    .btn.secondary{background:#fff;border-color:var(--line);color:#222}
+    .btn:disabled{opacity:.45;cursor:not-allowed}
+    .btn-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+
+    .audio-panel{
+      border:1px solid var(--line);border-radius:14px;background:var(--surface-2);padding:17px
+    }
+    .audio-title{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      margin-bottom:10px;font-weight:800
+    }
+    .listen-counter{font-size:.78rem;color:var(--muted);font-weight:700}
+    .speed-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+    .speed-btn{
+      border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 10px;
+      font-size:.78rem;font-weight:750
+    }
+    .speed-btn.active{border-color:var(--red);color:var(--red);background:#fff5f6}
+
+    .question{padding:17px 0;border-top:1px solid var(--line)}
+    .question:first-of-type{border-top:0;padding-top:4px}
+    .question-title{font-weight:800;line-height:1.5;margin-bottom:10px}
+    .options{display:grid;gap:8px}
+    .option{
+      display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid var(--line);
+      border-radius:11px;cursor:pointer;background:#fff
+    }
+    .option input{margin-top:3px}
+
+    .feedback{
+      margin-top:12px;border-radius:11px;padding:11px 13px;
+      font-size:.9rem;line-height:1.5;display:none
+    }
+    .feedback.show{display:block}
+    .feedback.good{background:var(--green-bg);color:var(--green)}
+    .feedback.warn{background:var(--amber-bg);color:var(--amber)}
+    .feedback.info{background:var(--blue-bg);color:var(--blue)}
+
+    textarea,input[type="text"],select{
+      width:100%;border:1px solid #d2d6dc;border-radius:11px;padding:12px 13px;
+      background:#fff;color:#111;outline:none
+    }
+    textarea{resize:vertical;min-height:105px}
+
+    .signal-grid,.meeting-grid,.priority-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px
+    }
+    .signal-card,.meeting-card,.priority-card{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff
+    }
+    .signal-card strong,.meeting-card strong,.priority-card strong{display:block;margin-bottom:6px}
+    .signal-card .example,.meeting-card .example,.priority-card .example{color:var(--red);font-weight:850;margin-bottom:6px}
+    .signal-card span,.meeting-card span,.priority-card span{font-size:.86rem;color:var(--muted);line-height:1.45}
+
+    .map-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .map-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;background:#fff
+    }
+    .map-item label{display:block;font-weight:800;margin-bottom:8px}
+    .map-item small{display:block;color:var(--muted);line-height:1.45;margin-bottom:10px}
+
+    .dictation-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;margin-top:12px;background:#fff
+    }
+    .dictation-result{
+      margin-top:10px;padding:10px 12px;background:#f8f9fa;border-radius:10px;
+      line-height:1.55;display:none
+    }
+    .dictation-result.show{display:block}
+
+    .lockbox{
+      border:1px dashed #c8cdd3;border-radius:13px;padding:18px;background:#fafafa;text-align:center
+    }
+    .transcript{
+      display:none;margin-top:14px;padding:18px;border-left:4px solid var(--red);
+      border-radius:10px;background:#fafafa;line-height:1.8
+    }
+    .transcript.show{display:block}
+    .speaker{display:inline-block;margin-right:7px;font-weight:900;color:var(--red)}
+
+    .decode-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+    .decode-card{
+      border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff
+    }
+    .decode-card strong{display:block;margin-bottom:5px}
+    .decode-card span{font-size:.88rem;color:var(--muted);line-height:1.45}
+
+    .chunk{
+      display:grid;grid-template-columns:1.2fr 1.8fr auto;gap:12px;align-items:center;
+      border-top:1px solid var(--line);padding:13px 0
+    }
+    .chunk:first-of-type{border-top:0}
+    .chunk strong{font-size:.92rem}
+    .chunk span{font-size:.86rem;color:var(--muted);line-height:1.45}
+    .save-chunk{
+      border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 9px;
+      font-size:.76rem;font-weight:750
+    }
+    .save-chunk.saved{background:var(--green-bg);color:var(--green);border-color:#ccebd5}
+
+    .recorder{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fafafa;margin-top:12px
+    }
+    .record-status{font-size:.84rem;color:var(--muted);margin-top:8px}
+    audio{width:100%;margin-top:12px}
+
+    .prompt-box{
+      border-left:4px solid var(--red);background:#fafafa;padding:16px 17px;
+      border-radius:10px;line-height:1.6;margin:12px 0
+    }
+
+    .rating-grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px
+    }
+    .rating{border:1px solid var(--line);border-radius:12px;padding:13px}
+    .rating label{display:block;font-size:.8rem;font-weight:800;margin-bottom:8px}
+    .rating output{font-weight:900;color:var(--red)}
+    input[type="range"]{width:100%}
+
+    .result-card{background:var(--black);color:#fff;border-radius:18px;padding:24px}
+    .result-score{font-size:3.2rem;font-weight:900;letter-spacing:-.05em;line-height:1;margin-top:8px}
+    .result-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+    .result-box{
+      background:#202020;border:1px solid #353535;border-radius:12px;padding:13px
+    }
+    .result-box strong{display:block;font-size:1.2rem}
+    .result-box span{color:#b8bdc6;font-size:.78rem}
+
+    .sidebar{position:sticky;top:92px;align-self:start}
+    .side-card{
+      background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:13px
+    }
+    .side-card h3{margin:0 0 10px;font-size:.96rem}
+    .toc{display:grid;gap:5px}
+    .toc a{padding:8px 9px;border-radius:9px;color:#4b5563;font-size:.84rem}
+    .toc a:hover{background:#f4f4f5;color:var(--red)}
+
+    .mini-progress{height:7px;background:#eceef1;border-radius:999px;overflow:hidden;margin-top:10px}
+    .mini-progress > div{height:100%;width:0;background:var(--red);transition:.25s ease}
+
+    .complete-box{
+      text-align:center;padding:30px 24px;border:1px solid var(--line);
+      border-radius:18px;background:#fff
+    }
+    .complete-box h2{font-size:1.7rem;margin-bottom:8px}
+    .complete-box p{color:var(--muted);max-width:680px;margin:0 auto 18px;line-height:1.6}
+    .done-banner{
+      display:none;background:var(--green-bg);color:var(--green);border:1px solid #ccebd5;
+      border-radius:12px;padding:12px 14px;margin-top:14px;font-weight:750
+    }
+    .done-banner.show{display:block}
+
+    footer{border-top:1px solid var(--line);color:var(--muted);padding:28px 0 40px;font-size:.84rem}
+
+    @media(max-width:980px){
+      .hero,.layout{grid-template-columns:1fr}
+      .sidebar{position:static}
+      .signal-grid,.meeting-grid,.priority-grid,.map-grid,.decode-grid{grid-template-columns:1fr}
+    }
+
+    @media(max-width:720px){
+      .shell{width:min(100% - 26px,1160px)}
+      .hero-main,.hero-side{padding:25px}
+      .lesson-card{padding:20px}
+      .chunk{grid-template-columns:1fr}
+      .rating-grid,.result-grid{grid-template-columns:1fr}
+      .toplinks .hide-mobile{display:none}
+      .phase-banner{align-items:flex-start;flex-direction:column}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="shell topnav">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">F30</span>
+      <span>Fluent<span>30</span></span>
+    </a>
+
+    <div class="toplinks">
+      <a href="lesson-day-26.html" class="navbtn">← Day 26</a>
+      <a href="index.html" class="navbtn hide-mobile">Roadmap</a>
+      <a href="lesson-day-28.html" class="navbtn">Day 28 →</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="shell">
+
+  <div class="phase-banner">
+    <strong>Phase 4 · C1 Processing</strong>
+    <span>Day 27 · complex meeting · competing priorities · conditional decisions · dependencies</span>
+  </div>
+
+  <section class="hero">
+    <div class="hero-main">
+      <div class="eyebrow">Day 27 · Complex Meeting</div>
+
+      <h1>What was actually<br>decided?</h1>
+
+      <p class="hero-copy">
+        In complex meetings, people interrupt, qualify, reopen issues and agree conditionally.
+        Your job is to separate <b>discussion from decision</b>, and leave with a clean view of
+        <b>priority, owner, deadline, dependency and open risk</b>.
+      </p>
+    </div>
+
+    <aside class="hero-side">
+      <div>
+        <div class="eyebrow" style="color:#e9a6b4">Today's target</div>
+        <h2 style="margin:0;font-size:1.55rem">Follow decisions, priorities and competing viewpoints</h2>
+        <p class="muted" style="line-height:1.55">
+          decision · owner · deadline · dependency · condition · unresolved risk
+        </p>
+      </div>
+
+      <div>
+        <div class="meta-grid">
+          <div class="meta-card"><strong>90</strong><span>minutes</span></div>
+          <div class="meta-card"><strong>4</strong><span>functional viewpoints</span></div>
+        </div>
+
+        <div class="progress-track"><div class="progress-fill" id="topProgress"></div></div>
+        <div class="muted" id="topProgressText" style="font-size:.82rem;margin-top:6px">0% complete</div>
+      </div>
+    </aside>
+  </section>
+
+  <div class="layout">
+    <div>
+
+      <!-- 1 -->
+      <section class="lesson-card" id="first-listen">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 1 · First Listen</div>
+            <h2>Keep the launch date — but change the launch.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <p class="muted">
+          Listen to a cross-functional launch-readiness meeting.
+          Product, Sales, Operations and Finance are pushing different priorities.
+          Do not take detailed notes on the first listen. Identify the final decision architecture.
+        </p>
+
+        <div class="audio-panel">
+          <div class="audio-title">
+            <span>🎧 Complex meeting · Launch readiness</span>
+            <span class="listen-counter">Full listens: <span id="listenCount">0</span></span>
+          </div>
+
+          <button class="btn primary" id="playMainBtn" type="button">▶ Play full meeting</button>
+          <button class="btn secondary" id="stopMainBtn" type="button">■ Stop</button>
+
+          <div class="speed-row">
+            <button class="speed-btn" data-rate="0.92" type="button">0.92×</button>
+            <button class="speed-btn active" data-rate="1.00" type="button">1.00×</button>
+            <button class="speed-btn" data-rate="1.08" type="button">1.08×</button>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="question-title">What is the final direction of the meeting?</div>
+
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="q1" value="a">
+              <span>Cancel the November launch and wait until every feature is complete.</span>
+            </label>
+
+            <label class="option">
+              <input type="radio" name="q1" value="b">
+              <span>Keep the November 18 launch, but limit phase one to selected enterprise customers and make wider rollout conditional on support and billing-readiness thresholds.</span>
+            </label>
+
+            <label class="option">
+              <input type="radio" name="q1" value="c">
+              <span>Launch to all customers on November 18 with the full analytics module.</span>
+            </label>
+          </div>
+
+          <button class="btn secondary" style="margin-top:12px" onclick="checkFirstQuestion()" type="button">Check answer</button>
+          <div class="feedback" id="q1Feedback"></div>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="lesson-card" id="signals">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 2 · Meeting Signals</div>
+            <h2>Hear when discussion becomes commitment.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="signal-grid">
+          <div class="signal-card">
+            <strong>Decision</strong>
+            <div class="example">“Let’s lock that.”</div>
+            <span>The issue is no longer merely under discussion.</span>
+          </div>
+
+          <div class="signal-card">
+            <strong>Conditional decision</strong>
+            <div class="example">“We proceed provided…”</div>
+            <span>The decision stands only if a stated condition is met.</span>
+          </div>
+
+          <div class="signal-card">
+            <strong>Owner</strong>
+            <div class="example">“Priya, can you own that?”</div>
+            <span>Identifies who is accountable for the next action.</span>
+          </div>
+
+          <div class="signal-card">
+            <strong>Dependency</strong>
+            <div class="example">“That depends on billing reconciliation.”</div>
+            <span>One action or decision cannot complete independently.</span>
+          </div>
+
+          <div class="signal-card">
+            <strong>Reopened issue</strong>
+            <div class="example">“Before we close this…”</div>
+            <span>A topic that looked settled is being challenged again.</span>
+          </div>
+
+          <div class="signal-card">
+            <strong>Parking lot</strong>
+            <div class="example">“Let’s separate that from today’s go/no-go.”</div>
+            <span>The issue matters, but it is deliberately kept outside the current decision.</span>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="playSignalDrill()">▶ Play meeting-signal drill</button>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="lesson-card" id="decision-map">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 3 · Decision / Owner / Dependency Map</div>
+            <h2>Convert messy discussion into an action sheet.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div class="meeting-grid">
+          <div class="meeting-card">
+            <strong>Product · Maya</strong>
+            <div class="example">Scope & defect visibility</div>
+            <span>Wants launch to reflect what is actually stable, not what was originally promised.</span>
+          </div>
+
+          <div class="meeting-card">
+            <strong>Sales · Jon</strong>
+            <div class="example">Client commitments</div>
+            <span>Wants to protect the November 18 date for anchor accounts.</span>
+          </div>
+
+          <div class="meeting-card">
+            <strong>Operations · Leo</strong>
+            <div class="example">Support capacity</div>
+            <span>Wants phased exposure until training and ticket volume are under control.</span>
+          </div>
+
+          <div class="meeting-card">
+            <strong>Finance · Priya</strong>
+            <div class="example">Cost & billing readiness</div>
+            <span>Wants vendor scope controlled and billing reconciliation completed before scale-up.</span>
+          </div>
+        </div>
+
+        <div class="map-grid" id="mapGrid" style="margin-top:16px"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeMap()">Check decision map</button>
+          <span class="muted" id="mapScoreText"></span>
+        </div>
+
+        <div class="feedback" id="mapFeedback"></div>
+      </section>
+
+      <!-- 4 -->
+      <section class="lesson-card" id="deep-listen">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 4 · Deep Listen</div>
+            <h2>Track decisions across reopened discussion.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div id="deepQuestions"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeDeepQuiz()">Check 8 answers</button>
+          <span class="muted" id="deepScoreText"></span>
+        </div>
+
+        <div class="feedback" id="deepFeedback"></div>
+      </section>
+
+      <!-- 5 -->
+      <section class="lesson-card" id="priority">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 5 · Conflict & Priority Tracking</div>
+            <h2>What was protected — and what was traded away?</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="priority-grid" id="priorityGrid"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradePriority()">Check priorities</button>
+          <span class="muted" id="priorityScoreText"></span>
+        </div>
+
+        <div class="feedback" id="priorityFeedback"></div>
+      </section>
+
+      <!-- 6 -->
+      <section class="lesson-card" id="dictation">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 6 · Dictation & Decode</div>
+            <h2>Capture decision language precisely.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div id="dictationList"></div>
+
+        <div class="lockbox" id="transcriptLock" style="margin-top:18px">
+          <strong>Transcript locked</strong>
+          <p class="muted" style="margin:7px 0 12px">
+            Complete at least two full listens before revealing the meeting transcript.
+          </p>
+          <button class="btn secondary" id="revealBtn" type="button" disabled>Reveal transcript</button>
+        </div>
+
+        <div class="transcript" id="transcriptBox">
+          <strong>Transcript — Launch-readiness meeting</strong>
+
+          <p><span class="speaker">Maya · Product:</span>Let me start with the product position. The core workflow is stable enough for production. The analytics module is not. We have three open defects there, one of which is still producing inconsistent data under load. I am comfortable launching the core product on November 18, but I do not want analytics included in the promise.</p>
+
+          <p><span class="speaker">Jon · Sales:</span>I can live with that for new prospects, but twelve enterprise clients already have November 18 in their planning calendar. If we move the whole launch, we create a credibility issue. At minimum I need a version of the product they can actually use on that date.</p>
+
+          <p><span class="speaker">Leo · Operations:</span>From support, the date itself is not the biggest problem. Scale is. Training finishes November 12, but that only gives us a few days to see where the knowledge gaps are. If we go to the full customer base immediately, we are effectively testing the support model at maximum exposure.</p>
+
+          <p><span class="speaker">Priya · Finance:</span>And there is a cost angle. The vendor has asked for another six hundred thousand dollars to keep the temporary integration team through December. Some extension may be justified, but I do not want us to approve the full amount simply because the original scope slipped.</p>
+
+          <p><span class="speaker">Maya:</span>That is related to analytics, not the core launch. If we separate analytics from phase one, I can freeze the core scope today and give everyone a clean defect list by Tuesday at three.</p>
+
+          <p><span class="speaker">Jon:</span>Okay, but I need clarity on what Sales is allowed to say. If analytics is delayed, I do not want twelve account teams improvising twelve different messages.</p>
+
+          <p><span class="speaker">Leo:</span>Agreed. Also, I would strongly prefer phase one to be the twelve anchor clients plus a small existing-customer cohort, not the entire base.</p>
+
+          <p><span class="speaker">Jon:</span>That works for me as long as November 18 remains real, not a pilot we later describe as a launch.</p>
+
+          <p><span class="speaker">Priya:</span>I am fine keeping the date if we define what has to be true before we widen it. Otherwise we are just postponing the go/no-go decision.</p>
+
+          <p><span class="speaker">Maya:</span>Then let’s make it explicit. November 18: core product only, twelve anchor clients plus the selected existing-customer cohort. Analytics stays out until the December 2 release.</p>
+
+          <p><span class="speaker">Leo:</span>For wider rollout, I want support tickets from phase one below eight percent of active users, and no severity-one issue open. If we are above that threshold, we hold.</p>
+
+          <p><span class="speaker">Priya:</span>I want one more condition: billing reconciliation has to be complete by November 21. We still have a mismatch between the contract configuration and the invoice logic on two plan types.</p>
+
+          <p><span class="speaker">Jon:</span>Would that block the twelve anchor clients on the eighteenth?</p>
+
+          <p><span class="speaker">Priya:</span>No. It blocks the wider rollout, not phase one. For the anchor clients we can manage the invoices manually if needed. I do not want manual work becoming the operating model at scale.</p>
+
+          <p><span class="speaker">Maya:</span>Good distinction. Let’s lock that. Phase one is not dependent on billing reconciliation; scale-up is.</p>
+
+          <p><span class="speaker">Leo:</span>One more thing before we close it. If training finishes on the twelfth, I need Product available on the thirteenth and fourteenth for support simulations. Otherwise the ticket threshold is not really a fair readiness test.</p>
+
+          <p><span class="speaker">Maya:</span>That is fine. I will assign two product specialists for both days.</p>
+
+          <p><span class="speaker">Jon:</span>And I will confirm the twelve anchor clients by Wednesday noon. I will also tell the teams not to position analytics as part of the November 18 package.</p>
+
+          <p><span class="speaker">Priya:</span>On the vendor extension, can we separate what is required for core stability from what is required only for analytics?</p>
+
+          <p><span class="speaker">Maya:</span>Yes. I will break that out with Engineering. We should not make the six-hundred-thousand-dollar decision in this meeting.</p>
+
+          <p><span class="speaker">Priya:</span>Fine. I will review the revised change order and cash impact by Friday. Until then, no approval beyond the current commitment.</p>
+
+          <p><span class="speaker">Leo:</span>So the wider rollout target is December 2?</p>
+
+          <p><span class="speaker">Maya:</span>Target, yes. Automatic, no. We widen on December 2 only if support tickets are below eight percent, there is no severity-one issue open, and billing reconciliation is complete.</p>
+
+          <p><span class="speaker">Jon:</span>That gives Sales enough certainty. I am good.</p>
+
+          <p><span class="speaker">Priya:</span>Same here, provided the vendor extension stays separate from the launch decision.</p>
+
+          <p><span class="speaker">Maya:</span>Great. Then November 18 is locked for phase one. December 2 is the conditional wider rollout. We have owners and thresholds. Let’s close there.</p>
+        </div>
+
+        <div class="decode-grid">
+          <div class="decode-card">
+            <strong>“I can live with that”</strong>
+            <span>Acceptable, even if it is not the speaker's preferred option.</span>
+          </div>
+          <div class="decode-card">
+            <strong>“At minimum...”</strong>
+            <span>Defines the least acceptable outcome.</span>
+          </div>
+          <div class="decode-card">
+            <strong>“Let’s make it explicit”</strong>
+            <span>Signals a move from discussion into a defined decision.</span>
+          </div>
+          <div class="decode-card">
+            <strong>“That blocks X, not Y”</strong>
+            <span>Separates dependencies so one issue does not delay everything.</span>
+          </div>
+          <div class="decode-card">
+            <strong>“Target, yes. Automatic, no.”</strong>
+            <span>The date is an intention, not an unconditional commitment.</span>
+          </div>
+          <div class="decode-card">
+            <strong>“provided...”</strong>
+            <span>Agreement remains conditional on a stated constraint.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section class="lesson-card" id="shadowing">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 7 · Shadowing & Meeting Chunks</div>
+            <h2>Sound precise when decisions are conditional.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div id="chunkList"></div>
+
+        <h3>Shadowing lines</h3>
+        <div id="shadowList"></div>
+
+        <div class="recorder">
+          <strong>🎙 Record your shadowing</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="shadowRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="shadowStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="shadowRecordStatus">
+            Stress decision words and conditions: locked, only if, not dependent on, provided.
+          </div>
+
+          <audio id="shadowPlayback" controls style="display:none"></audio>
+        </div>
+      </section>
+
+      <!-- 8 -->
+      <section class="lesson-card" id="speak-back">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 8 · Speak Back</div>
+            <h2>Give a two-minute executive meeting recap.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="prompt-box">
+          <strong>Executive recap</strong><br>
+          In 90–120 seconds, summarize:
+          <b>the decision, phase-one scope, wider-rollout conditions, four action owners, deadlines, and the vendor-cost issue that remains separate.</b>
+          Do not retell the discussion chronologically.
+        </div>
+
+        <textarea id="speakOutline" placeholder="Decision / phase 1 / Dec 2 conditions / Maya / Jon / Leo / Priya / vendor extension parked"></textarea>
+
+        <div class="recorder">
+          <strong>🎙 Record your executive recap</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="speakRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="speakStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="speakRecordStatus">
+            Structure: decision → conditions → owners → remaining risk.
+          </div>
+
+          <audio id="speakPlayback" controls style="display:none"></audio>
+        </div>
+
+        <h3>Self-check</h3>
+
+        <div class="rating-grid">
+          <div class="rating">
+            <label>Decision clarity · <output id="decisionOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="decisionRate">
+          </div>
+
+          <div class="rating">
+            <label>Owner accuracy · <output id="ownerOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="ownerRate">
+          </div>
+
+          <div class="rating">
+            <label>Condition tracking · <output id="conditionOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="conditionRate">
+          </div>
+
+          <div class="rating">
+            <label>Executive delivery · <output id="naturalOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="naturalRate">
+          </div>
+        </div>
+      </section>
+
+      <!-- RESULT -->
+      <section class="lesson-card" id="result">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Day 27 Result</div>
+            <h2>Your complex-meeting score</h2>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <div class="muted" style="color:#b8bdc6">Decision map + deep listening + priority tracking + dictation</div>
+
+          <div class="result-score">
+            <span id="overallScore">—</span><span style="font-size:1.3rem">%</span>
+          </div>
+
+          <div class="muted" id="scoreInterpretation" style="color:#b8bdc6;margin-top:7px">
+            Complete all four objective sections to calculate your score.
+          </div>
+
+          <div class="result-grid">
+            <div class="result-box">
+              <strong id="mapResult">—</strong>
+              <span>Decision map</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="deepResult">—</strong>
+              <span>Meeting comprehension</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="priorityResult">—</strong>
+              <span>Priority tracking</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="dictationResult">—</strong>
+              <span>Dictation</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPLETE -->
+      <section class="complete-box" id="complete">
+        <h2>Complete Day 27</h2>
+
+        <p>
+          Save today's result and continue to Day 28: Podcast Challenge.
+          Your roadmap progress will update automatically.
+        </p>
+
+        <button class="btn primary" id="completeDayBtn" type="button">✓ Mark Day 27 complete</button>
+        <a href="lesson-day-28.html" class="btn secondary">Go to Day 28 →</a>
+
+        <div class="done-banner" id="doneBanner">
+          Day 27 is saved as completed in this browser.
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="sidebar">
+      <div class="side-card">
+        <h3>Day 27</h3>
+        <div class="muted" style="font-size:.84rem">Complex Meeting</div>
+
+        <div class="mini-progress"><div id="sideProgress"></div></div>
+        <div class="muted" id="sideProgressText" style="font-size:.78rem;margin-top:7px">
+          0/8 sections touched
+        </div>
+      </div>
+
+      <div class="side-card">
+        <h3>Jump to</h3>
+        <nav class="toc">
+          <a href="#first-listen">1. First Listen</a>
+          <a href="#signals">2. Meeting Signals</a>
+          <a href="#decision-map">3. Decision Map</a>
+          <a href="#deep-listen">4. Deep Listen</a>
+          <a href="#priority">5. Priority Tracking</a>
+          <a href="#dictation">6. Dictation & Decode</a>
+          <a href="#shadowing">7. Shadowing</a>
+          <a href="#speak-back">8. Speak Back</a>
+          <a href="#result">Result</a>
+        </nav>
+      </div>
+
+      <div class="side-card">
+        <h3>Rule for today</h3>
+        <p class="muted" style="font-size:.84rem;line-height:1.55;margin:0">
+          Never leave a complex meeting with only “what people said.”
+          Leave with <b>decision, condition, owner, deadline, dependency and open risk.</b>
+        </p>
+      </div>
+    </aside>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="shell">Fluent30 · Day 27 · Complex Meeting</div>
+</footer>
+
+<script>
+  const COURSE_KEY = "fluent30-progress-v1";
+  const DAY_KEY = "fluent30-day-27-result";
+
+  const dialogue = [
+    {speaker:"Maya · Product", text:"Let me start with the product position. The core workflow is stable enough for production. The analytics module is not. We have three open defects there, one of which is still producing inconsistent data under load. I am comfortable launching the core product on November eighteenth, but I do not want analytics included in the promise."},
+    {speaker:"Jon · Sales", text:"I can live with that for new prospects, but twelve enterprise clients already have November eighteenth in their planning calendar. If we move the whole launch, we create a credibility issue. At minimum I need a version of the product they can actually use on that date."},
+    {speaker:"Leo · Operations", text:"From support, the date itself is not the biggest problem. Scale is. Training finishes November twelfth, but that only gives us a few days to see where the knowledge gaps are. If we go to the full customer base immediately, we are effectively testing the support model at maximum exposure."},
+    {speaker:"Priya · Finance", text:"And there is a cost angle. The vendor has asked for another six hundred thousand dollars to keep the temporary integration team through December. Some extension may be justified, but I do not want us to approve the full amount simply because the original scope slipped."},
+    {speaker:"Maya", text:"That is related to analytics, not the core launch. If we separate analytics from phase one, I can freeze the core scope today and give everyone a clean defect list by Tuesday at three."},
+    {speaker:"Jon", text:"Okay, but I need clarity on what Sales is allowed to say. If analytics is delayed, I do not want twelve account teams improvising twelve different messages."},
+    {speaker:"Leo", text:"Agreed. Also, I would strongly prefer phase one to be the twelve anchor clients plus a small existing-customer cohort, not the entire base."},
+    {speaker:"Jon", text:"That works for me as long as November eighteenth remains real, not a pilot we later describe as a launch."},
+    {speaker:"Priya", text:"I am fine keeping the date if we define what has to be true before we widen it. Otherwise we are just postponing the go or no-go decision."},
+    {speaker:"Maya", text:"Then let’s make it explicit. November eighteenth: core product only, twelve anchor clients plus the selected existing-customer cohort. Analytics stays out until the December second release."},
+    {speaker:"Leo", text:"For wider rollout, I want support tickets from phase one below eight percent of active users, and no severity-one issue open. If we are above that threshold, we hold."},
+    {speaker:"Priya", text:"I want one more condition: billing reconciliation has to be complete by November twenty-first. We still have a mismatch between the contract configuration and the invoice logic on two plan types."},
+    {speaker:"Jon", text:"Would that block the twelve anchor clients on the eighteenth?"},
+    {speaker:"Priya", text:"No. It blocks the wider rollout, not phase one. For the anchor clients we can manage the invoices manually if needed. I do not want manual work becoming the operating model at scale."},
+    {speaker:"Maya", text:"Good distinction. Let’s lock that. Phase one is not dependent on billing reconciliation; scale-up is."},
+    {speaker:"Leo", text:"One more thing before we close it. If training finishes on the twelfth, I need Product available on the thirteenth and fourteenth for support simulations. Otherwise the ticket threshold is not really a fair readiness test."},
+    {speaker:"Maya", text:"That is fine. I will assign two product specialists for both days."},
+    {speaker:"Jon", text:"And I will confirm the twelve anchor clients by Wednesday noon. I will also tell the teams not to position analytics as part of the November eighteenth package."},
+    {speaker:"Priya", text:"On the vendor extension, can we separate what is required for core stability from what is required only for analytics?"},
+    {speaker:"Maya", text:"Yes. I will break that out with Engineering. We should not make the six-hundred-thousand-dollar decision in this meeting."},
+    {speaker:"Priya", text:"Fine. I will review the revised change order and cash impact by Friday. Until then, no approval beyond the current commitment."},
+    {speaker:"Leo", text:"So the wider rollout target is December second?"},
+    {speaker:"Maya", text:"Target, yes. Automatic, no. We widen on December second only if support tickets are below eight percent, there is no severity-one issue open, and billing reconciliation is complete."},
+    {speaker:"Jon", text:"That gives Sales enough certainty. I am good."},
+    {speaker:"Priya", text:"Same here, provided the vendor extension stays separate from the launch decision."},
+    {speaker:"Maya", text:"Great. Then November eighteenth is locked for phase one. December second is the conditional wider rollout. We have owners and thresholds. Let’s close there."}
+  ];
+
+  const signalDrill = [
+    "Let’s make it explicit.",
+    "Let’s lock that.",
+    "That depends on billing reconciliation.",
+    "Before we close it...",
+    "Target, yes. Automatic, no.",
+    "I am good with that, provided the condition stays separate."
+  ];
+
+  const mapItems = [
+    {
+      label:"Phase-one decision",
+      hint:"What is locked for November 18?",
+      options:[
+        "Core product to 12 anchor clients plus a selected existing-customer cohort.",
+        "Full product to every customer.",
+        "Analytics-only pilot."
+      ],
+      answer:0
+    },
+    {
+      label:"Wider-rollout dependency",
+      hint:"Which condition does NOT block phase one but DOES block scale-up?",
+      options:[
+        "Billing reconciliation.",
+        "Product specialist assignment.",
+        "Sales messaging."
+      ],
+      answer:0
+    },
+    {
+      label:"Sales owner",
+      hint:"What does Jon own?",
+      options:[
+        "Confirm the 12 anchor clients by Wednesday noon and align messaging.",
+        "Approve the vendor extension.",
+        "Run support simulations."
+      ],
+      answer:0
+    },
+    {
+      label:"Finance owner",
+      hint:"What does Priya own?",
+      options:[
+        "Review the revised vendor change order and cash impact by Friday.",
+        "Freeze product scope.",
+        "Train support agents."
+      ],
+      answer:0
+    },
+    {
+      label:"Product owner",
+      hint:"What does Maya commit to?",
+      options:[
+        "Freeze core scope, issue a defect list by Tuesday 3 PM, and assign two product specialists for simulations.",
+        "Approve all vendor cost.",
+        "Confirm anchor clients."
+      ],
+      answer:0
+    },
+    {
+      label:"Operations condition",
+      hint:"What threshold protects the wider rollout?",
+      options:[
+        "Support tickets below 8% of active users and no severity-one issue open.",
+        "Support tickets below 20% and no billing issue.",
+        "All customers fully trained."
+      ],
+      answer:0
+    }
+  ];
+
+  const deepQuestions = [
+    {
+      q:"Why does Product exclude analytics from phase one?",
+      options:[
+        "It still has open defects, including inconsistent data under load.",
+        "Sales no longer wants analytics.",
+        "Finance cancelled it permanently."
+      ],
+      answer:0
+    },
+    {
+      q:"Why does Sales resist moving November 18?",
+      options:[
+        "Twelve enterprise clients already have the date in their planning calendar.",
+        "The vendor contract expires that day.",
+        "Support training begins that day."
+      ],
+      answer:0
+    },
+    {
+      q:"What is Operations' main concern?",
+      options:[
+        "Scale and support exposure, not the date itself.",
+        "The product has no users.",
+        "The billing logic is already complete."
+      ],
+      answer:0
+    },
+    {
+      q:"What is Finance unwilling to do in this meeting?",
+      options:[
+        "Approve the full $600,000 vendor extension without separating core from analytics needs.",
+        "Keep the November date.",
+        "Allow any manual invoicing for anchor clients."
+      ],
+      answer:0
+    },
+    {
+      q:"Does billing reconciliation block phase one?",
+      options:[
+        "No. It blocks wider rollout, not phase one.",
+        "Yes. It blocks everything.",
+        "Only Sales decides."
+      ],
+      answer:0
+    },
+    {
+      q:"Why does Leo want Product available on November 13 and 14?",
+      options:[
+        "For support simulations after training, so the readiness threshold is meaningful.",
+        "For customer demos.",
+        "For vendor negotiation."
+      ],
+      answer:0
+    },
+    {
+      q:"What is the status of December 2?",
+      options:[
+        "A target date, conditional on support and billing readiness.",
+        "An unconditional launch commitment.",
+        "A cancelled date."
+      ],
+      answer:0
+    },
+    {
+      q:"What remains separate from the launch decision?",
+      options:[
+        "Final approval of the vendor extension.",
+        "The phase-one customer cohort.",
+        "The support-ticket threshold."
+      ],
+      answer:0
+    }
+  ];
+
+  const priorityItems = [
+    {
+      statement:"Protect November 18 for key customers even if the scope is narrower.",
+      owner:"Sales",
+      options:["Product","Sales","Operations","Finance"],
+      answer:1
+    },
+    {
+      statement:"Avoid testing the support model at maximum exposure.",
+      owner:"Operations",
+      options:["Product","Sales","Operations","Finance"],
+      answer:2
+    },
+    {
+      statement:"Do not promise an unstable analytics module.",
+      owner:"Product",
+      options:["Product","Sales","Operations","Finance"],
+      answer:0
+    },
+    {
+      statement:"Do not approve the full vendor extension without clearer scope and cash impact.",
+      owner:"Finance",
+      options:["Product","Sales","Operations","Finance"],
+      answer:3
+    }
+  ];
+
+  const dictationItems = [
+    "Phase one is not dependent on billing reconciliation; scale-up is.",
+    "Target, yes. Automatic, no.",
+    "We widen only if support tickets are below eight percent and there is no severity-one issue open.",
+    "Until then, no approval beyond the current commitment."
+  ];
+
+  const chunks = [
+    ["I can live with that","acceptable even if not ideal","I can live with that if the date remains real."],
+    ["at minimum","the least acceptable outcome","At minimum, we need a usable version on the date."],
+    ["let’s make it explicit","move from discussion to a clear decision","Let’s make the conditions explicit."],
+    ["that blocks X, not Y","separate one dependency from another","That blocks scale-up, not phase one."],
+    ["target, yes; automatic, no","planned but conditional","December second is the target, but not automatic."],
+    ["provided...","agreement depends on a condition","I am good with that, provided the cost issue stays separate."],
+    ["no approval beyond the current commitment","hold spending at the existing approved level","No approval beyond the current commitment until review."]
+  ];
+
+  const shadowSentences = [
+    "Let’s make it explicit: November eighteenth is phase one, not the full rollout.",
+    "Phase one is not dependent on billing reconciliation; scale-up is.",
+    "Target, yes. Automatic, no.",
+    "We widen only if support tickets are below eight percent and there is no severity-one issue open.",
+    "I am good with that, provided the vendor extension stays separate from the launch decision."
+  ];
+
+  let speechRate = 1.00;
+  let listenCount = Number(localStorage.getItem("fluent30-day27-listens") || 0);
+  let mapScore = null;
+  let deepScore = null;
+  let priorityScore = null;
+  let dictationScores = [null,null,null,null];
+  let touched = new Set();
+
+  function getVoices(){
+    if(!("speechSynthesis" in window)) return [];
+    return speechSynthesis.getVoices();
+  }
+
+  function getVoice(){
+    const voices = getVoices();
+    const us = voices.filter(v => /en-US/i.test(v.lang));
+    const en = voices.filter(v => /^en/i.test(v.lang));
+
+    const preferred = [
+      /Google US English/i,
+      /Samantha/i,
+      /Jenny/i,
+      /Aria/i,
+      /Joanna/i,
+      /Ava/i
+    ];
+
+    for(const pattern of preferred){
+      const match = us.find(v => pattern.test(v.name)) || en.find(v => pattern.test(v.name));
+      if(match) return match;
+    }
+
+    return us[0] || en[0] || null;
+  }
+
+  function speak(text,rate=1,onEnd=null){
+    if(!("speechSynthesis" in window)){
+      alert("Speech synthesis is not supported in this browser.");
+      return;
+    }
+
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US";
+    u.rate = rate;
+    u.pitch = 1.0;
+
+    const v = getVoice();
+    if(v) u.voice = v;
+    if(onEnd) u.onend = onEnd;
+
+    speechSynthesis.speak(u);
+  }
+
+  function stopSpeech(){
+    if("speechSynthesis" in window) speechSynthesis.cancel();
+  }
+
+  function speakSequence(lines,rate=1,onComplete=null){
+    stopSpeech();
+    let i = 0;
+
+    const next = ()=>{
+      if(i >= lines.length){
+        if(onComplete) onComplete();
+        return;
+      }
+
+      speak(lines[i],rate,()=>{
+        i++;
+        setTimeout(next,160);
+      });
+    };
+
+    next();
+  }
+
+  document.getElementById("playMainBtn").addEventListener("click",()=>{
+    listenCount++;
+    localStorage.setItem("fluent30-day27-listens",String(listenCount));
+    updateListenUI();
+    markTouched("listen");
+    speakSequence(dialogue.map(x=>x.text),speechRate);
+  });
+
+  document.getElementById("stopMainBtn").addEventListener("click",stopSpeech);
+
+  document.querySelectorAll(".speed-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      speechRate = Number(btn.dataset.rate);
+      document.querySelectorAll(".speed-btn").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+
+  function updateListenUI(){
+    document.getElementById("listenCount").textContent = listenCount;
+    document.getElementById("revealBtn").disabled = listenCount < 2;
+
+    if(listenCount >= 2){
+      const lock = document.getElementById("transcriptLock");
+      lock.querySelector("strong").textContent = "Transcript ready";
+      lock.querySelector("p").textContent =
+        "You have completed at least two full listens. Now inspect where the meeting moved from discussion to decision.";
+    }
+  }
+
+  document.getElementById("revealBtn").addEventListener("click",()=>{
+    document.getElementById("transcriptBox").classList.add("show");
+    document.getElementById("transcriptLock").style.display = "none";
+    markTouched("dictation");
+  });
+
+  function checkFirstQuestion(){
+    const chosen = document.querySelector('input[name="q1"]:checked');
+    const box = document.getElementById("q1Feedback");
+    box.className = "feedback show";
+
+    if(!chosen){
+      box.classList.add("warn");
+      box.textContent = "Choose one answer first.";
+      return;
+    }
+
+    if(chosen.value === "b"){
+      box.classList.add("good");
+      box.textContent = "Correct. The team protects the date by narrowing phase one and making scale-up conditional.";
+    }else{
+      box.classList.add("warn");
+      box.textContent = "Not quite. Separate the phase-one decision from the wider-rollout conditions.";
+    }
+
+    markTouched("listen");
+  }
+
+  function playSignalDrill(){
+    markTouched("signals");
+    speakSequence(signalDrill,1.00);
+  }
+
+  function renderMap(){
+    const container = document.getElementById("mapGrid");
+
+    container.innerHTML = mapItems.map((item,index)=>`
+      <div class="map-item">
+        <label>${index+1}. ${item.label}</label>
+        <small>${item.hint}</small>
+        <select id="mapSelect${index}">
+          <option value="">Choose...</option>
+          ${item.options.map((option,optIndex)=>`
+            <option value="${optIndex}">${option}</option>
+          `).join("")}
+        </select>
+      </div>
+    `).join("");
+  }
+
+  function gradeMap(){
+    let correct = 0;
+    let answered = 0;
+
+    mapItems.forEach((item,index)=>{
+      const value = document.getElementById(`mapSelect${index}`).value;
+      if(value !== ""){
+        answered++;
+        if(Number(value) === item.answer) correct++;
+      }
+    });
+
+    const box = document.getElementById("mapFeedback");
+    box.className = "feedback show";
+
+    if(answered < mapItems.length){
+      box.classList.add("warn");
+      box.textContent = `You completed ${answered}/${mapItems.length}. Finish all six first.`;
+      return;
+    }
+
+    mapScore = Math.round((correct/mapItems.length)*100);
+    document.getElementById("mapScoreText").textContent =
+      `${correct}/${mapItems.length} correct · ${mapScore}%`;
+
+    box.classList.add(mapScore >= 84 ? "good" : "info");
+    box.textContent = mapScore >= 84
+      ? "Strong. You converted the meeting into a usable action sheet."
+      : "Replay and separate phase-one decision, scale-up conditions, owners and parked issues.";
+
+    markTouched("map");
+    updateResults();
+  }
+
+  function renderDeepQuestions(){
+    const container = document.getElementById("deepQuestions");
+
+    container.innerHTML = deepQuestions.map((item,index)=>`
+      <div class="question">
+        <div class="question-title">${index+1}. ${item.q}</div>
+        <div class="options">
+          ${item.options.map((option,optIndex)=>`
+            <label class="option">
+              <input type="radio" name="deep${index}" value="${optIndex}">
+              <span>${option}</span>
+            </label>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function gradeDeepQuiz(){
+    let correct = 0;
+    let answered = 0;
+
+    deepQuestions.forEach((item,index)=>{
+      const selected = document.querySelector(`input[name="deep${index}"]:checked`);
+      if(selected){
+        answered++;
+        if(Number(selected.value) === item.answer) correct++;
+      }
+    });
+
+    const box = document.getElementById("deepFeedback");
+    box.className = "feedback show";
+
+    if(answered < deepQuestions.length){
+      box.classList.add("warn");
+      box.textContent = `You answered ${answered}/${deepQuestions.length}. Complete all questions first.`;
+      return;
+    }
+
+    deepScore = Math.round((correct/deepQuestions.length)*100);
+    document.getElementById("deepScoreText").textContent =
+      `${correct}/${deepQuestions.length} correct · ${deepScore}%`;
+
+    if(deepScore >= 88){
+      box.classList.add("good");
+      box.textContent = "Excellent. You retained decisions even after the meeting reopened related issues.";
+    }else if(deepScore >= 75){
+      box.classList.add("info");
+      box.textContent = "Strong. The main decision architecture is stable, with occasional dependency or owner loss.";
+    }else{
+      box.classList.add("warn");
+      box.textContent = "Replay and build a four-column note: decision / condition / owner / open issue.";
+    }
+
+    markTouched("deep");
+    updateResults();
+  }
+
+  function renderPriority(){
+    const container = document.getElementById("priorityGrid");
+
+    container.innerHTML = priorityItems.map((item,index)=>`
+      <div class="priority-card">
+        <strong>${index+1}. Who is protecting this priority?</strong>
+        <span style="display:block;margin-bottom:10px">“${item.statement}”</span>
+        <select id="prioritySelect${index}">
+          <option value="">Choose function...</option>
+          ${item.options.map((option,optIndex)=>`
+            <option value="${optIndex}">${option}</option>
+          `).join("")}
+        </select>
+      </div>
+    `).join("");
+  }
+
+  function gradePriority(){
+    let correct = 0;
+    let answered = 0;
+
+    priorityItems.forEach((item,index)=>{
+      const value = document.getElementById(`prioritySelect${index}`).value;
+      if(value !== ""){
+        answered++;
+        if(Number(value) === item.answer) correct++;
+      }
+    });
+
+    const box = document.getElementById("priorityFeedback");
+    box.className = "feedback show";
+
+    if(answered < priorityItems.length){
+      box.classList.add("warn");
+      box.textContent = `You completed ${answered}/${priorityItems.length}. Finish all four first.`;
+      return;
+    }
+
+    priorityScore = Math.round((correct/priorityItems.length)*100);
+    document.getElementById("priorityScoreText").textContent =
+      `${correct}/${priorityItems.length} correct · ${priorityScore}%`;
+
+    box.classList.add(priorityScore >= 75 ? "good" : "info");
+    box.textContent = priorityScore >= 75
+      ? "Good. You can hear the functional priority behind each contribution."
+      : "Track not just the statement, but which function's risk it is trying to protect.";
+
+    markTouched("priority");
+    updateResults();
+  }
+
+  function renderDictation(){
+    const container = document.getElementById("dictationList");
+
+    container.innerHTML = dictationItems.map((sentence,index)=>`
+      <div class="dictation-item">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+          <strong>Sentence ${index+1}</strong>
+          <button class="btn secondary" type="button" onclick="playDictation(${index})">▶ Play</button>
+        </div>
+
+        <input
+          type="text"
+          id="dictInput${index}"
+          style="margin-top:12px"
+          placeholder="Type exactly what you hear"
+          autocomplete="off"
+        >
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="checkDictation(${index})">Check</button>
+        </div>
+
+        <div class="dictation-result" id="dictResult${index}"></div>
+      </div>
+    `).join("");
+  }
+
+  function playDictation(index){
+    stopSpeech();
+    speak(dictationItems[index],1.00);
+    markTouched("dictation");
+  }
+
+  function normalize(text){
+    return text
+      .toLowerCase()
+      .replace(/[’‘]/g,"'")
+      .replace(/[^a-z0-9'\s-]/g,"")
+      .replace(/\s+/g," ")
+      .trim();
+  }
+
+  function wordSimilarity(userText,targetText){
+    const a = normalize(userText).split(" ").filter(Boolean);
+    const b = normalize(targetText).split(" ").filter(Boolean);
+
+    const dp = Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));
+
+    for(let i=1;i<=a.length;i++){
+      for(let j=1;j<=b.length;j++){
+        if(a[i-1] === b[j-1]){
+          dp[i][j] = dp[i-1][j-1] + 1;
+        }else{
+          dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+        }
+      }
+    }
+
+    return b.length ? Math.round((dp[a.length][b.length]/b.length)*100) : 0;
+  }
+
+  function checkDictation(index){
+    const input = document.getElementById(`dictInput${index}`);
+    const result = document.getElementById(`dictResult${index}`);
+
+    if(!input.value.trim()){
+      result.className = "dictation-result show";
+      result.textContent = "Type what you hear first.";
+      return;
+    }
+
+    const score = wordSimilarity(input.value,dictationItems[index]);
+    dictationScores[index] = score;
+
+    result.className = "dictation-result show";
+    result.innerHTML = `
+      <div><strong>${score}% match</strong></div>
+      <div style="margin-top:6px"><span class="muted">Target:</span> ${dictationItems[index]}</div>
+    `;
+
+    markTouched("dictation");
+    updateResults();
+  }
+
+  function getDictationAverage(){
+    if(dictationScores.some(v => typeof v !== "number")) return null;
+    return Math.round(dictationScores.reduce((a,b)=>a+b,0)/dictationScores.length);
+  }
+
+  function renderChunks(){
+    const saved = JSON.parse(localStorage.getItem("fluent30-saved-chunks") || "[]");
+    const container = document.getElementById("chunkList");
+
+    container.innerHTML = chunks.map((chunk,index)=>{
+      const isSaved = saved.includes(chunk[0]);
+
+      return `
+        <div class="chunk">
+          <div>
+            <strong>${chunk[0]}</strong>
+            <div style="margin-top:5px;font-size:.82rem;color:#8b8f96">“${chunk[2]}”</div>
+          </div>
+          <span>${chunk[1]}</span>
+          <button
+            class="save-chunk ${isSaved ? "saved" : ""}"
+            type="button"
+            onclick="toggleChunk(${index},this)"
+          >${isSaved ? "Saved ✓" : "Save"}</button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function toggleChunk(index,button){
+    let saved = JSON.parse(localStorage.getItem("fluent30-saved-chunks") || "[]");
+    const phrase = chunks[index][0];
+
+    if(saved.includes(phrase)){
+      saved = saved.filter(x=>x!==phrase);
+      button.classList.remove("saved");
+      button.textContent = "Save";
+    }else{
+      saved.push(phrase);
+      button.classList.add("saved");
+      button.textContent = "Saved ✓";
+    }
+
+    localStorage.setItem("fluent30-saved-chunks",JSON.stringify(saved));
+    markTouched("shadow");
+  }
+
+  function renderShadowing(){
+    const container = document.getElementById("shadowList");
+
+    container.innerHTML = shadowSentences.map((sentence,index)=>`
+      <div class="dictation-item">
+        <strong>${index+1}. ${sentence}</strong>
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="playShadow(${index},0.92)">Slow</button>
+          <button class="btn primary" type="button" onclick="playShadow(${index},1.00)">Natural</button>
+          <button class="btn secondary" type="button" onclick="playShadow(${index},1.08)">Fast</button>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function playShadow(index,rate){
+    stopSpeech();
+    speak(shadowSentences[index],rate);
+    markTouched("shadow");
+  }
+
+  function setupRecorder(prefix){
+    const recordBtn = document.getElementById(`${prefix}RecordBtn`);
+    const stopBtn = document.getElementById(`${prefix}StopBtn`);
+    const status = document.getElementById(`${prefix}RecordStatus`);
+    const playback = document.getElementById(`${prefix}Playback`);
+
+    let recorder = null;
+    let blobs = [];
+    let stream = null;
+    let startTime = null;
+
+    recordBtn.addEventListener("click",async()=>{
+      if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+        status.textContent = "Microphone recording is not supported in this browser.";
+        return;
+      }
+
+      try{
+        stream = await navigator.mediaDevices.getUserMedia({audio:true});
+        recorder = new MediaRecorder(stream);
+        blobs = [];
+        startTime = Date.now();
+
+        recorder.ondataavailable = e=>{
+          if(e.data.size > 0) blobs.push(e.data);
+        };
+
+        recorder.onstop = ()=>{
+          const blob = new Blob(blobs,{type:recorder.mimeType || "audio/webm"});
+          playback.src = URL.createObjectURL(blob);
+          playback.style.display = "block";
+
+          const seconds = Math.round((Date.now()-startTime)/1000);
+          status.textContent =
+            `Recorded ${seconds} seconds. Check whether you separated decision, condition, owner and remaining risk.`;
+
+          if(stream) stream.getTracks().forEach(track=>track.stop());
+
+          if(prefix === "speak") markTouched("speak");
+          if(prefix === "shadow") markTouched("shadow");
+        };
+
+        recorder.start();
+        recordBtn.disabled = true;
+        stopBtn.disabled = false;
+        status.textContent = "Recording…";
+      }catch(e){
+        status.textContent = "Microphone permission was not granted.";
+      }
+    });
+
+    stopBtn.addEventListener("click",()=>{
+      if(recorder && recorder.state !== "inactive") recorder.stop();
+      recordBtn.disabled = false;
+      stopBtn.disabled = true;
+    });
+  }
+
+  ["decision","owner","condition","natural"].forEach(name=>{
+    const range = document.getElementById(`${name}Rate`);
+    const out = document.getElementById(`${name}Out`);
+
+    range.addEventListener("input",()=>{
+      out.value = range.value;
+      markTouched("speak");
+    });
+  });
+
+  function speakingAverage(){
+    const values = [
+      Number(document.getElementById("decisionRate").value),
+      Number(document.getElementById("ownerRate").value),
+      Number(document.getElementById("conditionRate").value),
+      Number(document.getElementById("naturalRate").value)
+    ];
+    return values.reduce((a,b)=>a+b,0)/values.length;
+  }
+
+  function updateResults(){
+    const dictAvg = getDictationAverage();
+
+    document.getElementById("mapResult").textContent =
+      mapScore === null ? "—" : `${mapScore}%`;
+
+    document.getElementById("deepResult").textContent =
+      deepScore === null ? "—" : `${deepScore}%`;
+
+    document.getElementById("priorityResult").textContent =
+      priorityScore === null ? "—" : `${priorityScore}%`;
+
+    document.getElementById("dictationResult").textContent =
+      dictAvg === null ? "—" : `${dictAvg}%`;
+
+    if(mapScore !== null && deepScore !== null && priorityScore !== null && dictAvg !== null){
+      const overall = Math.round(
+        mapScore * 0.30 +
+        deepScore * 0.35 +
+        priorityScore * 0.20 +
+        dictAvg * 0.15
+      );
+
+      document.getElementById("overallScore").textContent = overall;
+
+      let interpretation = "";
+
+      if(overall >= 88){
+        interpretation =
+          "Excellent. You can turn a messy cross-functional discussion into clear decisions, owners and conditional dependencies.";
+      }else if(overall >= 75){
+        interpretation =
+          "Strong. You track complex meetings well, with occasional loss of one dependency or owner detail.";
+      }else if(overall >= 60){
+        interpretation =
+          "Developing. You understand the discussion, but some decisions remain mixed with proposals or reopened issues.";
+      }else{
+        interpretation =
+          "Complex-meeting tracking is still unstable. Note only six fields: decision, condition, owner, deadline, dependency and open risk.";
+      }
+
+      document.getElementById("scoreInterpretation").textContent = interpretation;
+    }
+  }
+
+  function markTouched(section){
+    touched.add(section);
+    updateProgress();
+  }
+
+  function updateProgress(){
+    const count = touched.size;
+    const percent = Math.round((count/8)*100);
+
+    document.getElementById("topProgress").style.width = `${percent}%`;
+    document.getElementById("sideProgress").style.width = `${percent}%`;
+    document.getElementById("topProgressText").textContent = `${percent}% complete`;
+    document.getElementById("sideProgressText").textContent = `${count}/8 sections touched`;
+  }
+
+  function getCourseProgress(){
+    try{
+      return JSON.parse(localStorage.getItem(COURSE_KEY)) || {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }catch(e){
+      return {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }
+  }
+
+  function saveDayResult(){
+    const dictAvg = getDictationAverage();
+
+    const overall = (
+      mapScore !== null &&
+      deepScore !== null &&
+      priorityScore !== null &&
+      dictAvg !== null
+    ) ? Math.round(
+      mapScore * 0.30 +
+      deepScore * 0.35 +
+      priorityScore * 0.20 +
+      dictAvg * 0.15
+    ) : null;
+
+    const result = {
+      day:27,
+      mapScore,
+      deepScore,
+      priorityScore,
+      dictationScore:dictAvg,
+      dictationScores:[...dictationScores],
+      speakingSelf:Number(speakingAverage().toFixed(1)),
+      overall,
+      listens:listenCount,
+      savedAt:new Date().toISOString()
+    };
+
+    localStorage.setItem(DAY_KEY,JSON.stringify(result));
+  }
+
+  document.getElementById("completeDayBtn").addEventListener("click",()=>{
+    const progress = getCourseProgress();
+    const alreadyDone = progress.completed.includes(27);
+
+    if(!alreadyDone){
+      progress.completed.push(27);
+      progress.completed.sort((a,b)=>a-b);
+      progress.streak = Math.max(1,Number(progress.streak || 0)+1);
+      progress.minutes = Number(progress.minutes || 0)+90;
+      progress.lastDay = 27;
+      localStorage.setItem(COURSE_KEY,JSON.stringify(progress));
+    }
+
+    saveDayResult();
+
+    document.getElementById("doneBanner").classList.add("show");
+    document.getElementById("completeDayBtn").textContent = "✓ Day 27 completed";
+    document.getElementById("completeDayBtn").disabled = true;
+
+    touched = new Set([
+      "listen","signals","map","deep","priority","dictation","shadow","speak"
+    ]);
+
+    updateProgress();
+  });
+
+  function loadSavedState(){
+    updateListenUI();
+
+    const progress = getCourseProgress();
+
+    if(progress.completed.includes(27)){
+      document.getElementById("doneBanner").classList.add("show");
+      document.getElementById("completeDayBtn").textContent = "✓ Day 27 completed";
+      document.getElementById("completeDayBtn").disabled = true;
+
+      touched = new Set([
+        "listen","signals","map","deep","priority","dictation","shadow","speak"
+      ]);
+
+      updateProgress();
+    }
+
+    try{
+      const saved = JSON.parse(localStorage.getItem(DAY_KEY) || "null");
+
+      if(saved){
+        if(typeof saved.mapScore === "number") mapScore = saved.mapScore;
+        if(typeof saved.deepScore === "number") deepScore = saved.deepScore;
+        if(typeof saved.priorityScore === "number") priorityScore = saved.priorityScore;
+        if(Array.isArray(saved.dictationScores)) dictationScores = saved.dictationScores;
+      }
+    }catch(e){}
+
+    updateResults();
+  }
+
+  renderMap();
+  renderDeepQuestions();
+  renderPriority();
+  renderDictation();
+  renderChunks();
+  renderShadowing();
+  setupRecorder("shadow");
+  setupRecorder("speak");
+  loadSavedState();
+
+  if("speechSynthesis" in window){
+    speechSynthesis.onvoiceschanged = ()=>getVoice();
+  }
+</script>
+</body>
+</html>
