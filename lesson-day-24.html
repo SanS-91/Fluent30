@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fluent30 Day 24 — Long-form Interviews" />
+  <title>Fluent30 — Day 24 Long-form Interviews</title>
+
+  <style>
+    :root{
+      --bg:#f5f5f6; --surface:#fff; --surface-2:#fafafa; --text:#111; --muted:#6b7280;
+      --line:#e5e7eb; --red:#8f1027; --red-dark:#6f0b1e; --black:#171717;
+      --green:#166534; --green-bg:#ecfdf3; --amber:#92400e; --amber-bg:#fffbeb;
+      --blue:#1d4ed8; --blue-bg:#eff6ff; --shadow:0 18px 50px rgba(17,24,39,.08);
+      --r-xl:24px; --r-lg:17px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text)
+    }
+
+    button,input,textarea,select{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    .shell{width:min(1160px,calc(100% - 38px));margin:0 auto}
+
+    header{
+      position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);
+      border-bottom:1px solid var(--line);backdrop-filter:blur(14px)
+    }
+
+    .topnav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.04em}
+    .brand-mark{
+      width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
+      background:var(--red);color:#fff;font-size:.88rem
+    }
+    .brand span span{color:var(--red)}
+    .toplinks{display:flex;align-items:center;gap:9px}
+
+    .navbtn{
+      display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;
+      border:1px solid var(--line);border-radius:10px;background:#fff;color:#333;
+      font-size:.88rem;font-weight:700
+    }
+    .navbtn:hover{border-color:#c8ccd2}
+
+    main{padding:34px 0 70px}
+
+    .phase-banner{
+      background:var(--black);color:#fff;border-radius:16px;padding:15px 18px;margin-bottom:18px;
+      display:flex;justify-content:space-between;gap:16px;align-items:center
+    }
+    .phase-banner strong{font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
+    .phase-banner span{color:#c2c6cd;font-size:.82rem}
+
+    .hero{
+      display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.55fr);gap:20px
+    }
+
+    .hero-main,.hero-side{border-radius:var(--r-xl);box-shadow:var(--shadow)}
+
+    .hero-main{
+      background:linear-gradient(135deg,#fff 0%,#fbfbfc 72%,#f2f2f3 100%);
+      border:1px solid var(--line);padding:38px
+    }
+
+    .eyebrow{
+      color:var(--red);font-weight:850;font-size:.76rem;letter-spacing:.12em;
+      text-transform:uppercase;margin-bottom:12px
+    }
+
+    h1{margin:0;font-size:clamp(2.4rem,5vw,4.8rem);line-height:.96;letter-spacing:-.06em}
+
+    .hero-copy{
+      max-width:860px;color:var(--muted);line-height:1.65;margin:18px 0 0
+    }
+
+    .hero-side{
+      background:var(--black);color:#fff;padding:28px;display:flex;
+      flex-direction:column;justify-content:space-between;gap:20px
+    }
+
+    .hero-side .muted{color:#b9bec7}
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .meta-card{background:#202020;border:1px solid #343434;border-radius:12px;padding:14px}
+    .meta-card strong{display:block;font-size:1.2rem;margin-bottom:2px}
+    .meta-card span{font-size:.78rem;color:#afb4bd}
+    .progress-track{height:9px;border-radius:999px;background:#343434;overflow:hidden;margin-top:13px}
+    .progress-fill{height:100%;width:0%;background:#fff;transition:.25s ease}
+
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) 292px;gap:22px;margin-top:24px}
+
+    .lesson-card{
+      background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+      padding:26px;margin-bottom:18px
+    }
+
+    .lesson-card h2{margin:0;font-size:1.42rem;letter-spacing:-.035em}
+    .lesson-card h3{margin:18px 0 8px;font-size:1rem}
+    .lesson-card p{line-height:1.62}
+    .muted{color:var(--muted)}
+
+    .step-head{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px
+    }
+
+    .step-label{
+      color:var(--red);font-size:.74rem;font-weight:850;letter-spacing:.1em;
+      text-transform:uppercase;margin-bottom:6px
+    }
+
+    .time-pill{
+      flex:0 0 auto;padding:6px 9px;background:#f3f4f6;border-radius:999px;
+      color:#5b616c;font-size:.76rem;font-weight:750
+    }
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:43px;
+      padding:0 15px;border-radius:11px;border:1px solid transparent;font-weight:800;transition:.18s ease
+    }
+
+    .btn.primary{background:var(--red);color:#fff}
+    .btn.primary:hover{background:var(--red-dark);transform:translateY(-1px)}
+    .btn.secondary{background:#fff;border-color:var(--line);color:#222}
+    .btn.secondary:hover{border-color:#c9cdd3}
+    .btn:disabled{opacity:.45;cursor:not-allowed}
+    .btn-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+
+    .audio-panel{
+      border:1px solid var(--line);border-radius:14px;background:var(--surface-2);padding:17px
+    }
+
+    .audio-title{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      margin-bottom:10px;font-weight:800
+    }
+
+    .listen-counter{font-size:.78rem;color:var(--muted);font-weight:700}
+    .speed-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+
+    .speed-btn{
+      border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 10px;
+      font-size:.78rem;font-weight:750
+    }
+
+    .speed-btn.active{border-color:var(--red);color:var(--red);background:#fff5f6}
+
+    .question{padding:17px 0;border-top:1px solid var(--line)}
+    .question:first-of-type{border-top:0;padding-top:4px}
+    .question-title{font-weight:800;line-height:1.5;margin-bottom:10px}
+    .options{display:grid;gap:8px}
+
+    .option{
+      display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid var(--line);
+      border-radius:11px;cursor:pointer;background:#fff
+    }
+
+    .option:hover{border-color:#c9cdd3}
+    .option input{margin-top:3px}
+
+    .feedback{
+      margin-top:12px;border-radius:11px;padding:11px 13px;
+      font-size:.9rem;line-height:1.5;display:none
+    }
+
+    .feedback.show{display:block}
+    .feedback.good{background:var(--green-bg);color:var(--green)}
+    .feedback.warn{background:var(--amber-bg);color:var(--amber)}
+    .feedback.info{background:var(--blue-bg);color:var(--blue)}
+
+    textarea,input[type="text"],select{
+      width:100%;border:1px solid #d2d6dc;border-radius:11px;padding:12px 13px;
+      background:#fff;color:#111;outline:none
+    }
+
+    textarea:focus,input[type="text"]:focus,select:focus{
+      border-color:#ba6a7c;box-shadow:0 0 0 3px rgba(143,16,39,.08)
+    }
+
+    textarea{resize:vertical;min-height:105px}
+
+    .strategy-grid,.segment-grid,.evidence-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px
+    }
+
+    .strategy-card,.segment-card,.evidence-card{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff
+    }
+
+    .strategy-card strong,.segment-card strong,.evidence-card strong{display:block;margin-bottom:6px}
+    .strategy-card .example,.segment-card .example,.evidence-card .example{color:var(--red);font-weight:850;margin-bottom:6px}
+    .strategy-card span,.segment-card span,.evidence-card span{font-size:.86rem;color:var(--muted);line-height:1.45}
+
+    .map-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:12px
+    }
+
+    .map-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;background:#fff
+    }
+
+    .map-item label{display:block;font-weight:800;margin-bottom:8px}
+    .map-item small{display:block;color:var(--muted);line-height:1.45;margin-bottom:10px}
+
+    .dictation-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;margin-top:12px;background:#fff
+    }
+
+    .dictation-result{
+      margin-top:10px;padding:10px 12px;background:#f8f9fa;border-radius:10px;
+      line-height:1.55;display:none
+    }
+
+    .dictation-result.show{display:block}
+
+    .lockbox{
+      border:1px dashed #c8cdd3;border-radius:13px;padding:18px;background:#fafafa;text-align:center
+    }
+
+    .transcript{
+      display:none;margin-top:14px;padding:18px;border-left:4px solid var(--red);
+      border-radius:10px;background:#fafafa;line-height:1.8
+    }
+
+    .transcript.show{display:block}
+
+    .speaker{
+      display:inline-block;margin-right:7px;font-weight:900;color:var(--red)
+    }
+
+    .decode-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px
+    }
+
+    .decode-card{
+      border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff
+    }
+
+    .decode-card strong{display:block;margin-bottom:5px}
+    .decode-card span{font-size:.88rem;color:var(--muted);line-height:1.45}
+
+    .chunk{
+      display:grid;grid-template-columns:1.2fr 1.8fr auto;gap:12px;align-items:center;
+      border-top:1px solid var(--line);padding:13px 0
+    }
+
+    .chunk:first-of-type{border-top:0}
+    .chunk strong{font-size:.92rem}
+    .chunk span{font-size:.86rem;color:var(--muted);line-height:1.45}
+
+    .save-chunk{
+      border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 9px;
+      font-size:.76rem;font-weight:750
+    }
+
+    .save-chunk.saved{background:var(--green-bg);color:var(--green);border-color:#ccebd5}
+
+    .recorder{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fafafa;margin-top:12px
+    }
+
+    .record-status{font-size:.84rem;color:var(--muted);margin-top:8px}
+    audio{width:100%;margin-top:12px}
+
+    .prompt-box{
+      border-left:4px solid var(--red);background:#fafafa;padding:16px 17px;
+      border-radius:10px;line-height:1.6;margin:12px 0
+    }
+
+    .rating-grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px
+    }
+
+    .rating{border:1px solid var(--line);border-radius:12px;padding:13px}
+    .rating label{display:block;font-size:.8rem;font-weight:800;margin-bottom:8px}
+    .rating output{font-weight:900;color:var(--red)}
+    input[type="range"]{width:100%}
+
+    .result-card{background:var(--black);color:#fff;border-radius:18px;padding:24px}
+    .result-score{font-size:3.2rem;font-weight:900;letter-spacing:-.05em;line-height:1;margin-top:8px}
+
+    .result-grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px
+    }
+
+    .result-box{
+      background:#202020;border:1px solid #353535;border-radius:12px;padding:13px
+    }
+
+    .result-box strong{display:block;font-size:1.2rem}
+    .result-box span{color:#b8bdc6;font-size:.78rem}
+
+    .sidebar{position:sticky;top:92px;align-self:start}
+
+    .side-card{
+      background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:13px
+    }
+
+    .side-card h3{margin:0 0 10px;font-size:.96rem}
+    .toc{display:grid;gap:5px}
+    .toc a{padding:8px 9px;border-radius:9px;color:#4b5563;font-size:.84rem}
+    .toc a:hover{background:#f4f4f5;color:var(--red)}
+
+    .mini-progress{
+      height:7px;background:#eceef1;border-radius:999px;overflow:hidden;margin-top:10px
+    }
+
+    .mini-progress > div{height:100%;width:0;background:var(--red);transition:.25s ease}
+
+    .complete-box{
+      text-align:center;padding:30px 24px;border:1px solid var(--line);
+      border-radius:18px;background:#fff
+    }
+
+    .complete-box h2{font-size:1.7rem;margin-bottom:8px}
+    .complete-box p{
+      color:var(--muted);max-width:680px;margin:0 auto 18px;line-height:1.6
+    }
+
+    .done-banner{
+      display:none;background:var(--green-bg);color:var(--green);border:1px solid #ccebd5;
+      border-radius:12px;padding:12px 14px;margin-top:14px;font-weight:750
+    }
+
+    .done-banner.show{display:block}
+
+    footer{
+      border-top:1px solid var(--line);color:var(--muted);padding:28px 0 40px;font-size:.84rem
+    }
+
+    @media(max-width:980px){
+      .hero,.layout{grid-template-columns:1fr}
+      .sidebar{position:static}
+      .strategy-grid,.segment-grid,.evidence-grid,.map-grid,.decode-grid{grid-template-columns:1fr}
+    }
+
+    @media(max-width:720px){
+      .shell{width:min(100% - 26px,1160px)}
+      .hero-main,.hero-side{padding:25px}
+      .lesson-card{padding:20px}
+      .chunk{grid-template-columns:1fr}
+      .rating-grid,.result-grid{grid-template-columns:1fr}
+      .toplinks .hide-mobile{display:none}
+      .phase-banner{align-items:flex-start;flex-direction:column}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="shell topnav">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">F30</span>
+      <span>Fluent<span>30</span></span>
+    </a>
+
+    <div class="toplinks">
+      <a href="lesson-day-23.html" class="navbtn">← Day 23</a>
+      <a href="index.html" class="navbtn hide-mobile">Roadmap</a>
+      <a href="lesson-day-25.html" class="navbtn">Day 25 →</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="shell">
+
+  <div class="phase-banner">
+    <strong>Phase 4 · C1 Processing</strong>
+    <span>Day 24 · long-form retention · segment notes · evidence · inference · synthesis</span>
+  </div>
+
+  <section class="hero">
+    <div class="hero-main">
+      <div class="eyebrow">Day 24 · Long-form Interviews</div>
+
+      <h1>Hold the thread<br>for longer.</h1>
+
+      <p class="hero-copy">
+        C1 listening is not only about decoding difficult sentences. It is also about keeping the
+        <b>argument alive in working memory</b> across a longer interview: remembering what came earlier,
+        noticing when the speaker refines a claim, and reconstructing the logic after the audio ends.
+      </p>
+    </div>
+
+    <aside class="hero-side">
+      <div>
+        <div class="eyebrow" style="color:#e9a6b4">Today's target</div>
+        <h2 style="margin:0;font-size:1.55rem">Retain meaning across a long interview</h2>
+        <p class="muted" style="line-height:1.55">
+          segment map · weak signals · reversibility · inference · recall
+        </p>
+      </div>
+
+      <div>
+        <div class="meta-grid">
+          <div class="meta-card"><strong>90</strong><span>minutes</span></div>
+          <div class="meta-card"><strong>4</strong><span>interview segments</span></div>
+        </div>
+
+        <div class="progress-track"><div class="progress-fill" id="topProgress"></div></div>
+        <div class="muted" id="topProgressText" style="font-size:.82rem;margin-top:6px">0% complete</div>
+      </div>
+    </aside>
+  </section>
+
+  <div class="layout">
+    <div>
+
+      <!-- 1 -->
+      <section class="lesson-card" id="first-listen">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 1 · Full Interview</div>
+            <h2>Why smart teams still make poor decisions</h2>
+          </div>
+          <div class="time-pill">12 min</div>
+        </div>
+
+        <p class="muted">
+          Listen once without transcript. Your goal is not to remember every sentence.
+          Hold onto the interview's four major moves.
+        </p>
+
+        <div class="audio-panel">
+          <div class="audio-title">
+            <span>🎧 Full interview · Decision quality under uncertainty</span>
+            <span class="listen-counter">Full listens: <span id="listenCount">0</span></span>
+          </div>
+
+          <button class="btn primary" id="playFullBtn" type="button">▶ Play full interview</button>
+          <button class="btn secondary" id="stopBtn" type="button">■ Stop</button>
+
+          <div class="speed-row">
+            <button class="speed-btn" data-rate="0.92" type="button">0.92×</button>
+            <button class="speed-btn active" data-rate="1.00" type="button">1.00×</button>
+            <button class="speed-btn" data-rate="1.08" type="button">1.08×</button>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="question-title">What is the guest's central argument?</div>
+
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="q1" value="a">
+              <span>Good decisions are mainly the result of confident leaders making fast calls.</span>
+            </label>
+
+            <label class="option">
+              <input type="radio" name="q1" value="b">
+              <span>Decision quality depends less on confidence and more on process: noticing weak signals, matching speed to reversibility, and learning from decisions without judging only by outcomes.</span>
+            </label>
+
+            <label class="option">
+              <input type="radio" name="q1" value="c">
+              <span>Teams should avoid making decisions until uncertainty has disappeared.</span>
+            </label>
+          </div>
+
+          <button class="btn secondary" style="margin-top:12px" onclick="checkFirstQuestion()" type="button">Check answer</button>
+          <div class="feedback" id="q1Feedback"></div>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="lesson-card" id="strategy">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 2 · Long-form Strategy</div>
+            <h2>Do not take notes on everything.</h2>
+          </div>
+          <div class="time-pill">8 min</div>
+        </div>
+
+        <div class="strategy-grid">
+          <div class="strategy-card">
+            <strong>1. Name the segment</strong>
+            <div class="example">Confidence ≠ quality</div>
+            <span>Give each section a 2–4 word label instead of writing full sentences.</span>
+          </div>
+
+          <div class="strategy-card">
+            <strong>2. Capture the turn</strong>
+            <div class="example">“But the bigger issue is…”</div>
+            <span>Notice when the speaker shifts, qualifies or deepens the argument.</span>
+          </div>
+
+          <div class="strategy-card">
+            <strong>3. Save one example</strong>
+            <div class="example">Irreversible vs reversible decisions</div>
+            <span>One good example is enough to reconstruct a whole segment later.</span>
+          </div>
+
+          <div class="strategy-card">
+            <strong>4. End with one takeaway</strong>
+            <div class="example">Judge process separately from outcome</div>
+            <span>After each segment, summarize in your own words before moving on.</span>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="playStrategyDrill()">▶ Play discourse-signpost drill</button>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="lesson-card" id="segment-map">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 3 · Segment Map</div>
+            <h2>Replay selectively, then reconstruct the structure.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="segment-grid">
+          <div class="segment-card">
+            <strong>Segment 1</strong>
+            <div class="example">Confidence vs process</div>
+            <span>Why a confident decision can still be poorly made.</span>
+            <div class="btn-row"><button class="btn secondary" onclick="playSegment(0)" type="button">▶ Replay</button></div>
+          </div>
+
+          <div class="segment-card">
+            <strong>Segment 2</strong>
+            <div class="example">Weak signals</div>
+            <span>Why teams fail to escalate uncomfortable information.</span>
+            <div class="btn-row"><button class="btn secondary" onclick="playSegment(1)" type="button">▶ Replay</button></div>
+          </div>
+
+          <div class="segment-card">
+            <strong>Segment 3</strong>
+            <div class="example">Speed & reversibility</div>
+            <span>Why not every decision deserves the same amount of analysis.</span>
+            <div class="btn-row"><button class="btn secondary" onclick="playSegment(2)" type="button">▶ Replay</button></div>
+          </div>
+
+          <div class="segment-card">
+            <strong>Segment 4</strong>
+            <div class="example">Outcome bias</div>
+            <span>Why a good outcome does not prove a good decision process.</span>
+            <div class="btn-row"><button class="btn secondary" onclick="playSegment(3)" type="button">▶ Replay</button></div>
+          </div>
+        </div>
+
+        <div class="map-grid" id="mapGrid" style="margin-top:16px"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeMap()">Check segment map</button>
+          <span class="muted" id="mapScoreText"></span>
+        </div>
+
+        <div class="feedback" id="mapFeedback"></div>
+      </section>
+
+      <!-- 4 -->
+      <section class="lesson-card" id="deep-listen">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 4 · Deep Listen</div>
+            <h2>Retrieve meaning from across the interview.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div id="deepQuestions"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeDeepQuiz()">Check 8 answers</button>
+          <span class="muted" id="deepScoreText"></span>
+        </div>
+
+        <div class="feedback" id="deepFeedback"></div>
+      </section>
+
+      <!-- 5 -->
+      <section class="lesson-card" id="evidence">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 5 · Evidence vs Inference</div>
+            <h2>What did the guest say — and what are you adding?</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="evidence-grid" id="evidenceGrid"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeEvidence()">Check classification</button>
+          <span class="muted" id="evidenceScoreText"></span>
+        </div>
+
+        <div class="feedback" id="evidenceFeedback"></div>
+      </section>
+
+      <!-- 6 -->
+      <section class="lesson-card" id="dictation">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 6 · Dictation & Decode</div>
+            <h2>Capture the sentences carrying the argument.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div id="dictationList"></div>
+
+        <div class="lockbox" id="transcriptLock" style="margin-top:18px">
+          <strong>Transcript locked</strong>
+          <p class="muted" style="margin:7px 0 12px">
+            Complete at least two full listens before revealing the interview transcript.
+          </p>
+          <button class="btn secondary" id="revealBtn" type="button" disabled>Reveal transcript</button>
+        </div>
+
+        <div class="transcript" id="transcriptBox">
+          <strong>Interview — Why smart teams still make poor decisions</strong>
+
+          <p><span class="speaker">Host:</span>People often assume that better decisions come from having smarter people in the room. Is that actually the main factor?</p>
+
+          <p><span class="speaker">Guest:</span>It helps, obviously, but I think we overestimate individual intelligence and underestimate process. A team can be full of capable people and still make a weak decision if the process rewards confidence more than challenge. The person who sounds most certain can become the center of gravity, even when the evidence is mixed.</p>
+
+          <p><span class="speaker">Host:</span>So confidence is being mistaken for quality?</p>
+
+          <p><span class="speaker">Guest:</span>Sometimes. The deeper problem is that confidence is visible, while uncertainty is harder to present well. If someone says, “I’m eighty percent sure,” we often hear the eighty and ignore the twenty. A strong process makes room for what would have to be true for the decision to fail.</p>
+
+          <p><span class="speaker">Host:</span>What does that look like in practice?</p>
+
+          <p><span class="speaker">Guest:</span>One useful habit is to actively look for weak signals. By that I mean small pieces of information that do not fit the main story yet. Maybe customer complaints are slightly different from what the dashboard suggests. Maybe one regional team is seeing a pattern before the central team sees it.</p>
+
+          <p><span class="speaker">Host:</span>But organizations have a lot of noise. You cannot escalate every small concern.</p>
+
+          <p><span class="speaker">Guest:</span>Exactly, and that is the tension. The answer is not to treat every signal as a crisis. The answer is to make it cheap to surface the signal before deciding whether it matters. Teams get into trouble when raising a concern feels socially expensive. People start filtering information before leadership has even seen it.</p>
+
+          <p><span class="speaker">Host:</span>That sounds like it could slow decisions down.</p>
+
+          <p><span class="speaker">Guest:</span>It can, if you apply the same process to everything. I think a better distinction is reversibility. If a decision is easy to reverse, speed is often more valuable than perfect analysis. Run the test, learn, adjust. But if the decision is expensive or hard to unwind, you want more challenge before commitment.</p>
+
+          <p><span class="speaker">Host:</span>So not every decision deserves the same amount of debate.</p>
+
+          <p><span class="speaker">Guest:</span>Right. Treating all decisions as equally important creates two problems. Either the organization becomes painfully slow, or people stop respecting the process because it feels bureaucratic. The level of scrutiny should match the cost of being wrong and the cost of reversing course.</p>
+
+          <p><span class="speaker">Host:</span>What about after the decision? How should teams learn from the result?</p>
+
+          <p><span class="speaker">Guest:</span>This is where outcome bias becomes dangerous. A bad process can produce a good result because you got lucky. A good process can produce a bad result because uncertainty was real. If you judge only by the outcome, you reward luck and punish disciplined thinking.</p>
+
+          <p><span class="speaker">Host:</span>Then what should a review look at?</p>
+
+          <p><span class="speaker">Guest:</span>Look at what information was available at the time, which assumptions mattered, what alternatives were considered, and what would have changed the decision. A simple decision journal helps because it preserves the reasoning before hindsight rewrites the story.</p>
+
+          <p><span class="speaker">Host:</span>If you had to reduce all of this to one principle?</p>
+
+          <p><span class="speaker">Guest:</span>Separate the quality of the process from the quality of the outcome. Then design the process around the kind of decision you are actually making.</p>
+        </div>
+
+        <div class="decode-grid">
+          <div class="decode-card">
+            <strong>“center of gravity”</strong>
+            <span>The person or idea that begins to dominate the discussion.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“what would have to be true...”</strong>
+            <span>Tests the assumptions required for a conclusion to hold.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“make it cheap to surface...”</strong>
+            <span>Reduce the social or procedural cost of raising a concern.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“hard to unwind”</strong>
+            <span>Difficult or expensive to reverse after commitment.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“outcome bias”</strong>
+            <span>Judging a past decision mainly by what happened afterward.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“hindsight rewrites the story”</strong>
+            <span>After knowing the result, people remember the earlier uncertainty less accurately.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section class="lesson-card" id="recall-shadow">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 7 · Recall & Shadowing</div>
+            <h2>Rebuild the interview without replaying everything.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="prompt-box">
+          <strong>30-second memory test:</strong><br>
+          Without replaying, say the four segments aloud in order and attach one example to each.
+        </div>
+
+        <div id="chunkList"></div>
+
+        <h3>Shadowing lines</h3>
+        <div id="shadowList"></div>
+
+        <div class="recorder">
+          <strong>🎙 Record your recall + shadowing</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="shadowRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="shadowStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="shadowRecordStatus">
+            First recall the structure. Then shadow one or two lines for rhythm.
+          </div>
+
+          <audio id="shadowPlayback" controls style="display:none"></audio>
+        </div>
+      </section>
+
+      <!-- 8 -->
+      <section class="lesson-card" id="speak-back">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 8 · Speak Back</div>
+            <h2>Give a two-minute interview recap.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div class="prompt-box">
+          <strong>2-minute recap</strong><br>
+          Explain the guest's central argument and the four major ideas:
+          <b>confidence vs process, weak signals, reversibility, and outcome bias.</b>
+          End with one practical principle you would apply in real decision-making.
+        </div>
+
+        <textarea id="speakOutline" placeholder="Keywords only: process > confidence / weak signals / cheap to surface / reversible vs hard to unwind / outcome bias / decision journal"></textarea>
+
+        <div class="recorder">
+          <strong>🎙 Record your recap</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="speakRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="speakStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="speakRecordStatus">
+            Target: 90–150 seconds. Preserve the interview's structure rather than listing disconnected details.
+          </div>
+
+          <audio id="speakPlayback" controls style="display:none"></audio>
+        </div>
+
+        <h3>Self-check</h3>
+
+        <div class="rating-grid">
+          <div class="rating">
+            <label>Thread retention · <output id="threadOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="threadRate">
+          </div>
+
+          <div class="rating">
+            <label>Detail selection · <output id="detailOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="detailRate">
+          </div>
+
+          <div class="rating">
+            <label>Synthesis · <output id="synthesisOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="synthesisRate">
+          </div>
+
+          <div class="rating">
+            <label>Natural delivery · <output id="naturalOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="naturalRate">
+          </div>
+        </div>
+      </section>
+
+      <!-- RESULT -->
+      <section class="lesson-card" id="result">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Day 24 Result</div>
+            <h2>Your long-form retention score</h2>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <div class="muted" style="color:#b8bdc6">Segment map + deep listening + evidence/inference + dictation</div>
+
+          <div class="result-score">
+            <span id="overallScore">—</span><span style="font-size:1.3rem">%</span>
+          </div>
+
+          <div class="muted" id="scoreInterpretation" style="color:#b8bdc6;margin-top:7px">
+            Complete all four objective sections to calculate your score.
+          </div>
+
+          <div class="result-grid">
+            <div class="result-box">
+              <strong id="mapResult">—</strong>
+              <span>Segment map</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="deepResult">—</strong>
+              <span>Long-form comprehension</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="evidenceResult">—</strong>
+              <span>Evidence vs inference</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="dictationResult">—</strong>
+              <span>Dictation</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPLETE -->
+      <section class="complete-box" id="complete">
+        <h2>Complete Day 24</h2>
+
+        <p>
+          Save today's result and continue to Day 25: Debate.
+          Your roadmap progress will update automatically.
+        </p>
+
+        <button class="btn primary" id="completeDayBtn" type="button">✓ Mark Day 24 complete</button>
+        <a href="lesson-day-25.html" class="btn secondary">Go to Day 25 →</a>
+
+        <div class="done-banner" id="doneBanner">
+          Day 24 is saved as completed in this browser.
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="sidebar">
+      <div class="side-card">
+        <h3>Day 24</h3>
+        <div class="muted" style="font-size:.84rem">Long-form Interviews</div>
+
+        <div class="mini-progress"><div id="sideProgress"></div></div>
+        <div class="muted" id="sideProgressText" style="font-size:.78rem;margin-top:7px">
+          0/8 sections touched
+        </div>
+      </div>
+
+      <div class="side-card">
+        <h3>Jump to</h3>
+
+        <nav class="toc">
+          <a href="#first-listen">1. Full Interview</a>
+          <a href="#strategy">2. Strategy</a>
+          <a href="#segment-map">3. Segment Map</a>
+          <a href="#deep-listen">4. Deep Listen</a>
+          <a href="#evidence">5. Evidence vs Inference</a>
+          <a href="#dictation">6. Dictation & Decode</a>
+          <a href="#recall-shadow">7. Recall & Shadowing</a>
+          <a href="#speak-back">8. Speak Back</a>
+          <a href="#result">Result</a>
+        </nav>
+      </div>
+
+      <div class="side-card">
+        <h3>Rule for today</h3>
+        <p class="muted" style="font-size:.84rem;line-height:1.55;margin:0">
+          Long-form listening is not a memory contest. Keep:
+          <b>segment → turn → example → takeaway.</b>
+        </p>
+      </div>
+    </aside>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="shell">Fluent30 · Day 24 · Long-form Interviews</div>
+</footer>
+
+<script>
+  const COURSE_KEY = "fluent30-progress-v1";
+  const DAY_KEY = "fluent30-day-24-result";
+
+  const dialogue = [
+    {speaker:"Host", segment:0, text:"People often assume that better decisions come from having smarter people in the room. Is that actually the main factor?"},
+    {speaker:"Guest", segment:0, text:"It helps, obviously, but I think we overestimate individual intelligence and underestimate process. A team can be full of capable people and still make a weak decision if the process rewards confidence more than challenge. The person who sounds most certain can become the center of gravity, even when the evidence is mixed."},
+    {speaker:"Host", segment:0, text:"So confidence is being mistaken for quality?"},
+    {speaker:"Guest", segment:0, text:"Sometimes. The deeper problem is that confidence is visible, while uncertainty is harder to present well. If someone says, I'm eighty percent sure, we often hear the eighty and ignore the twenty. A strong process makes room for what would have to be true for the decision to fail."},
+
+    {speaker:"Host", segment:1, text:"What does that look like in practice?"},
+    {speaker:"Guest", segment:1, text:"One useful habit is to actively look for weak signals. By that I mean small pieces of information that do not fit the main story yet. Maybe customer complaints are slightly different from what the dashboard suggests. Maybe one regional team is seeing a pattern before the central team sees it."},
+    {speaker:"Host", segment:1, text:"But organizations have a lot of noise. You cannot escalate every small concern."},
+    {speaker:"Guest", segment:1, text:"Exactly, and that is the tension. The answer is not to treat every signal as a crisis. The answer is to make it cheap to surface the signal before deciding whether it matters. Teams get into trouble when raising a concern feels socially expensive. People start filtering information before leadership has even seen it."},
+
+    {speaker:"Host", segment:2, text:"That sounds like it could slow decisions down."},
+    {speaker:"Guest", segment:2, text:"It can, if you apply the same process to everything. I think a better distinction is reversibility. If a decision is easy to reverse, speed is often more valuable than perfect analysis. Run the test, learn, adjust. But if the decision is expensive or hard to unwind, you want more challenge before commitment."},
+    {speaker:"Host", segment:2, text:"So not every decision deserves the same amount of debate."},
+    {speaker:"Guest", segment:2, text:"Right. Treating all decisions as equally important creates two problems. Either the organization becomes painfully slow, or people stop respecting the process because it feels bureaucratic. The level of scrutiny should match the cost of being wrong and the cost of reversing course."},
+
+    {speaker:"Host", segment:3, text:"What about after the decision? How should teams learn from the result?"},
+    {speaker:"Guest", segment:3, text:"This is where outcome bias becomes dangerous. A bad process can produce a good result because you got lucky. A good process can produce a bad result because uncertainty was real. If you judge only by the outcome, you reward luck and punish disciplined thinking."},
+    {speaker:"Host", segment:3, text:"Then what should a review look at?"},
+    {speaker:"Guest", segment:3, text:"Look at what information was available at the time, which assumptions mattered, what alternatives were considered, and what would have changed the decision. A simple decision journal helps because it preserves the reasoning before hindsight rewrites the story."},
+    {speaker:"Host", segment:3, text:"If you had to reduce all of this to one principle?"},
+    {speaker:"Guest", segment:3, text:"Separate the quality of the process from the quality of the outcome. Then design the process around the kind of decision you are actually making."}
+  ];
+
+  const segmentLabels = [
+    "Confidence vs process",
+    "Weak signals",
+    "Speed & reversibility",
+    "Outcome bias"
+  ];
+
+  const strategyDrill = [
+    "The deeper problem is that...",
+    "One useful habit is to...",
+    "Exactly, and that is the tension.",
+    "I think a better distinction is...",
+    "This is where outcome bias becomes dangerous.",
+    "If you had to reduce all of this to one principle..."
+  ];
+
+  const mapItems = [
+    {
+      label:"Segment 1 takeaway",
+      hint:"What is the core point?",
+      options:[
+        "Confidence is visible, but decision quality depends on process and challenge.",
+        "The smartest person should always decide.",
+        "Uncertainty should be hidden."
+      ],
+      answer:0
+    },
+    {
+      label:"Segment 2 takeaway",
+      hint:"What should happen to weak signals?",
+      options:[
+        "They should be easy to surface before the team decides how important they are.",
+        "They should always become formal escalations.",
+        "They should be filtered out before leaders see them."
+      ],
+      answer:0
+    },
+    {
+      label:"Segment 3 takeaway",
+      hint:"How should decision speed vary?",
+      options:[
+        "Match scrutiny to reversibility and the cost of being wrong.",
+        "Every decision should be slow.",
+        "Every decision should be immediate."
+      ],
+      answer:0
+    },
+    {
+      label:"Segment 4 takeaway",
+      hint:"How should teams review decisions?",
+      options:[
+        "Evaluate the process separately from the outcome.",
+        "Judge only whether the result was good.",
+        "Ignore the original assumptions."
+      ],
+      answer:0
+    }
+  ];
+
+  const deepQuestions = [
+    {
+      q:"Why can confidence distort a team's decision process?",
+      options:[
+        "Because confidence is visible and can dominate attention even when evidence is mixed.",
+        "Because confident people always have more data.",
+        "Because uncertainty is never useful."
+      ],
+      answer:0
+    },
+    {
+      q:"What does the guest mean by “we hear the eighty and ignore the twenty”?",
+      options:[
+        "People focus on the stated confidence and neglect the remaining uncertainty.",
+        "People misunderstand percentages mathematically.",
+        "Teams should ignore probability estimates."
+      ],
+      answer:0
+    },
+    {
+      q:"What is a weak signal?",
+      options:[
+        "A small piece of information that does not yet fit the main story.",
+        "A confirmed crisis.",
+        "A formal management decision."
+      ],
+      answer:0
+    },
+    {
+      q:"Why should it be “cheap to surface” a weak signal?",
+      options:[
+        "So people can raise it without excessive social or procedural cost.",
+        "So every weak signal becomes a major escalation.",
+        "So leaders can avoid seeing uncertain information."
+      ],
+      answer:0
+    },
+    {
+      q:"When does the guest favor speed over extensive analysis?",
+      options:[
+        "When a decision is easy to reverse.",
+        "When a decision is impossible to reverse.",
+        "Whenever senior leaders are confident."
+      ],
+      answer:0
+    },
+    {
+      q:"What determines the appropriate level of scrutiny?",
+      options:[
+        "The cost of being wrong and the cost of reversing course.",
+        "The number of people in the meeting.",
+        "How strongly someone argues."
+      ],
+      answer:0
+    },
+    {
+      q:"What is outcome bias in this interview?",
+      options:[
+        "Judging the quality of a decision mainly by what happened afterward.",
+        "Ignoring the result completely.",
+        "Making every decision based on historical data."
+      ],
+      answer:0
+    },
+    {
+      q:"Why does the guest recommend a decision journal?",
+      options:[
+        "It preserves the reasoning before hindsight changes how people remember it.",
+        "It guarantees good outcomes.",
+        "It removes uncertainty from future decisions."
+      ],
+      answer:0
+    }
+  ];
+
+  const evidenceItems = [
+    {
+      statement:"The guest says capable teams can still make weak decisions.",
+      options:["Directly stated","Reasonable inference","Not supported"],
+      answer:0
+    },
+    {
+      statement:"The guest believes every weak signal should be escalated to senior leadership.",
+      options:["Directly stated","Reasonable inference","Not supported"],
+      answer:2
+    },
+    {
+      statement:"A reversible decision can often justify moving faster.",
+      options:["Directly stated","Reasonable inference","Not supported"],
+      answer:0
+    },
+    {
+      statement:"The guest would probably support different governance for a small pilot and a major irreversible investment.",
+      options:["Directly stated","Reasonable inference","Not supported"],
+      answer:1
+    }
+  ];
+
+  const dictationItems = [
+    "A strong process makes room for what would have to be true for the decision to fail.",
+    "The answer is to make it cheap to surface the signal before deciding whether it matters.",
+    "The level of scrutiny should match the cost of being wrong and the cost of reversing course.",
+    "Separate the quality of the process from the quality of the outcome."
+  ];
+
+  const chunks = [
+    ["center of gravity","the person or idea dominating attention","The most confident person can become the center of gravity."],
+    ["what would have to be true","tests the assumptions behind a conclusion","Ask what would have to be true for the plan to work."],
+    ["weak signal","small information that may become important later","Do not ignore a weak signal just because it is incomplete."],
+    ["make it cheap to surface","reduce the cost of raising a concern","Make it cheap to surface uncomfortable information."],
+    ["hard to unwind","difficult or costly to reverse","This commitment would be hard to unwind."],
+    ["outcome bias","judging a decision by its later result","Outcome bias can reward luck."],
+    ["separate process from outcome","evaluate reasoning independently of result","Separate process quality from outcome quality."]
+  ];
+
+  const shadowSentences = [
+    "A strong process makes room for what would have to be true for the decision to fail.",
+    "The answer is to make it cheap to surface the signal.",
+    "If a decision is easy to reverse, speed is often more valuable than perfect analysis.",
+    "The level of scrutiny should match the cost of being wrong.",
+    "Separate the quality of the process from the quality of the outcome."
+  ];
+
+  let speechRate = 1.00;
+  let listenCount = Number(localStorage.getItem("fluent30-day24-listens") || 0);
+  let mapScore = null;
+  let deepScore = null;
+  let evidenceScore = null;
+  let dictationScores = [null,null,null,null];
+  let touched = new Set();
+
+  function getVoices(){
+    if(!("speechSynthesis" in window)) return [];
+    return speechSynthesis.getVoices();
+  }
+
+  function getVoice(){
+    const voices = getVoices();
+    const us = voices.filter(v => /en-US/i.test(v.lang));
+    const en = voices.filter(v => /^en/i.test(v.lang));
+
+    const preferred = [
+      /Google US English/i,
+      /Samantha/i,
+      /Jenny/i,
+      /Aria/i,
+      /Joanna/i,
+      /Ava/i
+    ];
+
+    for(const pattern of preferred){
+      const match = us.find(v => pattern.test(v.name)) || en.find(v => pattern.test(v.name));
+      if(match) return match;
+    }
+
+    return us[0] || en[0] || null;
+  }
+
+  function speak(text,rate=1,onEnd=null){
+    if(!("speechSynthesis" in window)){
+      alert("Speech synthesis is not supported in this browser.");
+      return;
+    }
+
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US";
+    u.rate = rate;
+    u.pitch = 1.0;
+
+    const v = getVoice();
+    if(v) u.voice = v;
+    if(onEnd) u.onend = onEnd;
+
+    speechSynthesis.speak(u);
+  }
+
+  function stopSpeech(){
+    if("speechSynthesis" in window) speechSynthesis.cancel();
+  }
+
+  function speakSequence(lines,rate=1,onComplete=null){
+    stopSpeech();
+    let i = 0;
+
+    const next = ()=>{
+      if(i >= lines.length){
+        if(onComplete) onComplete();
+        return;
+      }
+
+      speak(lines[i],rate,()=>{
+        i++;
+        setTimeout(next,180);
+      });
+    };
+
+    next();
+  }
+
+  function playFullInterview(){
+    listenCount++;
+    localStorage.setItem("fluent30-day24-listens",String(listenCount));
+    updateListenUI();
+    markTouched("listen");
+
+    speakSequence(dialogue.map(x=>x.text),speechRate);
+  }
+
+  function playSegment(segmentIndex){
+    const lines = dialogue.filter(x=>x.segment === segmentIndex).map(x=>x.text);
+    speakSequence(lines,speechRate);
+    markTouched("map");
+  }
+
+  document.getElementById("playFullBtn").addEventListener("click",playFullInterview);
+  document.getElementById("stopBtn").addEventListener("click",stopSpeech);
+
+  document.querySelectorAll(".speed-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      speechRate = Number(btn.dataset.rate);
+      document.querySelectorAll(".speed-btn").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+
+  function updateListenUI(){
+    document.getElementById("listenCount").textContent = listenCount;
+    document.getElementById("revealBtn").disabled = listenCount < 2;
+
+    if(listenCount >= 2){
+      const lock = document.getElementById("transcriptLock");
+      lock.querySelector("strong").textContent = "Transcript ready";
+      lock.querySelector("p").textContent =
+        "You have completed at least two full listens. Now inspect how the argument develops across segments.";
+    }
+  }
+
+  document.getElementById("revealBtn").addEventListener("click",()=>{
+    document.getElementById("transcriptBox").classList.add("show");
+    document.getElementById("transcriptLock").style.display = "none";
+    markTouched("dictation");
+  });
+
+  function checkFirstQuestion(){
+    const chosen = document.querySelector('input[name="q1"]:checked');
+    const box = document.getElementById("q1Feedback");
+    box.className = "feedback show";
+
+    if(!chosen){
+      box.classList.add("warn");
+      box.textContent = "Choose one answer first.";
+      return;
+    }
+
+    if(chosen.value === "b"){
+      box.classList.add("good");
+      box.textContent = "Correct. The interview is about process design under uncertainty, not eliminating uncertainty.";
+    }else{
+      box.classList.add("warn");
+      box.textContent = "Not quite. Track the four-part process argument rather than a single personality trait.";
+    }
+
+    markTouched("listen");
+  }
+
+  function playStrategyDrill(){
+    markTouched("strategy");
+    speakSequence(strategyDrill,1.00);
+  }
+
+  function renderMap(){
+    const container = document.getElementById("mapGrid");
+
+    container.innerHTML = mapItems.map((item,index)=>`
+      <div class="map-item">
+        <label>${index+1}. ${item.label}</label>
+        <small>${item.hint}</small>
+        <select id="mapSelect${index}">
+          <option value="">Choose...</option>
+          ${item.options.map((option,optIndex)=>`
+            <option value="${optIndex}">${option}</option>
+          `).join("")}
+        </select>
+      </div>
+    `).join("");
+  }
+
+  function gradeMap(){
+    let correct = 0;
+    let answered = 0;
+
+    mapItems.forEach((item,index)=>{
+      const value = document.getElementById(`mapSelect${index}`).value;
+      if(value !== ""){
+        answered++;
+        if(Number(value) === item.answer) correct++;
+      }
+    });
+
+    const box = document.getElementById("mapFeedback");
+    box.className = "feedback show";
+
+    if(answered < mapItems.length){
+      box.classList.add("warn");
+      box.textContent = `You completed ${answered}/${mapItems.length}. Finish all four first.`;
+      return;
+    }
+
+    mapScore = Math.round((correct/mapItems.length)*100);
+    document.getElementById("mapScoreText").textContent =
+      `${correct}/${mapItems.length} correct · ${mapScore}%`;
+
+    box.classList.add(mapScore >= 75 ? "good" : "info");
+    box.textContent = mapScore >= 75
+      ? "Good. You retained the four-part interview structure."
+      : "Replay by segment and keep one takeaway per section.";
+
+    markTouched("map");
+    updateResults();
+  }
+
+  function renderDeepQuestions(){
+    const container = document.getElementById("deepQuestions");
+
+    container.innerHTML = deepQuestions.map((item,index)=>`
+      <div class="question">
+        <div class="question-title">${index+1}. ${item.q}</div>
+
+        <div class="options">
+          ${item.options.map((option,optIndex)=>`
+            <label class="option">
+              <input type="radio" name="deep${index}" value="${optIndex}">
+              <span>${option}</span>
+            </label>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function gradeDeepQuiz(){
+    let correct = 0;
+    let answered = 0;
+
+    deepQuestions.forEach((item,index)=>{
+      const selected = document.querySelector(`input[name="deep${index}"]:checked`);
+      if(selected){
+        answered++;
+        if(Number(selected.value) === item.answer) correct++;
+      }
+    });
+
+    const box = document.getElementById("deepFeedback");
+    box.className = "feedback show";
+
+    if(answered < deepQuestions.length){
+      box.classList.add("warn");
+      box.textContent = `You answered ${answered}/${deepQuestions.length}. Complete all questions first.`;
+      return;
+    }
+
+    deepScore = Math.round((correct/deepQuestions.length)*100);
+    document.getElementById("deepScoreText").textContent =
+      `${correct}/${deepQuestions.length} correct · ${deepScore}%`;
+
+    if(deepScore >= 88){
+      box.classList.add("good");
+      box.textContent = "Excellent long-form retention. You held both early and late interview details.";
+    }else if(deepScore >= 75){
+      box.classList.add("info");
+      box.textContent = "Strong. The main thread is stable, with only occasional loss across segment boundaries.";
+    }else{
+      box.classList.add("warn");
+      box.textContent = "Your comprehension may be fine sentence-by-sentence, but retention is dropping. Use segment labels and one example per segment.";
+    }
+
+    markTouched("deep");
+    updateResults();
+  }
+
+  function renderEvidence(){
+    const container = document.getElementById("evidenceGrid");
+
+    container.innerHTML = evidenceItems.map((item,index)=>`
+      <div class="evidence-card">
+        <strong>Statement ${index+1}</strong>
+        <span style="display:block;margin-bottom:10px">“${item.statement}”</span>
+        <select id="evidenceSelect${index}">
+          <option value="">Classify...</option>
+          ${item.options.map((option,optIndex)=>`
+            <option value="${optIndex}">${option}</option>
+          `).join("")}
+        </select>
+      </div>
+    `).join("");
+  }
+
+  function gradeEvidence(){
+    let correct = 0;
+    let answered = 0;
+
+    evidenceItems.forEach((item,index)=>{
+      const value = document.getElementById(`evidenceSelect${index}`).value;
+      if(value !== ""){
+        answered++;
+        if(Number(value) === item.answer) correct++;
+      }
+    });
+
+    const box = document.getElementById("evidenceFeedback");
+    box.className = "feedback show";
+
+    if(answered < evidenceItems.length){
+      box.classList.add("warn");
+      box.textContent = `You completed ${answered}/${evidenceItems.length}. Finish all four first.`;
+      return;
+    }
+
+    evidenceScore = Math.round((correct/evidenceItems.length)*100);
+    document.getElementById("evidenceScoreText").textContent =
+      `${correct}/${evidenceItems.length} correct · ${evidenceScore}%`;
+
+    box.classList.add(evidenceScore >= 75 ? "good" : "info");
+    box.textContent = evidenceScore >= 75
+      ? "Good. You are separating the guest's exact claims from reasonable extension."
+      : "Long-form summaries become inaccurate when inference is remembered as direct evidence.";
+
+    markTouched("evidence");
+    updateResults();
+  }
+
+  function renderDictation(){
+    const container = document.getElementById("dictationList");
+
+    container.innerHTML = dictationItems.map((sentence,index)=>`
+      <div class="dictation-item">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+          <strong>Sentence ${index+1}</strong>
+          <button class="btn secondary" type="button" onclick="playDictation(${index})">▶ Play</button>
+        </div>
+
+        <input
+          type="text"
+          id="dictInput${index}"
+          style="margin-top:12px"
+          placeholder="Type exactly what you hear"
+          autocomplete="off"
+        >
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="checkDictation(${index})">Check</button>
+        </div>
+
+        <div class="dictation-result" id="dictResult${index}"></div>
+      </div>
+    `).join("");
+  }
+
+  function playDictation(index){
+    stopSpeech();
+    speak(dictationItems[index],1.00);
+    markTouched("dictation");
+  }
+
+  function normalize(text){
+    return text
+      .toLowerCase()
+      .replace(/[’‘]/g,"'")
+      .replace(/[^a-z0-9'\s-]/g,"")
+      .replace(/\s+/g," ")
+      .trim();
+  }
+
+  function wordSimilarity(userText,targetText){
+    const a = normalize(userText).split(" ").filter(Boolean);
+    const b = normalize(targetText).split(" ").filter(Boolean);
+
+    const dp = Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));
+
+    for(let i=1;i<=a.length;i++){
+      for(let j=1;j<=b.length;j++){
+        if(a[i-1] === b[j-1]){
+          dp[i][j] = dp[i-1][j-1] + 1;
+        }else{
+          dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+        }
+      }
+    }
+
+    return b.length ? Math.round((dp[a.length][b.length]/b.length)*100) : 0;
+  }
+
+  function checkDictation(index){
+    const input = document.getElementById(`dictInput${index}`);
+    const result = document.getElementById(`dictResult${index}`);
+
+    if(!input.value.trim()){
+      result.className = "dictation-result show";
+      result.textContent = "Type what you hear first.";
+      return;
+    }
+
+    const score = wordSimilarity(input.value,dictationItems[index]);
+    dictationScores[index] = score;
+
+    result.className = "dictation-result show";
+    result.innerHTML = `
+      <div><strong>${score}% match</strong></div>
+      <div style="margin-top:6px"><span class="muted">Target:</span> ${dictationItems[index]}</div>
+    `;
+
+    markTouched("dictation");
+    updateResults();
+  }
+
+  function getDictationAverage(){
+    if(dictationScores.some(v => typeof v !== "number")) return null;
+    return Math.round(dictationScores.reduce((a,b)=>a+b,0)/dictationScores.length);
+  }
+
+  function renderChunks(){
+    const saved = JSON.parse(localStorage.getItem("fluent30-saved-chunks") || "[]");
+    const container = document.getElementById("chunkList");
+
+    container.innerHTML = chunks.map((chunk,index)=>{
+      const isSaved = saved.includes(chunk[0]);
+
+      return `
+        <div class="chunk">
+          <div>
+            <strong>${chunk[0]}</strong>
+            <div style="margin-top:5px;font-size:.82rem;color:#8b8f96">“${chunk[2]}”</div>
+          </div>
+
+          <span>${chunk[1]}</span>
+
+          <button
+            class="save-chunk ${isSaved ? "saved" : ""}"
+            type="button"
+            onclick="toggleChunk(${index},this)"
+          >${isSaved ? "Saved ✓" : "Save"}</button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function toggleChunk(index,button){
+    let saved = JSON.parse(localStorage.getItem("fluent30-saved-chunks") || "[]");
+    const phrase = chunks[index][0];
+
+    if(saved.includes(phrase)){
+      saved = saved.filter(x=>x!==phrase);
+      button.classList.remove("saved");
+      button.textContent = "Save";
+    }else{
+      saved.push(phrase);
+      button.classList.add("saved");
+      button.textContent = "Saved ✓";
+    }
+
+    localStorage.setItem("fluent30-saved-chunks",JSON.stringify(saved));
+    markTouched("recall");
+  }
+
+  function renderShadowing(){
+    const container = document.getElementById("shadowList");
+
+    container.innerHTML = shadowSentences.map((sentence,index)=>`
+      <div class="dictation-item">
+        <strong>${index+1}. ${sentence}</strong>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="playShadow(${index},0.92)">Slow</button>
+          <button class="btn primary" type="button" onclick="playShadow(${index},1.00)">Natural</button>
+          <button class="btn secondary" type="button" onclick="playShadow(${index},1.08)">Fast</button>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function playShadow(index,rate){
+    stopSpeech();
+    speak(shadowSentences[index],rate);
+    markTouched("recall");
+  }
+
+  function setupRecorder(prefix){
+    const recordBtn = document.getElementById(`${prefix}RecordBtn`);
+    const stopBtn = document.getElementById(`${prefix}StopBtn`);
+    const status = document.getElementById(`${prefix}RecordStatus`);
+    const playback = document.getElementById(`${prefix}Playback`);
+
+    let recorder = null;
+    let blobs = [];
+    let stream = null;
+    let startTime = null;
+
+    recordBtn.addEventListener("click",async()=>{
+      if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+        status.textContent = "Microphone recording is not supported in this browser.";
+        return;
+      }
+
+      try{
+        stream = await navigator.mediaDevices.getUserMedia({audio:true});
+        recorder = new MediaRecorder(stream);
+        blobs = [];
+        startTime = Date.now();
+
+        recorder.ondataavailable = e=>{
+          if(e.data.size > 0) blobs.push(e.data);
+        };
+
+        recorder.onstop = ()=>{
+          const blob = new Blob(blobs,{type:recorder.mimeType || "audio/webm"});
+          playback.src = URL.createObjectURL(blob);
+          playback.style.display = "block";
+
+          const seconds = Math.round((Date.now()-startTime)/1000);
+          status.textContent =
+            `Recorded ${seconds} seconds. Check whether the four-segment thread is still clear.`;
+
+          if(stream) stream.getTracks().forEach(track=>track.stop());
+
+          if(prefix === "speak") markTouched("speak");
+          if(prefix === "shadow") markTouched("recall");
+        };
+
+        recorder.start();
+        recordBtn.disabled = true;
+        stopBtn.disabled = false;
+        status.textContent = "Recording…";
+
+      }catch(e){
+        status.textContent = "Microphone permission was not granted.";
+      }
+    });
+
+    stopBtn.addEventListener("click",()=>{
+      if(recorder && recorder.state !== "inactive") recorder.stop();
+      recordBtn.disabled = false;
+      stopBtn.disabled = true;
+    });
+  }
+
+  ["thread","detail","synthesis","natural"].forEach(name=>{
+    const range = document.getElementById(`${name}Rate`);
+    const out = document.getElementById(`${name}Out`);
+
+    range.addEventListener("input",()=>{
+      out.value = range.value;
+      markTouched("speak");
+    });
+  });
+
+  function speakingAverage(){
+    const values = [
+      Number(document.getElementById("threadRate").value),
+      Number(document.getElementById("detailRate").value),
+      Number(document.getElementById("synthesisRate").value),
+      Number(document.getElementById("naturalRate").value)
+    ];
+
+    return values.reduce((a,b)=>a+b,0)/values.length;
+  }
+
+  function updateResults(){
+    const dictAvg = getDictationAverage();
+
+    document.getElementById("mapResult").textContent =
+      mapScore === null ? "—" : `${mapScore}%`;
+
+    document.getElementById("deepResult").textContent =
+      deepScore === null ? "—" : `${deepScore}%`;
+
+    document.getElementById("evidenceResult").textContent =
+      evidenceScore === null ? "—" : `${evidenceScore}%`;
+
+    document.getElementById("dictationResult").textContent =
+      dictAvg === null ? "—" : `${dictAvg}%`;
+
+    if(mapScore !== null && deepScore !== null && evidenceScore !== null && dictAvg !== null){
+      const overall = Math.round(
+        mapScore * 0.25 +
+        deepScore * 0.35 +
+        evidenceScore * 0.20 +
+        dictAvg * 0.20
+      );
+
+      document.getElementById("overallScore").textContent = overall;
+
+      let interpretation = "";
+
+      if(overall >= 88){
+        interpretation =
+          "Excellent long-form processing. You retain structure, detail and claim boundaries across an extended interview.";
+      }else if(overall >= 75){
+        interpretation =
+          "Strong. The interview thread remains stable, with only occasional loss of detail or evidence boundary.";
+      }else if(overall >= 60){
+        interpretation =
+          "Developing. Sentence-level comprehension is adequate, but retention drops across segments or inference becomes mixed with direct claims.";
+      }else{
+        interpretation =
+          "Long-form retention is still unstable. Reduce each segment to label + turn + example + takeaway before moving on.";
+      }
+
+      document.getElementById("scoreInterpretation").textContent = interpretation;
+    }
+  }
+
+  function markTouched(section){
+    touched.add(section);
+    updateProgress();
+  }
+
+  function updateProgress(){
+    const count = touched.size;
+    const percent = Math.round((count/8)*100);
+
+    document.getElementById("topProgress").style.width = `${percent}%`;
+    document.getElementById("sideProgress").style.width = `${percent}%`;
+    document.getElementById("topProgressText").textContent = `${percent}% complete`;
+    document.getElementById("sideProgressText").textContent = `${count}/8 sections touched`;
+  }
+
+  function getCourseProgress(){
+    try{
+      return JSON.parse(localStorage.getItem(COURSE_KEY)) || {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }catch(e){
+      return {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }
+  }
+
+  function saveDayResult(){
+    const dictAvg = getDictationAverage();
+
+    const overall = (
+      mapScore !== null &&
+      deepScore !== null &&
+      evidenceScore !== null &&
+      dictAvg !== null
+    ) ? Math.round(
+      mapScore * 0.25 +
+      deepScore * 0.35 +
+      evidenceScore * 0.20 +
+      dictAvg * 0.20
+    ) : null;
+
+    const result = {
+      day:24,
+      mapScore,
+      deepScore,
+      evidenceScore,
+      dictationScore:dictAvg,
+      dictationScores:[...dictationScores],
+      speakingSelf:Number(speakingAverage().toFixed(1)),
+      overall,
+      listens:listenCount,
+      savedAt:new Date().toISOString()
+    };
+
+    localStorage.setItem(DAY_KEY,JSON.stringify(result));
+  }
+
+  document.getElementById("completeDayBtn").addEventListener("click",()=>{
+    const progress = getCourseProgress();
+    const alreadyDone = progress.completed.includes(24);
+
+    if(!alreadyDone){
+      progress.completed.push(24);
+      progress.completed.sort((a,b)=>a-b);
+      progress.streak = Math.max(1,Number(progress.streak || 0)+1);
+      progress.minutes = Number(progress.minutes || 0)+90;
+      progress.lastDay = 24;
+
+      localStorage.setItem(COURSE_KEY,JSON.stringify(progress));
+    }
+
+    saveDayResult();
+
+    document.getElementById("doneBanner").classList.add("show");
+    document.getElementById("completeDayBtn").textContent = "✓ Day 24 completed";
+    document.getElementById("completeDayBtn").disabled = true;
+
+    touched = new Set([
+      "listen","strategy","map","deep","evidence","dictation","recall","speak"
+    ]);
+
+    updateProgress();
+  });
+
+  function loadSavedState(){
+    updateListenUI();
+
+    const progress = getCourseProgress();
+
+    if(progress.completed.includes(24)){
+      document.getElementById("doneBanner").classList.add("show");
+      document.getElementById("completeDayBtn").textContent = "✓ Day 24 completed";
+      document.getElementById("completeDayBtn").disabled = true;
+
+      touched = new Set([
+        "listen","strategy","map","deep","evidence","dictation","recall","speak"
+      ]);
+
+      updateProgress();
+    }
+
+    try{
+      const saved = JSON.parse(localStorage.getItem(DAY_KEY) || "null");
+
+      if(saved){
+        if(typeof saved.mapScore === "number") mapScore = saved.mapScore;
+        if(typeof saved.deepScore === "number") deepScore = saved.deepScore;
+        if(typeof saved.evidenceScore === "number") evidenceScore = saved.evidenceScore;
+        if(Array.isArray(saved.dictationScores)) dictationScores = saved.dictationScores;
+      }
+    }catch(e){}
+
+    updateResults();
+  }
+
+  renderMap();
+  renderDeepQuestions();
+  renderEvidence();
+  renderDictation();
+  renderChunks();
+  renderShadowing();
+  setupRecorder("shadow");
+  setupRecorder("speak");
+  loadSavedState();
+
+  if("speechSynthesis" in window){
+    speechSynthesis.onvoiceschanged = ()=>getVoice();
+  }
+</script>
+</body>
+</html>
