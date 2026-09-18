@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fluent30 Day 05 — Numbers, Dates & Names" />
+  <title>Fluent30 — Day 05 Numbers, Dates & Names</title>
+
+  <style>
+    :root{
+      --bg:#f5f5f6; --surface:#fff; --surface-2:#fafafa; --text:#111; --muted:#6b7280;
+      --line:#e5e7eb; --red:#8f1027; --red-dark:#6f0b1e; --black:#171717;
+      --green:#166534; --green-bg:#ecfdf3; --amber:#92400e; --amber-bg:#fffbeb;
+      --blue:#1d4ed8; --blue-bg:#eff6ff; --shadow:0 18px 50px rgba(17,24,39,.08);
+      --r-xl:24px; --r-lg:17px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text);
+    }
+    button,input,textarea{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    .shell{width:min(1160px,calc(100% - 38px));margin:0 auto}
+
+    header{
+      position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);
+      border-bottom:1px solid var(--line);backdrop-filter:blur(14px)
+    }
+    .topnav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.04em}
+    .brand-mark{
+      width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
+      background:var(--red);color:#fff;font-size:.88rem
+    }
+    .brand span span{color:var(--red)}
+    .toplinks{display:flex;align-items:center;gap:9px}
+    .navbtn{
+      display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;
+      border:1px solid var(--line);border-radius:10px;background:#fff;color:#333;
+      font-size:.88rem;font-weight:700
+    }
+    .navbtn:hover{border-color:#c8ccd2}
+
+    main{padding:34px 0 70px}
+    .hero{
+      display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.55fr);gap:20px
+    }
+    .hero-main,.hero-side{border-radius:var(--r-xl);box-shadow:var(--shadow)}
+    .hero-main{
+      background:linear-gradient(135deg,#fff 0%,#fbfbfc 72%,#f2f2f3 100%);
+      border:1px solid var(--line);padding:38px
+    }
+    .eyebrow{
+      color:var(--red);font-weight:850;font-size:.76rem;letter-spacing:.12em;
+      text-transform:uppercase;margin-bottom:12px
+    }
+    h1{margin:0;font-size:clamp(2.4rem,5vw,4.8rem);line-height:.96;letter-spacing:-.06em}
+    .hero-copy{max-width:790px;color:var(--muted);line-height:1.65;margin:18px 0 0}
+    .hero-side{
+      background:var(--black);color:#fff;padding:28px;display:flex;
+      flex-direction:column;justify-content:space-between;gap:20px
+    }
+    .hero-side .muted{color:#b9bec7}
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .meta-card{background:#202020;border:1px solid #343434;border-radius:12px;padding:14px}
+    .meta-card strong{display:block;font-size:1.2rem;margin-bottom:2px}
+    .meta-card span{font-size:.78rem;color:#afb4bd}
+    .progress-track{height:9px;border-radius:999px;background:#343434;overflow:hidden;margin-top:13px}
+    .progress-fill{height:100%;width:0%;background:#fff;transition:.25s ease}
+
+    .layout{
+      display:grid;grid-template-columns:minmax(0,1fr) 292px;gap:22px;margin-top:24px
+    }
+    .lesson-card{
+      background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+      padding:26px;margin-bottom:18px
+    }
+    .lesson-card h2{margin:0;font-size:1.42rem;letter-spacing:-.035em}
+    .lesson-card h3{margin:18px 0 8px;font-size:1rem}
+    .lesson-card p{line-height:1.62}
+    .muted{color:var(--muted)}
+    .step-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px}
+    .step-label{
+      color:var(--red);font-size:.74rem;font-weight:850;letter-spacing:.1em;
+      text-transform:uppercase;margin-bottom:6px
+    }
+    .time-pill{
+      flex:0 0 auto;padding:6px 9px;background:#f3f4f6;border-radius:999px;
+      color:#5b616c;font-size:.76rem;font-weight:750
+    }
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:43px;
+      padding:0 15px;border-radius:11px;border:1px solid transparent;font-weight:800;transition:.18s ease
+    }
+    .btn.primary{background:var(--red);color:#fff}
+    .btn.primary:hover{background:var(--red-dark);transform:translateY(-1px)}
+    .btn.secondary{background:#fff;border-color:var(--line);color:#222}
+    .btn.secondary:hover{border-color:#c9cdd3}
+    .btn:disabled{opacity:.45;cursor:not-allowed}
+    .btn-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+
+    .audio-panel{
+      border:1px solid var(--line);border-radius:14px;background:var(--surface-2);padding:17px
+    }
+    .audio-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;font-weight:800}
+    .listen-counter{font-size:.78rem;color:var(--muted);font-weight:700}
+    .speed-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+    .speed-btn{
+      border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 10px;
+      font-size:.78rem;font-weight:750
+    }
+    .speed-btn.active{border-color:var(--red);color:var(--red);background:#fff5f6}
+
+    .question{padding:17px 0;border-top:1px solid var(--line)}
+    .question:first-of-type{border-top:0;padding-top:4px}
+    .question-title{font-weight:800;line-height:1.5;margin-bottom:10px}
+    .options{display:grid;gap:8px}
+    .option{
+      display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid var(--line);
+      border-radius:11px;cursor:pointer;background:#fff
+    }
+    .option:hover{border-color:#c9cdd3}
+    .option input{margin-top:3px}
+
+    .feedback{
+      margin-top:12px;border-radius:11px;padding:11px 13px;font-size:.9rem;line-height:1.5;display:none
+    }
+    .feedback.show{display:block}
+    .feedback.good{background:var(--green-bg);color:var(--green)}
+    .feedback.warn{background:var(--amber-bg);color:var(--amber)}
+    .feedback.info{background:var(--blue-bg);color:var(--blue)}
+
+    textarea,input[type="text"]{
+      width:100%;border:1px solid #d2d6dc;border-radius:11px;padding:12px 13px;
+      background:#fff;color:#111;outline:none
+    }
+    textarea:focus,input[type="text"]:focus{
+      border-color:#ba6a7c;box-shadow:0 0 0 3px rgba(143,16,39,.08)
+    }
+    textarea{resize:vertical;min-height:100px}
+
+    .precision-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px
+    }
+    .precision-card{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff
+    }
+    .precision-card strong{display:block;margin-bottom:6px}
+    .precision-card .pair{color:var(--red);font-weight:900;font-size:1.05rem;margin-bottom:6px}
+    .precision-card span{font-size:.86rem;color:var(--muted);line-height:1.45}
+
+    .data-list{
+      margin-top:14px;border:1px solid var(--line);border-radius:13px;overflow:hidden
+    }
+    .data-row{
+      display:grid;grid-template-columns:1fr 1.2fr 1.6fr;gap:12px;
+      padding:12px 14px;border-top:1px solid var(--line);align-items:center
+    }
+    .data-row:first-child{border-top:0;background:#fafafa;font-weight:800;font-size:.82rem}
+    .data-row span{font-size:.86rem}
+    .focus{color:var(--red);font-weight:850}
+
+    .entry-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .entry-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;background:#fff
+    }
+    .entry-item label{font-weight:800;display:block;margin-bottom:8px}
+    .entry-result{
+      margin-top:9px;padding:9px 10px;background:#f8f9fa;border-radius:9px;display:none;font-size:.88rem
+    }
+    .entry-result.show{display:block}
+
+    .dictation-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;margin-top:12px;background:#fff
+    }
+    .dictation-result{
+      margin-top:10px;padding:10px 12px;background:#f8f9fa;border-radius:10px;
+      line-height:1.55;display:none
+    }
+    .dictation-result.show{display:block}
+    .miss{color:#b91c1c;text-decoration:underline;text-decoration-style:wavy}
+
+    .lockbox{
+      border:1px dashed #c8cdd3;border-radius:13px;padding:18px;background:#fafafa;text-align:center
+    }
+    .transcript{
+      display:none;margin-top:14px;padding:18px;border-left:4px solid var(--red);
+      border-radius:10px;background:#fafafa;line-height:1.8
+    }
+    .transcript.show{display:block}
+    .decode-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+    .decode-card{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff}
+    .decode-card strong{display:block;margin-bottom:5px}
+    .decode-card span{font-size:.88rem;color:var(--muted);line-height:1.45}
+
+    .chunk{
+      display:grid;grid-template-columns:1.2fr 1.8fr auto;gap:12px;align-items:center;
+      border-top:1px solid var(--line);padding:13px 0
+    }
+    .chunk:first-of-type{border-top:0}
+    .chunk strong{font-size:.92rem}
+    .chunk span{font-size:.86rem;color:var(--muted);line-height:1.45}
+    .save-chunk{
+      border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 9px;
+      font-size:.76rem;font-weight:750
+    }
+    .save-chunk.saved{background:var(--green-bg);color:var(--green);border-color:#ccebd5}
+
+    .recorder{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fafafa;margin-top:12px
+    }
+    .record-status{font-size:.84rem;color:var(--muted);margin-top:8px}
+    audio{width:100%;margin-top:12px}
+
+    .prompt-box{
+      border-left:4px solid var(--red);background:#fafafa;padding:16px 17px;
+      border-radius:10px;line-height:1.6;margin:12px 0
+    }
+
+    .rating-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+    .rating{border:1px solid var(--line);border-radius:12px;padding:13px}
+    .rating label{display:block;font-size:.8rem;font-weight:800;margin-bottom:8px}
+    .rating output{font-weight:900;color:var(--red)}
+    input[type="range"]{width:100%}
+
+    .result-card{background:var(--black);color:#fff;border-radius:18px;padding:24px}
+    .result-score{font-size:3.2rem;font-weight:900;letter-spacing:-.05em;line-height:1;margin-top:8px}
+    .result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+    .result-box{background:#202020;border:1px solid #353535;border-radius:12px;padding:13px}
+    .result-box strong{display:block;font-size:1.2rem}
+    .result-box span{color:#b8bdc6;font-size:.78rem}
+
+    .sidebar{position:sticky;top:92px;align-self:start}
+    .side-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:13px}
+    .side-card h3{margin:0 0 10px;font-size:.96rem}
+    .toc{display:grid;gap:5px}
+    .toc a{padding:8px 9px;border-radius:9px;color:#4b5563;font-size:.84rem}
+    .toc a:hover{background:#f4f4f5;color:var(--red)}
+    .mini-progress{height:7px;background:#eceef1;border-radius:999px;overflow:hidden;margin-top:10px}
+    .mini-progress > div{height:100%;width:0;background:var(--red);transition:.25s ease}
+
+    .complete-box{
+      text-align:center;padding:30px 24px;border:1px solid var(--line);
+      border-radius:18px;background:#fff
+    }
+    .complete-box h2{font-size:1.7rem;margin-bottom:8px}
+    .complete-box p{color:var(--muted);max-width:620px;margin:0 auto 18px;line-height:1.6}
+    .done-banner{
+      display:none;background:var(--green-bg);color:var(--green);border:1px solid #ccebd5;
+      border-radius:12px;padding:12px 14px;margin-top:14px;font-weight:750
+    }
+    .done-banner.show{display:block}
+
+    footer{border-top:1px solid var(--line);color:var(--muted);padding:28px 0 40px;font-size:.84rem}
+
+    @media(max-width:980px){
+      .hero,.layout{grid-template-columns:1fr}
+      .sidebar{position:static}
+      .decode-grid,.precision-grid,.entry-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:720px){
+      .shell{width:min(100% - 26px,1160px)}
+      .hero-main,.hero-side{padding:25px}
+      .lesson-card{padding:20px}
+      .chunk,.data-row{grid-template-columns:1fr}
+      .rating-grid,.result-grid{grid-template-columns:1fr}
+      .toplinks .hide-mobile{display:none}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="shell topnav">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">F30</span>
+      <span>Fluent<span>30</span></span>
+    </a>
+
+    <div class="toplinks">
+      <a href="lesson-day-04.html" class="navbtn">← Day 04</a>
+      <a href="index.html" class="navbtn hide-mobile">Roadmap</a>
+      <a href="lesson-day-06.html" class="navbtn">Day 06 →</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="shell">
+
+  <section class="hero">
+    <div class="hero-main">
+      <div class="eyebrow">Day 05 · Numbers, Dates & Names</div>
+      <h1>Understanding isn't enough.<br>Get the detail right.</h1>
+
+      <p class="hero-copy">
+        Real-world listening often fails on tiny details: <b>13 or 30, 15 or 50, June 14 or June 40</b>,
+        a person's name, a room number, a time, a price or a reference code. Today you train precision:
+        hear the meaning, then capture the exact data.
+      </p>
+    </div>
+
+    <aside class="hero-side">
+      <div>
+        <div class="eyebrow" style="color:#e9a6b4">Today's target</div>
+        <h2 style="margin:0;font-size:1.55rem">Capture high-risk details accurately</h2>
+        <p class="muted" style="line-height:1.55">
+          Teen vs tens · time · dates · prices · names · short codes
+        </p>
+      </div>
+
+      <div>
+        <div class="meta-grid">
+          <div class="meta-card"><strong>90</strong><span>minutes</span></div>
+          <div class="meta-card"><strong>8</strong><span>core tasks</span></div>
+        </div>
+
+        <div class="progress-track">
+          <div class="progress-fill" id="topProgress"></div>
+        </div>
+
+        <div class="muted" id="topProgressText" style="font-size:.82rem;margin-top:6px">
+          0% complete
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <div class="layout">
+    <div>
+
+      <!-- 1 -->
+      <section class="lesson-card" id="first-listen">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 1 · First Listen</div>
+            <h2>Understand the situation first.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <p class="muted">
+          Listen to a phone message about a client visit. On the first listen, focus on the overall plan.
+          Do not stop to verify every number yet.
+        </p>
+
+        <div class="audio-panel">
+          <div class="audio-title">
+            <span>🎧 Client visit update</span>
+            <span class="listen-counter">Listens: <span id="listenCount">0</span></span>
+          </div>
+
+          <button class="btn primary" id="playMainBtn" type="button">▶ Play full message</button>
+          <button class="btn secondary" id="stopMainBtn" type="button">■ Stop</button>
+
+          <div class="speed-row">
+            <button class="speed-btn" data-rate="0.9" type="button">0.9×</button>
+            <button class="speed-btn active" data-rate="1" type="button">1.0×</button>
+            <button class="speed-btn" data-rate="1.07" type="button">1.07×</button>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="question-title">What is the main purpose of the message?</div>
+
+          <div class="options">
+            <label class="option"><input type="radio" name="q1" value="a"><span>To update the listener on a client's arrival, meeting logistics and payment details.</span></label>
+            <label class="option"><input type="radio" name="q1" value="b"><span>To cancel the client's trip completely.</span></label>
+            <label class="option"><input type="radio" name="q1" value="c"><span>To ask the listener to prepare a new sales proposal.</span></label>
+          </div>
+
+          <button class="btn secondary" style="margin-top:12px" onclick="checkFirstQuestion()" type="button">Check answer</button>
+          <div class="feedback" id="q1Feedback"></div>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="lesson-card" id="precision">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 2 · Precision Patterns</div>
+            <h2>Train the risky contrasts.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div class="precision-grid">
+          <div class="precision-card">
+            <strong>-teen vs -ty</strong>
+            <div class="pair">13 ↔ 30</div>
+            <span>“ThirTEEN” usually has stronger final stress; “THIRty” stresses the first syllable.</span>
+          </div>
+
+          <div class="precision-card">
+            <strong>-teen vs -ty</strong>
+            <div class="pair">15 ↔ 50</div>
+            <span>Listen for stress placement, not only the consonants.</span>
+          </div>
+
+          <div class="precision-card">
+            <strong>Time</strong>
+            <div class="pair">2:15 ↔ 2:50</div>
+            <span>Always verify the minute value in context if it affects a schedule.</span>
+          </div>
+
+          <div class="precision-card">
+            <strong>Money</strong>
+            <div class="pair">$1,850 ↔ $1,815</div>
+            <span>Large numbers often arrive in chunks. Track thousands, hundreds and tens separately.</span>
+          </div>
+        </div>
+
+        <div class="data-list">
+          <div class="data-row">
+            <span>Type</span><span>Listen for</span><span>Strategy</span>
+          </div>
+
+          <div class="data-row">
+            <span>Dates</span><span class="focus">June 14</span><span>Anchor the month first, then the date.</span>
+          </div>
+
+          <div class="data-row">
+            <span>Names</span><span class="focus">Mara / Maya / Maria</span><span>Use spelling or repetition when the name matters.</span>
+          </div>
+
+          <div class="data-row">
+            <span>Codes</span><span class="focus">B-316</span><span>Chunk letter + number; do not hold everything at once.</span>
+          </div>
+
+          <div class="data-row">
+            <span>Phone-like strings</span><span class="focus">617-204</span><span>Write in groups while listening.</span>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="playPrecisionDrill()">▶ Play contrast drill</button>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="lesson-card" id="data-capture">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 3 · Data Capture</div>
+            <h2>Write the exact detail you hear.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <p class="muted">
+          This is precision listening: no multiple choice. Play each item and type the exact number, time, date, name or code.
+        </p>
+
+        <div class="entry-grid" id="dataCaptureGrid"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeDataCapture()">Check all details</button>
+          <span class="muted" id="dataCaptureScoreText"></span>
+        </div>
+
+        <div class="feedback" id="dataCaptureFeedback"></div>
+      </section>
+
+      <!-- 4 -->
+      <section class="lesson-card" id="deep-listen">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 4 · Deep Listen</div>
+            <h2>Now combine meaning + precision.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div id="deepQuestions"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeDeepQuiz()">Check 5 answers</button>
+          <span class="muted" id="deepScoreText"></span>
+        </div>
+
+        <div class="feedback" id="deepFeedback"></div>
+      </section>
+
+      <!-- 5 -->
+      <section class="lesson-card" id="dictation">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 5 · Dictation</div>
+            <h2>Keep the sentence and the data.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div id="dictationList"></div>
+      </section>
+
+      <!-- 6 -->
+      <section class="lesson-card" id="decode">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 6 · Decode</div>
+            <h2>Reveal the full message.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="lockbox" id="transcriptLock">
+          <strong>Transcript locked</strong>
+          <p class="muted" style="margin:7px 0 12px">
+            Complete at least two full listens before revealing the transcript.
+          </p>
+          <button class="btn secondary" id="revealBtn" type="button" disabled>Reveal transcript</button>
+        </div>
+
+        <div class="transcript" id="transcriptBox">
+          <strong>Transcript — Client visit update</strong>
+
+          <p>
+            Hi, quick update for tomorrow. The client is still arriving on <b>June fourteenth</b>,
+            but her flight now lands at <b>nine thirty</b> instead of nine fifteen.
+          </p>
+
+          <p>
+            Her name is <b>Mara Chen</b> — Mara with an “a” at the end — and she'll be coming with
+            <b>Daniel Brooks</b>.
+          </p>
+
+          <p>
+            I've booked meeting room <b>B-three-sixteen</b> from <b>eleven to twelve thirty</b>.
+            If the flight is delayed, we can move lunch from <b>twelve forty-five</b> to <b>one fifteen</b>.
+          </p>
+
+          <p>
+            Finance also confirmed the deposit is <b>one thousand eight hundred and fifty dollars</b>,
+            not one thousand eight hundred and fifteen.
+          </p>
+
+          <p>
+            The internal reference is <b>six-one-seven, two-zero-four</b>.
+            I've sent the details to <b>Priya Nair</b> as well, so she should have the same information.
+          </p>
+        </div>
+
+        <div class="decode-grid">
+          <div class="decode-card">
+            <strong>14 vs 40</strong>
+            <span>Stress is a major clue. “fourTEEN” contrasts with “FORty”.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>9:15 vs 9:50</strong>
+            <span>Do not rely on context alone. Confirm the final stress and vowel quality.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>Mara Chen</strong>
+            <span>Names should be treated as data. If uncertain, spelling or repetition is appropriate.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>B-316</strong>
+            <span>Chunk letters and numbers separately: “B” + “three-sixteen”.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>$1,850</strong>
+            <span>Track the number in groups: one thousand / eight hundred / fifty.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>617-204</strong>
+            <span>Short codes are easier if you write them in chunks as they arrive.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section class="lesson-card" id="shadowing">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 7 · Shadowing & Chunks</div>
+            <h2>Say details clearly without slowing everything down.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div id="chunkList"></div>
+
+        <h3>Shadowing lines</h3>
+        <div id="shadowList"></div>
+
+        <div class="recorder">
+          <strong>🎙 Record your shadowing</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="shadowRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="shadowStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="shadowRecordStatus">
+            Keep the sentence natural, but make critical data easy to hear.
+          </div>
+
+          <audio id="shadowPlayback" controls style="display:none"></audio>
+        </div>
+      </section>
+
+      <!-- 8 -->
+      <section class="lesson-card" id="speak-back">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 8 · Speak Back</div>
+            <h2>Give a precise verbal update.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="prompt-box">
+          <strong>60–90 second response</strong><br>
+          Imagine you're forwarding this update to a teammate. State the client's name, arrival time,
+          meeting room, lunch contingency, deposit amount and internal reference clearly.
+        </div>
+
+        <textarea id="speakOutline" placeholder="Keywords only: Mara Chen / 9:30 / B-316 / 12:45→1:15 / $1,850 / 617-204"></textarea>
+
+        <div class="recorder">
+          <strong>🎙 Record your response</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="speakRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="speakStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="speakRecordStatus">
+            Prioritize precision on names, times and numbers.
+          </div>
+
+          <audio id="speakPlayback" controls style="display:none"></audio>
+        </div>
+
+        <h3>Self-check</h3>
+
+        <div class="rating-grid">
+          <div class="rating">
+            <label>Number clarity · <output id="numberOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="numberRate">
+          </div>
+
+          <div class="rating">
+            <label>Name clarity · <output id="nameOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="nameRate">
+          </div>
+
+          <div class="rating">
+            <label>Natural flow · <output id="naturalOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="naturalRate">
+          </div>
+        </div>
+      </section>
+
+      <!-- RESULT -->
+      <section class="lesson-card" id="result">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Day 05 Result</div>
+            <h2>Your precision listening score</h2>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <div class="muted" style="color:#b8bdc6">Data capture + listening + dictation</div>
+
+          <div class="result-score">
+            <span id="overallScore">—</span><span style="font-size:1.3rem">%</span>
+          </div>
+
+          <div class="muted" id="scoreInterpretation" style="color:#b8bdc6;margin-top:7px">
+            Complete data capture, deep listening and dictation to calculate your score.
+          </div>
+
+          <div class="result-grid">
+            <div class="result-box">
+              <strong id="dataResult">—</strong>
+              <span>Data capture</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="deepResult">—</strong>
+              <span>Deep listening</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="dictationResult">—</strong>
+              <span>Dictation</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPLETE -->
+      <section class="complete-box" id="complete">
+        <h2>Complete Day 05</h2>
+
+        <p>
+          Save today's result and continue to Day 06: Fast Casual English.
+          Your Week 1 roadmap progress will update automatically.
+        </p>
+
+        <button class="btn primary" id="completeDayBtn" type="button">✓ Mark Day 05 complete</button>
+        <a href="lesson-day-06.html" class="btn secondary">Go to Day 06 →</a>
+
+        <div class="done-banner" id="doneBanner">
+          Day 05 is saved as completed in this browser.
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="sidebar">
+      <div class="side-card">
+        <h3>Day 05</h3>
+        <div class="muted" style="font-size:.84rem">Numbers, Dates & Names</div>
+
+        <div class="mini-progress"><div id="sideProgress"></div></div>
+
+        <div class="muted" id="sideProgressText" style="font-size:.78rem;margin-top:7px">
+          0/8 sections touched
+        </div>
+      </div>
+
+      <div class="side-card">
+        <h3>Jump to</h3>
+        <nav class="toc">
+          <a href="#first-listen">1. First Listen</a>
+          <a href="#precision">2. Precision Patterns</a>
+          <a href="#data-capture">3. Data Capture</a>
+          <a href="#deep-listen">4. Deep Listen</a>
+          <a href="#dictation">5. Dictation</a>
+          <a href="#decode">6. Decode</a>
+          <a href="#shadowing">7. Shadowing</a>
+          <a href="#speak-back">8. Speak Back</a>
+          <a href="#result">Result</a>
+        </nav>
+      </div>
+
+      <div class="side-card">
+        <h3>Rule for today</h3>
+        <p class="muted" style="font-size:.84rem;line-height:1.55;margin:0">
+          When a number, date or name matters operationally, “almost right” is wrong. Slow down mentally and verify the detail.
+        </p>
+      </div>
+    </aside>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="shell">Fluent30 · Day 05 · Numbers, Dates & Names</div>
+</footer>
+
+<script>
+  const COURSE_KEY = "fluent30-progress-v1";
+  const DAY_KEY = "fluent30-day-05-result";
+
+  const mainScript = `Hi, quick update for tomorrow.
+
+The client is still arriving on June fourteenth, but her flight now lands at nine thirty instead of nine fifteen.
+
+Her name is Mara Chen — Mara with an “a” at the end — and she'll be coming with Daniel Brooks.
+
+I've booked meeting room B-three-sixteen from eleven to twelve thirty.
+
+If the flight is delayed, we can move lunch from twelve forty-five to one fifteen.
+
+Finance also confirmed the deposit is one thousand eight hundred and fifty dollars, not one thousand eight hundred and fifteen.
+
+The internal reference is six-one-seven, two-zero-four.
+
+I've sent the details to Priya Nair as well, so she should have the same information.`;
+
+  const precisionDrill = [
+    "thirteen",
+    "thirty",
+    "fifteen",
+    "fifty",
+    "nine fifteen",
+    "nine fifty",
+    "one thousand eight hundred and fifteen",
+    "one thousand eight hundred and fifty"
+  ];
+
+  const dataItems = [
+    {label:"Date", prompt:"What date is the client arriving?", spoken:"June fourteenth", answer:"June 14"},
+    {label:"Arrival time", prompt:"What is the new landing time?", spoken:"nine thirty", answer:"9:30"},
+    {label:"Client name", prompt:"What is the client's name?", spoken:"Mara Chen", answer:"Mara Chen"},
+    {label:"Meeting room", prompt:"Which room is booked?", spoken:"B three sixteen", answer:"B-316"},
+    {label:"Deposit", prompt:"What is the confirmed deposit?", spoken:"one thousand eight hundred and fifty dollars", answer:"1850"},
+    {label:"Reference", prompt:"What is the internal reference?", spoken:"six one seven two zero four", answer:"617204"}
+  ];
+
+  const deepQuestions = [
+    {
+      q:"What changed about the client's flight?",
+      options:["The date changed.","The landing time changed from 9:15 to 9:30.","The flight was cancelled."],
+      answer:1
+    },
+    {
+      q:"Who is traveling with Mara Chen?",
+      options:["Daniel Brooks","Priya Nair","Ben Carter"],
+      answer:0
+    },
+    {
+      q:"How long is meeting room B-316 booked?",
+      options:["From 10:00 to 11:30","From 11:00 to 12:30","From 11:30 to 1:00"],
+      answer:1
+    },
+    {
+      q:"What is the backup lunch time if the flight is delayed?",
+      options:["12:15","12:45","1:15"],
+      answer:2
+    },
+    {
+      q:"What amount was specifically corrected?",
+      options:["$1,815 to $1,850","$1,850 to $1,580","$1,500 to $1,850"],
+      answer:0
+    }
+  ];
+
+  const dictationItems = [
+    "The client is still arriving on June fourteenth.",
+    "Her flight now lands at nine thirty instead of nine fifteen.",
+    "I've booked meeting room B-three-sixteen from eleven to twelve thirty.",
+    "Finance confirmed the deposit is one thousand eight hundred and fifty dollars."
+  ];
+
+  const chunks = [
+    ["quick update","a short piece of new information","Hi, quick update for tomorrow."],
+    ["instead of","in place of another option","Nine thirty instead of nine fifteen."],
+    ["coming with","traveling or arriving together with someone","She'll be coming with Daniel Brooks."],
+    ["if the flight is delayed","conditional phrase for a schedule change","If the flight is delayed, we can move lunch."],
+    ["confirmed the deposit","verified the amount","Finance confirmed the deposit."],
+    ["internal reference","a code used inside an organization","The internal reference is 617-204."]
+  ];
+
+  const shadowSentences = [
+    "The client is still arriving on June fourteenth.",
+    "Her flight now lands at nine thirty instead of nine fifteen.",
+    "I've booked meeting room B-three-sixteen from eleven to twelve thirty.",
+    "The deposit is one thousand eight hundred and fifty dollars.",
+    "The internal reference is six-one-seven, two-zero-four."
+  ];
+
+  let speechRate = 1;
+  let listenCount = Number(localStorage.getItem("fluent30-day05-listens") || 0);
+  let dataScore = null;
+  let deepScore = null;
+  let dictationScores = [null,null,null,null];
+  let touchedSections = new Set();
+
+  function getUSVoice(){
+    if(!("speechSynthesis" in window)) return null;
+    const voices = speechSynthesis.getVoices();
+
+    return (
+      voices.find(v => /en-US/i.test(v.lang) && /Google|Samantha|Jenny|Aria|Guy|Joanna|Matthew/i.test(v.name)) ||
+      voices.find(v => /en-US/i.test(v.lang)) ||
+      voices.find(v => /^en/i.test(v.lang)) ||
+      null
+    );
+  }
+
+  function speak(text,rate=1,onEnd=null){
+    if(!("speechSynthesis" in window)){
+      alert("Speech synthesis is not supported in this browser.");
+      return;
+    }
+
+    speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    utterance.rate = rate;
+    utterance.pitch = 1;
+
+    const voice = getUSVoice();
+    if(voice) utterance.voice = voice;
+    if(onEnd) utterance.onend = onEnd;
+
+    speechSynthesis.speak(utterance);
+  }
+
+  document.getElementById("playMainBtn").addEventListener("click",()=>{
+    listenCount += 1;
+    localStorage.setItem("fluent30-day05-listens",String(listenCount));
+    updateListenUI();
+    markTouched("listen");
+    speak(mainScript,speechRate);
+  });
+
+  document.getElementById("stopMainBtn").addEventListener("click",()=>{
+    if("speechSynthesis" in window) speechSynthesis.cancel();
+  });
+
+  document.querySelectorAll(".speed-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      speechRate = Number(btn.dataset.rate);
+      document.querySelectorAll(".speed-btn").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+
+  function updateListenUI(){
+    document.getElementById("listenCount").textContent = listenCount;
+    document.getElementById("revealBtn").disabled = listenCount < 2;
+
+    if(listenCount >= 2){
+      const lock = document.getElementById("transcriptLock");
+      lock.querySelector("strong").textContent = "Transcript ready";
+      lock.querySelector("p").textContent =
+        "You have completed at least two listens. Now verify the high-risk details against the transcript.";
+    }
+  }
+
+  document.getElementById("revealBtn").addEventListener("click",()=>{
+    document.getElementById("transcriptBox").classList.add("show");
+    document.getElementById("transcriptLock").style.display = "none";
+    markTouched("decode");
+  });
+
+  function checkFirstQuestion(){
+    const chosen = document.querySelector('input[name="q1"]:checked');
+    const box = document.getElementById("q1Feedback");
+    box.className = "feedback show";
+
+    if(!chosen){
+      box.classList.add("warn");
+      box.textContent = "Choose one answer first.";
+      return;
+    }
+
+    if(chosen.value === "a"){
+      box.classList.add("good");
+      box.textContent = "Correct. The message is an operational update covering arrival, meeting logistics and financial details.";
+    }else{
+      box.classList.add("warn");
+      box.textContent = "Not quite. Listen for the overall purpose rather than one individual detail.";
+    }
+
+    markTouched("listen");
+  }
+
+  function playPrecisionDrill(){
+    markTouched("precision");
+    let i = 0;
+
+    const next = ()=>{
+      if(i >= precisionDrill.length) return;
+
+      speak(precisionDrill[i],0.92,()=>{
+        i++;
+        setTimeout(next,220);
+      });
+    };
+
+    next();
+  }
+
+  function normalizeData(text){
+    return text
+      .toLowerCase()
+      .replace(/\$/g,"")
+      .replace(/,/g,"")
+      .replace(/\s+/g," ")
+      .replace(/[.\-]/g,"")
+      .trim();
+  }
+
+  function renderDataCapture(){
+    const container = document.getElementById("dataCaptureGrid");
+
+    container.innerHTML = dataItems.map((item,index)=>`
+      <div class="entry-item">
+        <label>${item.label}</label>
+        <div class="muted" style="font-size:.84rem;margin-bottom:10px">${item.prompt}</div>
+
+        <button class="btn secondary" type="button" onclick="playDataItem(${index})">▶ Play</button>
+
+        <input
+          type="text"
+          id="dataInput${index}"
+          style="margin-top:10px"
+          placeholder="Type the exact detail"
+          autocomplete="off"
+        >
+
+        <div class="entry-result" id="dataResult${index}"></div>
+      </div>
+    `).join("");
+  }
+
+  function playDataItem(index){
+    speak(dataItems[index].spoken,1);
+    markTouched("data");
+  }
+
+  function dataEquivalent(user,answer,index){
+    const u = normalizeData(user);
+    const a = normalizeData(answer);
+
+    const alternatives = {
+      0:["june14","june 14","june fourteenth","14 june"],
+      1:["930","9 30","nine thirty"],
+      2:["mara chen"],
+      3:["b316","b 316","b three sixteen"],
+      4:["1850","one thousand eight hundred and fifty","one thousand eight hundred fifty"],
+      5:["617204","617 204","six one seven two zero four"]
+    };
+
+    return alternatives[index].includes(u) || u === a;
+  }
+
+  function gradeDataCapture(){
+    let correct = 0;
+
+    dataItems.forEach((item,index)=>{
+      const input = document.getElementById(`dataInput${index}`);
+      const result = document.getElementById(`dataResult${index}`);
+      const ok = dataEquivalent(input.value,item.answer,index);
+
+      if(ok) correct++;
+
+      result.className = "entry-result show";
+      result.innerHTML = ok
+        ? `<strong style="color:var(--green)">Correct</strong>`
+        : `<strong style="color:#b91c1c">Target: ${item.answer}</strong>`;
+    });
+
+    dataScore = Math.round((correct/dataItems.length)*100);
+
+    document.getElementById("dataCaptureScoreText").textContent =
+      `${correct}/${dataItems.length} correct · ${dataScore}%`;
+
+    const feedback = document.getElementById("dataCaptureFeedback");
+    feedback.className = "feedback show";
+
+    if(dataScore >= 84){
+      feedback.classList.add("good");
+      feedback.textContent = "Strong precision. You're capturing operational details reliably.";
+    }else if(dataScore >= 67){
+      feedback.classList.add("info");
+      feedback.textContent = "Good overall, but one or two high-risk details are still slipping. Replay only the missed items.";
+    }else{
+      feedback.classList.add("warn");
+      feedback.textContent = "Precision is the bottleneck. Use chunking and write details immediately instead of holding them in memory.";
+    }
+
+    markTouched("data");
+    updateResults();
+  }
+
+  function renderDeepQuestions(){
+    const container = document.getElementById("deepQuestions");
+
+    container.innerHTML = deepQuestions.map((item,index)=>`
+      <div class="question">
+        <div class="question-title">${index+1}. ${item.q}</div>
+
+        <div class="options">
+          ${item.options.map((option,optIndex)=>`
+            <label class="option">
+              <input type="radio" name="deep${index}" value="${optIndex}">
+              <span>${option}</span>
+            </label>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function gradeDeepQuiz(){
+    let correct = 0;
+    let answered = 0;
+
+    deepQuestions.forEach((item,index)=>{
+      const selected = document.querySelector(`input[name="deep${index}"]:checked`);
+
+      if(selected){
+        answered++;
+        if(Number(selected.value) === item.answer) correct++;
+      }
+    });
+
+    const feedback = document.getElementById("deepFeedback");
+    feedback.className = "feedback show";
+
+    if(answered < deepQuestions.length){
+      feedback.classList.add("warn");
+      feedback.textContent = `You answered ${answered}/${deepQuestions.length}. Complete all questions first.`;
+      return;
+    }
+
+    deepScore = Math.round((correct/deepQuestions.length)*100);
+
+    document.getElementById("deepScoreText").textContent =
+      `${correct}/${deepQuestions.length} correct · ${deepScore}%`;
+
+    if(deepScore >= 80){
+      feedback.classList.add("good");
+      feedback.textContent = "Strong meaning + detail comprehension.";
+    }else if(deepScore >= 60){
+      feedback.classList.add("info");
+      feedback.textContent = "The overall message is clear, but some precise details are still vulnerable.";
+    }else{
+      feedback.classList.add("warn");
+      feedback.textContent = "Replay the full message and write down only the data points before attempting the questions again.";
+    }
+
+    markTouched("deep");
+    updateResults();
+  }
+
+  function renderDictation(){
+    const container = document.getElementById("dictationList");
+
+    container.innerHTML = dictationItems.map((sentence,index)=>`
+      <div class="dictation-item">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+          <strong>Sentence ${index+1}</strong>
+          <button class="btn secondary" type="button" onclick="speakDictation(${index})">▶ Play</button>
+        </div>
+
+        <input
+          type="text"
+          id="dictInput${index}"
+          style="margin-top:12px"
+          placeholder="Type exactly what you hear"
+          autocomplete="off"
+        >
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="checkDictation(${index})">Check</button>
+        </div>
+
+        <div class="dictation-result" id="dictResult${index}"></div>
+      </div>
+    `).join("");
+  }
+
+  function speakDictation(index){
+    speak(dictationItems[index],1);
+    markTouched("dictation");
+  }
+
+  function normalize(text){
+    return text
+      .toLowerCase()
+      .replace(/[’‘]/g,"'")
+      .replace(/[^a-z0-9'\s-]/g,"")
+      .replace(/\s+/g," ")
+      .trim();
+  }
+
+  function wordSimilarity(userText,targetText){
+    const a = normalize(userText).split(" ").filter(Boolean);
+    const b = normalize(targetText).split(" ").filter(Boolean);
+
+    const dp = Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));
+
+    for(let i=1;i<=a.length;i++){
+      for(let j=1;j<=b.length;j++){
+        if(a[i-1] === b[j-1]){
+          dp[i][j] = dp[i-1][j-1] + 1;
+        }else{
+          dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+        }
+      }
+    }
+
+    return b.length ? Math.round((dp[a.length][b.length]/b.length)*100) : 0;
+  }
+
+  function checkDictation(index){
+    const input = document.getElementById(`dictInput${index}`);
+    const result = document.getElementById(`dictResult${index}`);
+
+    if(!input.value.trim()){
+      result.className = "dictation-result show";
+      result.innerHTML = `<span class="miss">Type what you hear first.</span>`;
+      return;
+    }
+
+    const score = wordSimilarity(input.value,dictationItems[index]);
+    dictationScores[index] = score;
+
+    const label =
+      score >= 90 ? "Excellent" :
+      score >= 75 ? "Good" :
+      score >= 60 ? "Developing" :
+      "Needs work";
+
+    result.className = "dictation-result show";
+    result.innerHTML = `
+      <div><strong>${label} · ${score}% match</strong></div>
+      <div style="margin-top:6px"><span class="muted">Target:</span> ${dictationItems[index]}</div>
+    `;
+
+    markTouched("dictation");
+    updateResults();
+  }
+
+  function getAverageDictation(){
+    const scored = dictationScores.filter(v => typeof v === "number");
+    if(scored.length !== dictationScores.length) return null;
+
+    return Math.round(scored.reduce((a,b)=>a+b,0)/scored.length);
+  }
+
+  function renderChunks(){
+    const saved = JSON.parse(localStorage.getItem("fluent30-saved-chunks") || "[]");
+    const container = document.getElementById("chunkList");
+
+    container.innerHTML = chunks.map((chunk,index)=>{
+      const isSaved = saved.includes(chunk[0]);
+
+      return `
+        <div class="chunk">
+          <div>
+            <strong>${chunk[0]}</strong>
+            <div style="margin-top:5px;font-size:.82rem;color:#8b8f96">“${chunk[2]}”</div>
+          </div>
+
+          <span>${chunk[1]}</span>
+
+          <button
+            class="save-chunk ${isSaved ? "saved" : ""}"
+            type="button"
+            onclick="toggleChunk(${index},this)"
+          >${isSaved ? "Saved ✓" : "Save"}</button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function toggleChunk(index,button){
+    let saved = JSON.parse(localStorage.getItem("fluent30-saved-chunks") || "[]");
+    const phrase = chunks[index][0];
+
+    if(saved.includes(phrase)){
+      saved = saved.filter(x=>x!==phrase);
+      button.classList.remove("saved");
+      button.textContent = "Save";
+    }else{
+      saved.push(phrase);
+      button.classList.add("saved");
+      button.textContent = "Saved ✓";
+    }
+
+    localStorage.setItem("fluent30-saved-chunks",JSON.stringify(saved));
+    markTouched("shadow");
+  }
+
+  function renderShadowing(){
+    const container = document.getElementById("shadowList");
+
+    container.innerHTML = shadowSentences.map((sentence,index)=>`
+      <div class="dictation-item">
+        <strong>${index+1}. ${sentence}</strong>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="playShadow(${index},0.84)">Slow model</button>
+          <button class="btn primary" type="button" onclick="playShadow(${index},1)">Natural model</button>
+          <button class="btn secondary" type="button" onclick="playShadow(${index},1.07)">Fast model</button>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function playShadow(index,rate){
+    speak(shadowSentences[index],rate);
+    markTouched("shadow");
+  }
+
+  function setupRecorder(prefix){
+    const recordBtn = document.getElementById(`${prefix}RecordBtn`);
+    const stopBtn = document.getElementById(`${prefix}StopBtn`);
+    const status = document.getElementById(`${prefix}RecordStatus`);
+    const playback = document.getElementById(`${prefix}Playback`);
+
+    let recorder = null;
+    let blobs = [];
+    let stream = null;
+    let startTime = null;
+
+    recordBtn.addEventListener("click",async()=>{
+      if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+        status.textContent = "Microphone recording is not supported in this browser.";
+        return;
+      }
+
+      try{
+        stream = await navigator.mediaDevices.getUserMedia({audio:true});
+        recorder = new MediaRecorder(stream);
+        blobs = [];
+        startTime = Date.now();
+
+        recorder.ondataavailable = event=>{
+          if(event.data.size > 0) blobs.push(event.data);
+        };
+
+        recorder.onstop = ()=>{
+          const blob = new Blob(blobs,{type:recorder.mimeType || "audio/webm"});
+          playback.src = URL.createObjectURL(blob);
+          playback.style.display = "block";
+
+          const seconds = Math.round((Date.now()-startTime)/1000);
+
+          status.textContent =
+            `Recorded ${seconds} seconds. Check whether critical details are easy to hear.`;
+
+          if(prefix === "speak") markTouched("speak");
+          if(prefix === "shadow") markTouched("shadow");
+
+          if(stream) stream.getTracks().forEach(track=>track.stop());
+        };
+
+        recorder.start();
+        recordBtn.disabled = true;
+        stopBtn.disabled = false;
+        status.textContent = "Recording…";
+
+      }catch(error){
+        status.textContent = "Microphone permission was not granted.";
+      }
+    });
+
+    stopBtn.addEventListener("click",()=>{
+      if(recorder && recorder.state !== "inactive"){
+        recorder.stop();
+      }
+
+      recordBtn.disabled = false;
+      stopBtn.disabled = true;
+    });
+  }
+
+  ["number","name","natural"].forEach(name=>{
+    const range = document.getElementById(`${name}Rate`);
+    const out = document.getElementById(`${name}Out`);
+
+    range.addEventListener("input",()=>{
+      out.value = range.value;
+      markTouched("speak");
+    });
+  });
+
+  function speakingAverage(){
+    const values = [
+      Number(document.getElementById("numberRate").value),
+      Number(document.getElementById("nameRate").value),
+      Number(document.getElementById("naturalRate").value)
+    ];
+
+    return values.reduce((a,b)=>a+b,0)/values.length;
+  }
+
+  function updateResults(){
+    const dictAvg = getAverageDictation();
+
+    document.getElementById("dataResult").textContent =
+      dataScore === null ? "—" : `${dataScore}%`;
+
+    document.getElementById("deepResult").textContent =
+      deepScore === null ? "—" : `${deepScore}%`;
+
+    document.getElementById("dictationResult").textContent =
+      dictAvg === null ? "—" : `${dictAvg}%`;
+
+    if(dataScore !== null && deepScore !== null && dictAvg !== null){
+      const overall = Math.round(
+        dataScore * 0.40 +
+        deepScore * 0.25 +
+        dictAvg * 0.35
+      );
+
+      document.getElementById("overallScore").textContent = overall;
+
+      let interpretation = "";
+
+      if(overall >= 90){
+        interpretation =
+          "Excellent precision. You are capturing high-risk details accurately without losing the message.";
+      }else if(overall >= 78){
+        interpretation =
+          "Strong. Most operational details are reliable, with only occasional slips under speed.";
+      }else if(overall >= 65){
+        interpretation =
+          "Developing. Meaning is clear, but exact data still needs deliberate verification.";
+      }else{
+        interpretation =
+          "Precision is still a major bottleneck. Practice chunking numbers and writing data immediately as you hear it.";
+      }
+
+      document.getElementById("scoreInterpretation").textContent = interpretation;
+    }
+  }
+
+  function markTouched(section){
+    touchedSections.add(section);
+    updateSectionProgress();
+  }
+
+  function updateSectionProgress(){
+    const count = touchedSections.size;
+    const percent = Math.round((count/8)*100);
+
+    document.getElementById("topProgress").style.width = `${percent}%`;
+    document.getElementById("sideProgress").style.width = `${percent}%`;
+    document.getElementById("topProgressText").textContent = `${percent}% complete`;
+    document.getElementById("sideProgressText").textContent = `${count}/8 sections touched`;
+  }
+
+  function getCourseProgress(){
+    try{
+      return JSON.parse(localStorage.getItem(COURSE_KEY)) || {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }catch(e){
+      return {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }
+  }
+
+  function saveDayResult(){
+    const dictAvg = getAverageDictation();
+
+    const overall = (
+      dataScore !== null &&
+      deepScore !== null &&
+      dictAvg !== null
+    )
+      ? Math.round(
+          dataScore * 0.40 +
+          deepScore * 0.25 +
+          dictAvg * 0.35
+        )
+      : null;
+
+    const result = {
+      day:5,
+      dataScore,
+      deepScore,
+      dictationScore:dictAvg,
+      dictationScores:[...dictationScores],
+      speakingSelf:Number(speakingAverage().toFixed(1)),
+      overall,
+      listens:listenCount,
+      savedAt:new Date().toISOString()
+    };
+
+    localStorage.setItem(DAY_KEY,JSON.stringify(result));
+  }
+
+  document.getElementById("completeDayBtn").addEventListener("click",()=>{
+    const progress = getCourseProgress();
+    const alreadyDone = progress.completed.includes(5);
+
+    if(!alreadyDone){
+      progress.completed.push(5);
+      progress.completed.sort((a,b)=>a-b);
+      progress.streak = Math.max(1,Number(progress.streak || 0)+1);
+      progress.minutes = Number(progress.minutes || 0)+90;
+      progress.lastDay = 5;
+
+      localStorage.setItem(COURSE_KEY,JSON.stringify(progress));
+    }
+
+    saveDayResult();
+
+    document.getElementById("doneBanner").classList.add("show");
+    document.getElementById("completeDayBtn").textContent = "✓ Day 05 completed";
+    document.getElementById("completeDayBtn").disabled = true;
+
+    touchedSections = new Set([
+      "listen","precision","data","deep","dictation","decode","shadow","speak"
+    ]);
+
+    updateSectionProgress();
+  });
+
+  function loadSavedState(){
+    updateListenUI();
+
+    const progress = getCourseProgress();
+
+    if(progress.completed.includes(5)){
+      document.getElementById("doneBanner").classList.add("show");
+      document.getElementById("completeDayBtn").textContent = "✓ Day 05 completed";
+      document.getElementById("completeDayBtn").disabled = true;
+
+      touchedSections = new Set([
+        "listen","precision","data","deep","dictation","decode","shadow","speak"
+      ]);
+
+      updateSectionProgress();
+    }
+
+    try{
+      const saved = JSON.parse(localStorage.getItem(DAY_KEY) || "null");
+
+      if(saved){
+        if(typeof saved.dataScore === "number") dataScore = saved.dataScore;
+        if(typeof saved.deepScore === "number") deepScore = saved.deepScore;
+        if(Array.isArray(saved.dictationScores)) dictationScores = saved.dictationScores;
+      }
+    }catch(e){}
+
+    updateResults();
+  }
+
+  renderDataCapture();
+  renderDeepQuestions();
+  renderDictation();
+  renderChunks();
+  renderShadowing();
+  setupRecorder("shadow");
+  setupRecorder("speak");
+  loadSavedState();
+
+  if("speechSynthesis" in window){
+    speechSynthesis.onvoiceschanged = ()=>getUSVoice();
+  }
+</script>
+</body>
+</html>
