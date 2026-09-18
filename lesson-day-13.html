@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fluent30 Day 13 — Meetings at Natural Speed" />
+  <title>Fluent30 — Day 13 Meetings at Natural Speed</title>
+
+  <style>
+    :root{
+      --bg:#f5f5f6; --surface:#fff; --surface-2:#fafafa; --text:#111; --muted:#6b7280;
+      --line:#e5e7eb; --red:#8f1027; --red-dark:#6f0b1e; --black:#171717;
+      --green:#166534; --green-bg:#ecfdf3; --amber:#92400e; --amber-bg:#fffbeb;
+      --blue:#1d4ed8; --blue-bg:#eff6ff; --shadow:0 18px 50px rgba(17,24,39,.08);
+      --r-xl:24px; --r-lg:17px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text)
+    }
+
+    button,input,textarea{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    .shell{width:min(1160px,calc(100% - 38px));margin:0 auto}
+
+    header{
+      position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);
+      border-bottom:1px solid var(--line);backdrop-filter:blur(14px)
+    }
+
+    .topnav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.04em}
+    .brand-mark{
+      width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
+      background:var(--red);color:#fff;font-size:.88rem
+    }
+    .brand span span{color:var(--red)}
+    .toplinks{display:flex;align-items:center;gap:9px}
+
+    .navbtn{
+      display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;
+      border:1px solid var(--line);border-radius:10px;background:#fff;color:#333;
+      font-size:.88rem;font-weight:700
+    }
+    .navbtn:hover{border-color:#c8ccd2}
+
+    main{padding:34px 0 70px}
+
+    .hero{
+      display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.55fr);gap:20px
+    }
+
+    .hero-main,.hero-side{border-radius:var(--r-xl);box-shadow:var(--shadow)}
+
+    .hero-main{
+      background:linear-gradient(135deg,#fff 0%,#fbfbfc 72%,#f2f2f3 100%);
+      border:1px solid var(--line);padding:38px
+    }
+
+    .eyebrow{
+      color:var(--red);font-weight:850;font-size:.76rem;letter-spacing:.12em;
+      text-transform:uppercase;margin-bottom:12px
+    }
+
+    h1{margin:0;font-size:clamp(2.4rem,5vw,4.8rem);line-height:.96;letter-spacing:-.06em}
+
+    .hero-copy{
+      max-width:830px;color:var(--muted);line-height:1.65;margin:18px 0 0
+    }
+
+    .hero-side{
+      background:var(--black);color:#fff;padding:28px;display:flex;
+      flex-direction:column;justify-content:space-between;gap:20px
+    }
+
+    .hero-side .muted{color:#b9bec7}
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .meta-card{background:#202020;border:1px solid #343434;border-radius:12px;padding:14px}
+    .meta-card strong{display:block;font-size:1.2rem;margin-bottom:2px}
+    .meta-card span{font-size:.78rem;color:#afb4bd}
+    .progress-track{height:9px;border-radius:999px;background:#343434;overflow:hidden;margin-top:13px}
+    .progress-fill{height:100%;width:0%;background:#fff;transition:.25s ease}
+
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) 292px;gap:22px;margin-top:24px}
+
+    .lesson-card{
+      background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+      padding:26px;margin-bottom:18px
+    }
+
+    .lesson-card h2{margin:0;font-size:1.42rem;letter-spacing:-.035em}
+    .lesson-card h3{margin:18px 0 8px;font-size:1rem}
+    .lesson-card p{line-height:1.62}
+    .muted{color:var(--muted)}
+
+    .step-head{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px
+    }
+
+    .step-label{
+      color:var(--red);font-size:.74rem;font-weight:850;letter-spacing:.1em;
+      text-transform:uppercase;margin-bottom:6px
+    }
+
+    .time-pill{
+      flex:0 0 auto;padding:6px 9px;background:#f3f4f6;border-radius:999px;
+      color:#5b616c;font-size:.76rem;font-weight:750
+    }
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:43px;
+      padding:0 15px;border-radius:11px;border:1px solid transparent;font-weight:800;transition:.18s ease
+    }
+
+    .btn.primary{background:var(--red);color:#fff}
+    .btn.primary:hover{background:var(--red-dark);transform:translateY(-1px)}
+    .btn.secondary{background:#fff;border-color:var(--line);color:#222}
+    .btn.secondary:hover{border-color:#c9cdd3}
+    .btn:disabled{opacity:.45;cursor:not-allowed}
+    .btn-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+
+    .audio-panel{
+      border:1px solid var(--line);border-radius:14px;background:var(--surface-2);padding:17px
+    }
+
+    .audio-title{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      margin-bottom:10px;font-weight:800
+    }
+
+    .listen-counter{font-size:.78rem;color:var(--muted);font-weight:700}
+    .speed-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+
+    .speed-btn{
+      border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 10px;
+      font-size:.78rem;font-weight:750
+    }
+
+    .speed-btn.active{border-color:var(--red);color:var(--red);background:#fff5f6}
+
+    .question{padding:17px 0;border-top:1px solid var(--line)}
+    .question:first-of-type{border-top:0;padding-top:4px}
+    .question-title{font-weight:800;line-height:1.5;margin-bottom:10px}
+    .options{display:grid;gap:8px}
+
+    .option{
+      display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid var(--line);
+      border-radius:11px;cursor:pointer;background:#fff
+    }
+
+    .option:hover{border-color:#c9cdd3}
+    .option input{margin-top:3px}
+
+    .feedback{
+      margin-top:12px;border-radius:11px;padding:11px 13px;
+      font-size:.9rem;line-height:1.5;display:none
+    }
+
+    .feedback.show{display:block}
+    .feedback.good{background:var(--green-bg);color:var(--green)}
+    .feedback.warn{background:var(--amber-bg);color:var(--amber)}
+    .feedback.info{background:var(--blue-bg);color:var(--blue)}
+
+    textarea,input[type="text"]{
+      width:100%;border:1px solid #d2d6dc;border-radius:11px;padding:12px 13px;
+      background:#fff;color:#111;outline:none
+    }
+
+    textarea:focus,input[type="text"]:focus{
+      border-color:#ba6a7c;box-shadow:0 0 0 3px rgba(143,16,39,.08)
+    }
+
+    textarea{resize:vertical;min-height:100px}
+
+    .meeting-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px
+    }
+
+    .meeting-card{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff
+    }
+
+    .meeting-card strong{display:block;margin-bottom:6px}
+    .meeting-card .example{color:var(--red);font-weight:850;margin-bottom:6px}
+    .meeting-card span{font-size:.86rem;color:var(--muted);line-height:1.45}
+
+    .meeting-table{
+      margin-top:14px;border:1px solid var(--line);border-radius:13px;overflow:hidden
+    }
+
+    .meeting-row{
+      display:grid;grid-template-columns:1.1fr 1.5fr 1.7fr;gap:12px;
+      padding:12px 14px;border-top:1px solid var(--line);align-items:center
+    }
+
+    .meeting-row:first-child{
+      border-top:0;background:#fafafa;font-weight:800;font-size:.82rem
+    }
+
+    .meeting-row span{font-size:.86rem}
+    .signal{color:var(--red);font-weight:850}
+
+    .speaker-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:12px
+    }
+
+    .speaker-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;background:#fff
+    }
+
+    .speaker-tag{
+      display:inline-flex;padding:5px 8px;border-radius:999px;background:#f3f4f6;
+      font-size:.75rem;font-weight:800;margin-bottom:9px
+    }
+
+    .dictation-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;margin-top:12px;background:#fff
+    }
+
+    .dictation-result{
+      margin-top:10px;padding:10px 12px;background:#f8f9fa;border-radius:10px;
+      line-height:1.55;display:none
+    }
+
+    .dictation-result.show{display:block}
+    .miss{color:#b91c1c;text-decoration:underline;text-decoration-style:wavy}
+
+    .lockbox{
+      border:1px dashed #c8cdd3;border-radius:13px;padding:18px;background:#fafafa;text-align:center
+    }
+
+    .transcript{
+      display:none;margin-top:14px;padding:18px;border-left:4px solid var(--red);
+      border-radius:10px;background:#fafafa;line-height:1.8
+    }
+
+    .transcript.show{display:block}
+
+    .decode-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px
+    }
+
+    .decode-card{
+      border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff
+    }
+
+    .decode-card strong{display:block;margin-bottom:5px}
+    .decode-card span{font-size:.88rem;color:var(--muted);line-height:1.45}
+
+    .chunk{
+      display:grid;grid-template-columns:1.2fr 1.8fr auto;gap:12px;align-items:center;
+      border-top:1px solid var(--line);padding:13px 0
+    }
+
+    .chunk:first-of-type{border-top:0}
+    .chunk strong{font-size:.92rem}
+    .chunk span{font-size:.86rem;color:var(--muted);line-height:1.45}
+
+    .save-chunk{
+      border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 9px;
+      font-size:.76rem;font-weight:750
+    }
+
+    .save-chunk.saved{background:var(--green-bg);color:var(--green);border-color:#ccebd5}
+
+    .recorder{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fafafa;margin-top:12px
+    }
+
+    .record-status{font-size:.84rem;color:var(--muted);margin-top:8px}
+    audio{width:100%;margin-top:12px}
+
+    .prompt-box{
+      border-left:4px solid var(--red);background:#fafafa;padding:16px 17px;
+      border-radius:10px;line-height:1.6;margin:12px 0
+    }
+
+    .rating-grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px
+    }
+
+    .rating{border:1px solid var(--line);border-radius:12px;padding:13px}
+    .rating label{display:block;font-size:.8rem;font-weight:800;margin-bottom:8px}
+    .rating output{font-weight:900;color:var(--red)}
+    input[type="range"]{width:100%}
+
+    .result-card{background:var(--black);color:#fff;border-radius:18px;padding:24px}
+    .result-score{font-size:3.2rem;font-weight:900;letter-spacing:-.05em;line-height:1;margin-top:8px}
+
+    .result-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px
+    }
+
+    .result-box{
+      background:#202020;border:1px solid #353535;border-radius:12px;padding:13px
+    }
+
+    .result-box strong{display:block;font-size:1.2rem}
+    .result-box span{color:#b8bdc6;font-size:.78rem}
+
+    .sidebar{position:sticky;top:92px;align-self:start}
+
+    .side-card{
+      background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:13px
+    }
+
+    .side-card h3{margin:0 0 10px;font-size:.96rem}
+
+    .toc{display:grid;gap:5px}
+
+    .toc a{
+      padding:8px 9px;border-radius:9px;color:#4b5563;font-size:.84rem
+    }
+
+    .toc a:hover{background:#f4f4f5;color:var(--red)}
+
+    .mini-progress{
+      height:7px;background:#eceef1;border-radius:999px;overflow:hidden;margin-top:10px
+    }
+
+    .mini-progress > div{
+      height:100%;width:0;background:var(--red);transition:.25s ease
+    }
+
+    .complete-box{
+      text-align:center;padding:30px 24px;border:1px solid var(--line);
+      border-radius:18px;background:#fff
+    }
+
+    .complete-box h2{font-size:1.7rem;margin-bottom:8px}
+
+    .complete-box p{
+      color:var(--muted);max-width:650px;margin:0 auto 18px;line-height:1.6
+    }
+
+    .done-banner{
+      display:none;background:var(--green-bg);color:var(--green);border:1px solid #ccebd5;
+      border-radius:12px;padding:12px 14px;margin-top:14px;font-weight:750
+    }
+
+    .done-banner.show{display:block}
+
+    footer{
+      border-top:1px solid var(--line);color:var(--muted);padding:28px 0 40px;font-size:.84rem
+    }
+
+    @media(max-width:980px){
+      .hero,.layout{grid-template-columns:1fr}
+      .sidebar{position:static}
+      .decode-grid,.meeting-grid,.speaker-grid{grid-template-columns:1fr}
+    }
+
+    @media(max-width:720px){
+      .shell{width:min(100% - 26px,1160px)}
+      .hero-main,.hero-side{padding:25px}
+      .lesson-card{padding:20px}
+      .chunk,.meeting-row{grid-template-columns:1fr}
+      .rating-grid,.result-grid{grid-template-columns:1fr}
+      .toplinks .hide-mobile{display:none}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="shell topnav">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">F30</span>
+      <span>Fluent<span>30</span></span>
+    </a>
+
+    <div class="toplinks">
+      <a href="lesson-day-12.html" class="navbtn">← Day 12</a>
+      <a href="index.html" class="navbtn hide-mobile">Roadmap</a>
+      <a href="lesson-day-14.html" class="navbtn">Day 14 →</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="shell">
+
+  <section class="hero">
+    <div class="hero-main">
+      <div class="eyebrow">Day 13 · Meetings at Natural Speed</div>
+
+      <h1>Track the meeting.<br>Not every sentence.</h1>
+
+      <p class="hero-copy">
+        In real meetings, people interrupt, soften disagreement, change direction and leave some ideas unfinished.
+        Your job is not to remember every line. Your job is to keep a live map of:
+        <b>speaker → issue → position → decision → owner → deadline.</b>
+      </p>
+    </div>
+
+    <aside class="hero-side">
+      <div>
+        <div class="eyebrow" style="color:#e9a6b4">Today's target</div>
+        <h2 style="margin:0;font-size:1.55rem">Follow a multi-speaker meeting at natural speed</h2>
+        <p class="muted" style="line-height:1.55">
+          speaker tracking · interruptions · disagreement · decisions · action items
+        </p>
+      </div>
+
+      <div>
+        <div class="meta-grid">
+          <div class="meta-card"><strong>90</strong><span>minutes</span></div>
+          <div class="meta-card"><strong>4</strong><span>meeting speakers</span></div>
+        </div>
+
+        <div class="progress-track"><div class="progress-fill" id="topProgress"></div></div>
+        <div class="muted" id="topProgressText" style="font-size:.82rem;margin-top:6px">0% complete</div>
+      </div>
+    </aside>
+  </section>
+
+  <div class="layout">
+    <div>
+
+      <!-- 1 -->
+      <section class="lesson-card" id="first-listen">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 1 · First Listen</div>
+            <h2>What decision does the meeting reach?</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <p class="muted">
+          Four colleagues are discussing whether to launch a client campaign next Monday or delay it.
+          Listen once for the final decision and the main reason.
+        </p>
+
+        <div class="audio-panel">
+          <div class="audio-title">
+            <span>🎧 Weekly launch meeting</span>
+            <span class="listen-counter">Listens: <span id="listenCount">0</span></span>
+          </div>
+
+          <button class="btn primary" id="playMainBtn" type="button">▶ Play full meeting</button>
+          <button class="btn secondary" id="stopMainBtn" type="button">■ Stop</button>
+
+          <div class="speed-row">
+            <button class="speed-btn" data-rate="0.95" type="button">0.95×</button>
+            <button class="speed-btn active" data-rate="1.08" type="button">1.08×</button>
+            <button class="speed-btn" data-rate="1.16" type="button">1.16×</button>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="question-title">What is the final decision?</div>
+
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="q1" value="a">
+              <span>Delay the entire campaign for two weeks.</span>
+            </label>
+
+            <label class="option">
+              <input type="radio" name="q1" value="b">
+              <span>Keep Monday's launch, but limit the first release and hold back the unverified customer list.</span>
+            </label>
+
+            <label class="option">
+              <input type="radio" name="q1" value="c">
+              <span>Launch immediately without further checks.</span>
+            </label>
+          </div>
+
+          <button class="btn secondary" style="margin-top:12px" onclick="checkFirstQuestion()" type="button">Check answer</button>
+          <div class="feedback" id="q1Feedback"></div>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="lesson-card" id="meeting-language">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 2 · Meeting Language</div>
+            <h2>Recognize the meeting mechanics.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div class="meeting-grid">
+          <div class="meeting-card">
+            <strong>Interrupt</strong>
+            <div class="example">Sorry, can I jump in there?</div>
+            <span>The speaker needs to enter before the current point moves on.</span>
+          </div>
+
+          <div class="meeting-card">
+            <strong>Bring focus back</strong>
+            <div class="example">Can we come back to the main question?</div>
+            <span>Signals that the discussion is drifting.</span>
+          </div>
+
+          <div class="meeting-card">
+            <strong>Challenge politely</strong>
+            <div class="example">I'm not sure that solves the core issue.</div>
+            <span>Disagreement without direct confrontation.</span>
+          </div>
+
+          <div class="meeting-card">
+            <strong>Clarify decision</strong>
+            <div class="example">So are we saying we launch Monday?</div>
+            <span>Tests whether the group has actually reached a decision.</span>
+          </div>
+
+          <div class="meeting-card">
+            <strong>Close an item</strong>
+            <div class="example">Okay, let's lock that in.</div>
+            <span>The group accepts the decision and moves forward.</span>
+          </div>
+
+          <div class="meeting-card">
+            <strong>Assign follow-up</strong>
+            <div class="example">Can you own that and report back?</div>
+            <span>Creates a clear action owner after the meeting.</span>
+          </div>
+        </div>
+
+        <div class="meeting-table">
+          <div class="meeting-row">
+            <span>Signal</span><span>Meeting function</span><span>Listening action</span>
+          </div>
+
+          <div class="meeting-row">
+            <span class="signal">Can I jump in?</span>
+            <span>Interruption</span>
+            <span>Track whether the new speaker changes the direction.</span>
+          </div>
+
+          <div class="meeting-row">
+            <span class="signal">I take your point, but…</span>
+            <span>Partial agreement</span>
+            <span>The key disagreement comes after “but”.</span>
+          </div>
+
+          <div class="meeting-row">
+            <span class="signal">So are we saying…?</span>
+            <span>Decision check</span>
+            <span>Listen for confirmation or correction immediately after.</span>
+          </div>
+
+          <div class="meeting-row">
+            <span class="signal">Let's lock that in.</span>
+            <span>Decision confirmed</span>
+            <span>Now listen for owner and deadline.</span>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="playMeetingDrill()">▶ Play meeting-language drill</button>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="lesson-card" id="speaker-tracking">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 3 · Speaker Tracking</div>
+            <h2>Who said what — and why?</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="speaker-grid" id="speakerQuiz"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeSpeakerQuiz()">Check speaker tracking</button>
+          <span class="muted" id="speakerScoreText"></span>
+        </div>
+
+        <div class="feedback" id="speakerFeedback"></div>
+      </section>
+
+      <!-- 4 -->
+      <section class="lesson-card" id="deep-listen">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 4 · Deep Listen</div>
+            <h2>Track issue → disagreement → compromise.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div id="deepQuestions"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeDeepQuiz()">Check 6 answers</button>
+          <span class="muted" id="deepScoreText"></span>
+        </div>
+
+        <div class="feedback" id="deepFeedback"></div>
+      </section>
+
+      <!-- 5 -->
+      <section class="lesson-card" id="dictation">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 5 · Dictation</div>
+            <h2>Catch compressed meeting phrases.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div id="dictationList"></div>
+      </section>
+
+      <!-- 6 -->
+      <section class="lesson-card" id="decode">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 6 · Decode</div>
+            <h2>Reveal the meeting transcript.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="lockbox" id="transcriptLock">
+          <strong>Transcript locked</strong>
+          <p class="muted" style="margin:7px 0 12px">
+            Complete at least two full listens before revealing the transcript.
+          </p>
+          <button class="btn secondary" id="revealBtn" type="button" disabled>Reveal transcript</button>
+        </div>
+
+        <div class="transcript" id="transcriptBox">
+          <strong>Transcript — Weekly launch meeting</strong>
+
+          <p><b>Anna:</b> Okay, main question: are we still comfortable launching the campaign on Monday?</p>
+
+          <p><b>David:</b> From a marketing side, yes. Creative is ready, media is booked, and if we move the date now we'll probably lose the placement.</p>
+
+          <p><b>Mei:</b> Sorry, can I jump in there? I'm not sure we're ready from a data perspective. The new customer list still hasn't been fully verified.</p>
+
+          <p><b>David:</b> I take your point, but we're talking about maybe ten percent of the list, right?</p>
+
+          <p><b>Mei:</b> Closer to fifteen. And the issue isn't just volume — some of the records have missing consent fields.</p>
+
+          <p><b>Jon:</b> Can we come back to the main question? Do we need to delay everything, or can we separate the clean data from the unverified records?</p>
+
+          <p><b>Anna:</b> That's what I was thinking. Launch to the verified segment on Monday, then add the rest once Data clears it.</p>
+
+          <p><b>David:</b> That works for me, as long as the first wave is still large enough to justify the media spend.</p>
+
+          <p><b>Mei:</b> I should be able to confirm the final verified count by tomorrow noon.</p>
+
+          <p><b>Jon:</b> Sorry — just to make sure I've got this right — we're not delaying the campaign, we're limiting the first release?</p>
+
+          <p><b>Anna:</b> Correct. Monday stays. Unverified records stay out.</p>
+
+          <p><b>David:</b> Okay. If Mei confirms the count by noon tomorrow, I can adjust the media split by end of day.</p>
+
+          <p><b>Anna:</b> Great. Let's lock that in. Mei owns the verified count by noon; David updates the media split by five; and I'll send the final go/no-go note after that.</p>
+
+          <p><b>Jon:</b> Works for me.</p>
+
+          <p><b>Mei:</b> Same here.</p>
+        </div>
+
+        <div class="decode-grid">
+          <div class="decode-card">
+            <strong>“Can I jump in there?”</strong>
+            <span>Polite interruption. A new concern is entering before the group closes the topic.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“I take your point, but…”</strong>
+            <span>Partial agreement followed by a counterargument.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“Can we come back to the main question?”</strong>
+            <span>Meeting control language: the speaker refocuses the discussion.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“just to make sure I've got this right”</strong>
+            <span>Decision confirmation before action owners are assigned.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“Let's lock that in.”</strong>
+            <span>The decision is now final enough to assign follow-up.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“go/no-go note”</strong>
+            <span>A final communication stating whether the launch proceeds.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section class="lesson-card" id="shadowing">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 7 · Shadowing & Meeting Chunks</div>
+            <h2>Sound like you belong in the meeting.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div id="chunkList"></div>
+
+        <h3>Shadowing lines</h3>
+        <div id="shadowList"></div>
+
+        <div class="recorder">
+          <strong>🎙 Record your shadowing</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="shadowRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="shadowStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="shadowRecordStatus">
+            Keep the tone concise and neutral. Meeting English is often short because everyone already shares context.
+          </div>
+
+          <audio id="shadowPlayback" controls style="display:none"></audio>
+        </div>
+      </section>
+
+      <!-- 8 -->
+      <section class="lesson-card" id="speak-back">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 8 · Speak Back</div>
+            <h2>Give a 75-second meeting recap.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="prompt-box">
+          <strong>75–90 second meeting recap</strong><br>
+          Imagine you attended this meeting and need to update your manager.
+          Explain the original issue, the concern raised by Data, the compromise, the three final action items and the deadlines.
+        </div>
+
+        <textarea id="speakOutline" placeholder="Keywords only: Monday launch / unverified data / verified segment / Mei noon / David 5pm / Anna go-no-go"></textarea>
+
+        <div class="recorder">
+          <strong>🎙 Record your meeting recap</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="speakRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="speakStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="speakRecordStatus">
+            Focus on decision logic and action items, not a line-by-line retelling.
+          </div>
+
+          <audio id="speakPlayback" controls style="display:none"></audio>
+        </div>
+
+        <h3>Self-check</h3>
+
+        <div class="rating-grid">
+          <div class="rating">
+            <label>Decision clarity · <output id="decisionOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="decisionRate">
+          </div>
+
+          <div class="rating">
+            <label>Speaker tracking · <output id="speakerOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="speakerRate">
+          </div>
+
+          <div class="rating">
+            <label>Action accuracy · <output id="actionOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="actionRate">
+          </div>
+
+          <div class="rating">
+            <label>Natural delivery · <output id="naturalOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="naturalRate">
+          </div>
+        </div>
+      </section>
+
+      <!-- RESULT -->
+      <section class="lesson-card" id="result">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Day 13 Result</div>
+            <h2>Your meeting-listening score</h2>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <div class="muted" style="color:#b8bdc6">Speaker tracking + deep listening + dictation</div>
+
+          <div class="result-score">
+            <span id="overallScore">—</span><span style="font-size:1.3rem">%</span>
+          </div>
+
+          <div class="muted" id="scoreInterpretation" style="color:#b8bdc6;margin-top:7px">
+            Complete speaker tracking, deep listening and dictation to calculate your score.
+          </div>
+
+          <div class="result-grid">
+            <div class="result-box">
+              <strong id="speakerResult">—</strong>
+              <span>Speaker tracking</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="deepResult">—</strong>
+              <span>Meeting comprehension</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="dictationResult">—</strong>
+              <span>Dictation</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPLETE -->
+      <section class="complete-box" id="complete">
+        <h2>Complete Day 13</h2>
+
+        <p>
+          Save today's result and continue to Day 14: Presentation Listening.
+          Your Week 2 roadmap progress will update automatically.
+        </p>
+
+        <button class="btn primary" id="completeDayBtn" type="button">✓ Mark Day 13 complete</button>
+        <a href="lesson-day-14.html" class="btn secondary">Go to Day 14 →</a>
+
+        <div class="done-banner" id="doneBanner">
+          Day 13 is saved as completed in this browser.
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="sidebar">
+      <div class="side-card">
+        <h3>Day 13</h3>
+        <div class="muted" style="font-size:.84rem">Meetings at Natural Speed</div>
+
+        <div class="mini-progress"><div id="sideProgress"></div></div>
+        <div class="muted" id="sideProgressText" style="font-size:.78rem;margin-top:7px">
+          0/8 sections touched
+        </div>
+      </div>
+
+      <div class="side-card">
+        <h3>Jump to</h3>
+
+        <nav class="toc">
+          <a href="#first-listen">1. First Listen</a>
+          <a href="#meeting-language">2. Meeting Language</a>
+          <a href="#speaker-tracking">3. Speaker Tracking</a>
+          <a href="#deep-listen">4. Deep Listen</a>
+          <a href="#dictation">5. Dictation</a>
+          <a href="#decode">6. Decode</a>
+          <a href="#shadowing">7. Shadowing</a>
+          <a href="#speak-back">8. Speak Back</a>
+          <a href="#result">Result</a>
+        </nav>
+      </div>
+
+      <div class="side-card">
+        <h3>Rule for today</h3>
+        <p class="muted" style="font-size:.84rem;line-height:1.55;margin:0">
+          If you lose one sentence, do not mentally rewind. Re-anchor on the current speaker and ask:
+          <b>Are they raising an issue, giving a view, confirming a decision or taking an action?</b>
+        </p>
+      </div>
+    </aside>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="shell">Fluent30 · Day 13 · Meetings at Natural Speed</div>
+</footer>
+
+<script>
+  const COURSE_KEY = "fluent30-progress-v1";
+  const DAY_KEY = "fluent30-day-13-result";
+
+  const meeting = [
+    {speaker:"Anna", text:"Okay, main question: are we still comfortable launching the campaign on Monday?", role:"a"},
+    {speaker:"David", text:"From a marketing side, yes. Creative is ready, media is booked, and if we move the date now we'll probably lose the placement.", role:"b"},
+    {speaker:"Mei", text:"Sorry, can I jump in there? I'm not sure we're ready from a data perspective. The new customer list still hasn't been fully verified.", role:"c"},
+    {speaker:"David", text:"I take your point, but we're talking about maybe ten percent of the list, right?", role:"b"},
+    {speaker:"Mei", text:"Closer to fifteen. And the issue isn't just volume — some of the records have missing consent fields.", role:"c"},
+    {speaker:"Jon", text:"Can we come back to the main question? Do we need to delay everything, or can we separate the clean data from the unverified records?", role:"d"},
+    {speaker:"Anna", text:"That's what I was thinking. Launch to the verified segment on Monday, then add the rest once Data clears it.", role:"a"},
+    {speaker:"David", text:"That works for me, as long as the first wave is still large enough to justify the media spend.", role:"b"},
+    {speaker:"Mei", text:"I should be able to confirm the final verified count by tomorrow noon.", role:"c"},
+    {speaker:"Jon", text:"Sorry — just to make sure I've got this right — we're not delaying the campaign, we're limiting the first release?", role:"d"},
+    {speaker:"Anna", text:"Correct. Monday stays. Unverified records stay out.", role:"a"},
+    {speaker:"David", text:"Okay. If Mei confirms the count by noon tomorrow, I can adjust the media split by end of day.", role:"b"},
+    {speaker:"Anna", text:"Great. Let's lock that in. Mei owns the verified count by noon; David updates the media split by five; and I'll send the final go/no-go note after that.", role:"a"},
+    {speaker:"Jon", text:"Works for me.", role:"d"},
+    {speaker:"Mei", text:"Same here.", role:"c"}
+  ];
+
+  const meetingDrill = [
+    "Sorry, can I jump in there?",
+    "I take your point, but I'm not sure that solves the core issue.",
+    "Can we come back to the main question?",
+    "So are we saying we launch on Monday?",
+    "Okay, let's lock that in.",
+    "Can you own that and report back?"
+  ];
+
+  const speakerQuestions = [
+    {
+      speaker:"Mei",
+      spoken:"I'm not sure we're ready from a data perspective.",
+      q:"What is Mei doing?",
+      options:["Raising a risk","Confirming the launch","Assigning media spend"],
+      answer:0
+    },
+    {
+      speaker:"Jon",
+      spoken:"Can we come back to the main question?",
+      q:"What is Jon doing?",
+      options:["Changing the subject","Refocusing the meeting","Ending the meeting"],
+      answer:1
+    },
+    {
+      speaker:"David",
+      spoken:"That works for me, as long as the first wave is still large enough.",
+      q:"What is David's stance?",
+      options:["Conditional agreement","Complete rejection","No opinion"],
+      answer:0
+    },
+    {
+      speaker:"Anna",
+      spoken:"Let's lock that in.",
+      q:"What is Anna doing?",
+      options:["Opening a new issue","Confirming the decision","Postponing the topic"],
+      answer:1
+    }
+  ];
+
+  const deepQuestions = [
+    {
+      q:"Why does David prefer to keep Monday's launch?",
+      options:[
+        "The client requested Monday.",
+        "Creative is ready and moving the date may lose the media placement.",
+        "The data team has already approved everything."
+      ],
+      answer:1
+    },
+    {
+      q:"What percentage of the list does Mei say is still affected?",
+      options:["About 5%","About 10%","About 15%"],
+      answer:2
+    },
+    {
+      q:"What additional problem exists besides the size of the unverified segment?",
+      options:[
+        "Some records have missing consent fields.",
+        "The campaign budget is missing.",
+        "Creative files are incomplete."
+      ],
+      answer:0
+    },
+    {
+      q:"What compromise does Anna propose?",
+      options:[
+        "Delay the full campaign.",
+        "Launch to verified records first and add the rest later.",
+        "Remove the data-driven audience entirely."
+      ],
+      answer:1
+    },
+    {
+      q:"What is Mei's deadline?",
+      options:["Tomorrow noon","Tomorrow 5pm","Monday morning"],
+      answer:0
+    },
+    {
+      q:"What happens after David updates the media split?",
+      options:[
+        "Jon sends the client list.",
+        "Anna sends the final go/no-go note.",
+        "Mei books new media."
+      ],
+      answer:1
+    }
+  ];
+
+  const dictationItems = [
+    "Sorry, can I jump in there?",
+    "Can we come back to the main question?",
+    "We're not delaying the campaign, we're limiting the first release.",
+    "Let's lock that in."
+  ];
+
+  const chunks = [
+    ["jump in","interrupt briefly to add something important","Sorry, can I jump in there?"],
+    ["take your point","acknowledge another person's argument","I take your point, but..."],
+    ["come back to the main question","refocus the discussion","Can we come back to the main question?"],
+    ["as long as","sets a condition for agreement","That works for me, as long as the first wave is large enough."],
+    ["make sure I've got this right","confirm the group's decision","Just to make sure I've got this right..."],
+    ["lock that in","confirm a decision","Great. Let's lock that in."],
+    ["go/no-go","final proceed / do-not-proceed decision","I'll send the final go/no-go note."]
+  ];
+
+  const shadowSentences = [
+    "Sorry, can I jump in there?",
+    "I take your point, but we're talking about maybe ten percent, right?",
+    "Can we come back to the main question?",
+    "Just to make sure I've got this right, we're limiting the first release?",
+    "Great. Let's lock that in."
+  ];
+
+  let speechRate = 1.08;
+  let listenCount = Number(localStorage.getItem("fluent30-day13-listens") || 0);
+  let speakerScore = null;
+  let deepScore = null;
+  let dictationScores = [null,null,null,null];
+  let touchedSections = new Set();
+
+  function getVoices(){
+    if(!("speechSynthesis" in window)) return [];
+    return speechSynthesis.getVoices();
+  }
+
+  function getVoice(role){
+    const voices = getVoices();
+    const us = voices.filter(v => /en-US/i.test(v.lang));
+    const en = voices.filter(v => /^en/i.test(v.lang));
+
+    const patterns = {
+      a:/Samantha|Jenny|Aria|Joanna/i,
+      b:/Guy|Matthew|Daniel|David/i,
+      c:/Zira|Ava|Emma|Sonia/i,
+      d:/Alex|Tom|Eric|Ryan/i
+    };
+
+    return us.find(v => patterns[role].test(v.name)) ||
+           us[{a:0,b:1,c:2,d:3}[role]] ||
+           us[0] ||
+           en[{a:0,b:1,c:2,d:3}[role]] ||
+           en[0] ||
+           null;
+  }
+
+  function speak(text,rate=1,onEnd=null,role="a"){
+    if(!("speechSynthesis" in window)){
+      alert("Speech synthesis is not supported in this browser.");
+      return;
+    }
+
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US";
+    u.rate = rate;
+
+    const pitches = {a:1.05,b:.95,c:1.00,d:.91};
+    u.pitch = pitches[role] || 1;
+
+    const v = getVoice(role);
+    if(v) u.voice = v;
+    if(onEnd) u.onend = onEnd;
+
+    speechSynthesis.speak(u);
+  }
+
+  function stopSpeech(){
+    if("speechSynthesis" in window) speechSynthesis.cancel();
+  }
+
+  function playMeeting(){
+    stopSpeech();
+    let i = 0;
+
+    const next = ()=>{
+      if(i >= meeting.length) return;
+
+      const part = meeting[i];
+
+      speak(part.text,speechRate,()=>{
+        i++;
+        setTimeout(next, i === 3 || i === 6 ? 50 : 105);
+      },part.role);
+    };
+
+    next();
+  }
+
+  document.getElementById("playMainBtn").addEventListener("click",()=>{
+    listenCount += 1;
+    localStorage.setItem("fluent30-day13-listens",String(listenCount));
+    updateListenUI();
+    markTouched("listen");
+    playMeeting();
+  });
+
+  document.getElementById("stopMainBtn").addEventListener("click",stopSpeech);
+
+  document.querySelectorAll(".speed-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      speechRate = Number(btn.dataset.rate);
+      document.querySelectorAll(".speed-btn").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+
+  function updateListenUI(){
+    document.getElementById("listenCount").textContent = listenCount;
+    document.getElementById("revealBtn").disabled = listenCount < 2;
+
+    if(listenCount >= 2){
+      const lock = document.getElementById("transcriptLock");
+      lock.querySelector("strong").textContent = "Transcript ready";
+      lock.querySelector("p").textContent =
+        "You have completed at least two listens. Now inspect speaker shifts, disagreement and action items.";
+    }
+  }
+
+  document.getElementById("revealBtn").addEventListener("click",()=>{
+    document.getElementById("transcriptBox").classList.add("show");
+    document.getElementById("transcriptLock").style.display = "none";
+    markTouched("decode");
+  });
+
+  function checkFirstQuestion(){
+    const chosen = document.querySelector('input[name="q1"]:checked');
+    const box = document.getElementById("q1Feedback");
+    box.className = "feedback show";
+
+    if(!chosen){
+      box.classList.add("warn");
+      box.textContent = "Choose one answer first.";
+      return;
+    }
+
+    if(chosen.value === "b"){
+      box.classList.add("good");
+      box.textContent = "Correct. Monday stays, but only verified records go into the first release.";
+    }else{
+      box.classList.add("warn");
+      box.textContent = "Not quite. Track the final compromise rather than the early disagreement.";
+    }
+
+    markTouched("listen");
+  }
+
+  function playMeetingDrill(){
+    markTouched("meeting");
+    stopSpeech();
+
+    let i = 0;
+
+    const next = ()=>{
+      if(i >= meetingDrill.length) return;
+
+      speak(meetingDrill[i],1.02,()=>{
+        i++;
+        setTimeout(next,180);
+      },["a","b","c","d"][i%4]);
+    };
+
+    next();
+  }
+
+  function renderSpeakerQuiz(){
+    const container = document.getElementById("speakerQuiz");
+
+    container.innerHTML = speakerQuestions.map((item,index)=>`
+      <div class="speaker-item">
+        <span class="speaker-tag">${item.speaker}</span>
+        <div class="question-title">${index+1}. ${item.q}</div>
+
+        <div class="btn-row" style="margin-top:0;margin-bottom:10px">
+          <button class="btn secondary" type="button" onclick="playSpeaker(${index})">▶ Play</button>
+        </div>
+
+        <div class="options">
+          ${item.options.map((option,optIndex)=>`
+            <label class="option">
+              <input type="radio" name="speaker${index}" value="${optIndex}">
+              <span>${option}</span>
+            </label>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function playSpeaker(index){
+    stopSpeech();
+    speak(speakerQuestions[index].spoken,1.05);
+    markTouched("speaker");
+  }
+
+  function gradeSpeakerQuiz(){
+    let correct = 0;
+    let answered = 0;
+
+    speakerQuestions.forEach((item,index)=>{
+      const selected = document.querySelector(`input[name="speaker${index}"]:checked`);
+
+      if(selected){
+        answered++;
+        if(Number(selected.value) === item.answer) correct++;
+      }
+    });
+
+    const feedback = document.getElementById("speakerFeedback");
+    feedback.className = "feedback show";
+
+    if(answered < speakerQuestions.length){
+      feedback.classList.add("warn");
+      feedback.textContent = `You answered ${answered}/${speakerQuestions.length}. Complete all questions first.`;
+      return;
+    }
+
+    speakerScore = Math.round((correct/speakerQuestions.length)*100);
+
+    document.getElementById("speakerScoreText").textContent =
+      `${correct}/${speakerQuestions.length} correct · ${speakerScore}%`;
+
+    if(speakerScore >= 75){
+      feedback.classList.add("good");
+      feedback.textContent = "Good. You're tracking not only who is speaking, but what function their turn serves.";
+    }else{
+      feedback.classList.add("warn");
+      feedback.textContent = "Focus on speaker function: concern / challenge / refocus / decision / action.";
+    }
+
+    markTouched("speaker");
+    updateResults();
+  }
+
+  function renderDeepQuestions(){
+    const container = document.getElementById("deepQuestions");
+
+    container.innerHTML = deepQuestions.map((item,index)=>`
+      <div class="question">
+        <div class="question-title">${index+1}. ${item.q}</div>
+
+        <div class="options">
+          ${item.options.map((option,optIndex)=>`
+            <label class="option">
+              <input type="radio" name="deep${index}" value="${optIndex}">
+              <span>${option}</span>
+            </label>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function gradeDeepQuiz(){
+    let correct = 0;
+    let answered = 0;
+
+    deepQuestions.forEach((item,index)=>{
+      const selected = document.querySelector(`input[name="deep${index}"]:checked`);
+
+      if(selected){
+        answered++;
+        if(Number(selected.value) === item.answer) correct++;
+      }
+    });
+
+    const feedback = document.getElementById("deepFeedback");
+    feedback.className = "feedback show";
+
+    if(answered < deepQuestions.length){
+      feedback.classList.add("warn");
+      feedback.textContent = `You answered ${answered}/${deepQuestions.length}. Complete all questions first.`;
+      return;
+    }
+
+    deepScore = Math.round((correct/deepQuestions.length)*100);
+
+    document.getElementById("deepScoreText").textContent =
+      `${correct}/${deepQuestions.length} correct · ${deepScore}%`;
+
+    if(deepScore >= 84){
+      feedback.classList.add("good");
+      feedback.textContent = "Strong meeting comprehension. You followed the conflict, compromise and final action chain.";
+    }else if(deepScore >= 67){
+      feedback.classList.add("info");
+      feedback.textContent = "Good overall. Some speaker shifts or deadline details are still dropping at meeting speed.";
+    }else{
+      feedback.classList.add("warn");
+      feedback.textContent = "Replay and write only: issue → view A → view B → compromise → owners → deadlines.";
+    }
+
+    markTouched("deep");
+    updateResults();
+  }
+
+  function renderDictation(){
+    const container = document.getElementById("dictationList");
+
+    container.innerHTML = dictationItems.map((sentence,index)=>`
+      <div class="dictation-item">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+          <strong>Sentence ${index+1}</strong>
+          <button class="btn secondary" type="button" onclick="playDictation(${index})">▶ Play</button>
+        </div>
+
+        <input
+          type="text"
+          id="dictInput${index}"
+          style="margin-top:12px"
+          placeholder="Type exactly what you hear"
+          autocomplete="off"
+        >
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="checkDictation(${index})">Check</button>
+        </div>
+
+        <div class="dictation-result" id="dictResult${index}"></div>
+      </div>
+    `).join("");
+  }
+
+  function playDictation(index){
+    stopSpeech();
+    speak(dictationItems[index],1.08);
+    markTouched("dictation");
+  }
+
+  function normalize(text){
+    return text
+      .toLowerCase()
+      .replace(/[’‘]/g,"'")
+      .replace(/[^a-z0-9'\s-]/g,"")
+      .replace(/\s+/g," ")
+      .trim();
+  }
+
+  function wordSimilarity(userText,targetText){
+    const a = normalize(userText).split(" ").filter(Boolean);
+    const b = normalize(targetText).split(" ").filter(Boolean);
+
+    const dp = Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));
+
+    for(let i=1;i<=a.length;i++){
+      for(let j=1;j<=b.length;j++){
+        if(a[i-1] === b[j-1]){
+          dp[i][j] = dp[i-1][j-1] + 1;
+        }else{
+          dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+        }
+      }
+    }
+
+    return b.length ? Math.round((dp[a.length][b.length]/b.length)*100) : 0;
+  }
+
+  function checkDictation(index){
+    const input = document.getElementById(`dictInput${index}`);
+    const result = document.getElementById(`dictResult${index}`);
+
+    if(!input.value.trim()){
+      result.className = "dictation-result show";
+      result.innerHTML = `<span class="miss">Type what you hear first.</span>`;
+      return;
+    }
+
+    const score = wordSimilarity(input.value,dictationItems[index]);
+    dictationScores[index] = score;
+
+    const label =
+      score >= 90 ? "Excellent" :
+      score >= 75 ? "Good" :
+      score >= 60 ? "Developing" :
+      "Needs work";
+
+    result.className = "dictation-result show";
+    result.innerHTML = `
+      <div><strong>${label} · ${score}% match</strong></div>
+      <div style="margin-top:6px"><span class="muted">Target:</span> ${dictationItems[index]}</div>
+    `;
+
+    markTouched("dictation");
+    updateResults();
+  }
+
+  function getDictationAverage(){
+    const scored = dictationScores.filter(v => typeof v === "number");
+    if(scored.length !== dictationScores.length) return null;
+
+    return Math.round(scored.reduce((a,b)=>a+b,0)/scored.length);
+  }
+
+  function renderChunks(){
+    const saved = JSON.parse(localStorage.getItem("fluent30-saved-chunks") || "[]");
+    const container = document.getElementById("chunkList");
+
+    container.innerHTML = chunks.map((chunk,index)=>{
+      const isSaved = saved.includes(chunk[0]);
+
+      return `
+        <div class="chunk">
+          <div>
+            <strong>${chunk[0]}</strong>
+            <div style="margin-top:5px;font-size:.82rem;color:#8b8f96">“${chunk[2]}”</div>
+          </div>
+
+          <span>${chunk[1]}</span>
+
+          <button
+            class="save-chunk ${isSaved ? "saved" : ""}"
+            type="button"
+            onclick="toggleChunk(${index},this)"
+          >${isSaved ? "Saved ✓" : "Save"}</button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function toggleChunk(index,button){
+    let saved = JSON.parse(localStorage.getItem("fluent30-saved-chunks") || "[]");
+    const phrase = chunks[index][0];
+
+    if(saved.includes(phrase)){
+      saved = saved.filter(x=>x!==phrase);
+      button.classList.remove("saved");
+      button.textContent = "Save";
+    }else{
+      saved.push(phrase);
+      button.classList.add("saved");
+      button.textContent = "Saved ✓";
+    }
+
+    localStorage.setItem("fluent30-saved-chunks",JSON.stringify(saved));
+    markTouched("shadow");
+  }
+
+  function renderShadowing(){
+    const container = document.getElementById("shadowList");
+
+    container.innerHTML = shadowSentences.map((sentence,index)=>`
+      <div class="dictation-item">
+        <strong>${index+1}. ${sentence}</strong>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="playShadow(${index},0.94)">Slow model</button>
+          <button class="btn primary" type="button" onclick="playShadow(${index},1.08)">Natural model</button>
+          <button class="btn secondary" type="button" onclick="playShadow(${index},1.16)">Fast model</button>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function playShadow(index,rate){
+    stopSpeech();
+    speak(shadowSentences[index],rate);
+    markTouched("shadow");
+  }
+
+  function setupRecorder(prefix){
+    const recordBtn = document.getElementById(`${prefix}RecordBtn`);
+    const stopBtn = document.getElementById(`${prefix}StopBtn`);
+    const status = document.getElementById(`${prefix}RecordStatus`);
+    const playback = document.getElementById(`${prefix}Playback`);
+
+    let recorder = null;
+    let blobs = [];
+    let stream = null;
+    let startTime = null;
+
+    recordBtn.addEventListener("click",async()=>{
+      if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+        status.textContent = "Microphone recording is not supported in this browser.";
+        return;
+      }
+
+      try{
+        stream = await navigator.mediaDevices.getUserMedia({audio:true});
+        recorder = new MediaRecorder(stream);
+        blobs = [];
+        startTime = Date.now();
+
+        recorder.ondataavailable = event=>{
+          if(event.data.size > 0) blobs.push(event.data);
+        };
+
+        recorder.onstop = ()=>{
+          const blob = new Blob(blobs,{type:recorder.mimeType || "audio/webm"});
+          playback.src = URL.createObjectURL(blob);
+          playback.style.display = "block";
+
+          const seconds = Math.round((Date.now()-startTime)/1000);
+
+          status.textContent =
+            `Recorded ${seconds} seconds. Check whether the decision and final action chain are easy to follow.`;
+
+          if(prefix === "speak") markTouched("speak");
+          if(prefix === "shadow") markTouched("shadow");
+
+          if(stream) stream.getTracks().forEach(track=>track.stop());
+        };
+
+        recorder.start();
+        recordBtn.disabled = true;
+        stopBtn.disabled = false;
+        status.textContent = "Recording…";
+
+      }catch(error){
+        status.textContent = "Microphone permission was not granted.";
+      }
+    });
+
+    stopBtn.addEventListener("click",()=>{
+      if(recorder && recorder.state !== "inactive"){
+        recorder.stop();
+      }
+
+      recordBtn.disabled = false;
+      stopBtn.disabled = true;
+    });
+  }
+
+  ["decision","speaker","action","natural"].forEach(name=>{
+    const range = document.getElementById(`${name}Rate`);
+    const out = document.getElementById(`${name}Out`);
+
+    range.addEventListener("input",()=>{
+      out.value = range.value;
+      markTouched("speak");
+    });
+  });
+
+  function speakingAverage(){
+    const values = [
+      Number(document.getElementById("decisionRate").value),
+      Number(document.getElementById("speakerRate").value),
+      Number(document.getElementById("actionRate").value),
+      Number(document.getElementById("naturalRate").value)
+    ];
+
+    return values.reduce((a,b)=>a+b,0)/values.length;
+  }
+
+  function updateResults(){
+    const dictAvg = getDictationAverage();
+
+    document.getElementById("speakerResult").textContent =
+      speakerScore === null ? "—" : `${speakerScore}%`;
+
+    document.getElementById("deepResult").textContent =
+      deepScore === null ? "—" : `${deepScore}%`;
+
+    document.getElementById("dictationResult").textContent =
+      dictAvg === null ? "—" : `${dictAvg}%`;
+
+    if(speakerScore !== null && deepScore !== null && dictAvg !== null){
+      const overall = Math.round(
+        speakerScore * 0.30 +
+        deepScore * 0.40 +
+        dictAvg * 0.30
+      );
+
+      document.getElementById("overallScore").textContent = overall;
+
+      let interpretation = "";
+
+      if(overall >= 88){
+        interpretation =
+          "Excellent. You can follow multi-speaker meeting logic, speaker shifts and action items at natural speed.";
+      }else if(overall >= 75){
+        interpretation =
+          "Strong. The meeting structure is clear, with only occasional loss during interruptions or rapid speaker changes.";
+      }else if(overall >= 60){
+        interpretation =
+          "Developing. Main decisions are understandable, but speaker function or action-chain detail is still unstable.";
+      }else{
+        interpretation =
+          "Meeting speed is still overwhelming. Stop trying to retain every sentence and track only speaker function + decision state.";
+      }
+
+      document.getElementById("scoreInterpretation").textContent = interpretation;
+    }
+  }
+
+  function markTouched(section){
+    touchedSections.add(section);
+    updateSectionProgress();
+  }
+
+  function updateSectionProgress(){
+    const count = touchedSections.size;
+    const percent = Math.round((count/8)*100);
+
+    document.getElementById("topProgress").style.width = `${percent}%`;
+    document.getElementById("sideProgress").style.width = `${percent}%`;
+    document.getElementById("topProgressText").textContent = `${percent}% complete`;
+    document.getElementById("sideProgressText").textContent = `${count}/8 sections touched`;
+  }
+
+  function getCourseProgress(){
+    try{
+      return JSON.parse(localStorage.getItem(COURSE_KEY)) || {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }catch(e){
+      return {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }
+  }
+
+  function saveDayResult(){
+    const dictAvg = getDictationAverage();
+
+    const overall = (
+      speakerScore !== null &&
+      deepScore !== null &&
+      dictAvg !== null
+    )
+      ? Math.round(
+          speakerScore * 0.30 +
+          deepScore * 0.40 +
+          dictAvg * 0.30
+        )
+      : null;
+
+    const result = {
+      day:13,
+      speakerScore,
+      deepScore,
+      dictationScore:dictAvg,
+      dictationScores:[...dictationScores],
+      speakingSelf:Number(speakingAverage().toFixed(1)),
+      overall,
+      listens:listenCount,
+      savedAt:new Date().toISOString()
+    };
+
+    localStorage.setItem(DAY_KEY,JSON.stringify(result));
+  }
+
+  document.getElementById("completeDayBtn").addEventListener("click",()=>{
+    const progress = getCourseProgress();
+    const alreadyDone = progress.completed.includes(13);
+
+    if(!alreadyDone){
+      progress.completed.push(13);
+      progress.completed.sort((a,b)=>a-b);
+      progress.streak = Math.max(1,Number(progress.streak || 0)+1);
+      progress.minutes = Number(progress.minutes || 0)+90;
+      progress.lastDay = 13;
+
+      localStorage.setItem(COURSE_KEY,JSON.stringify(progress));
+    }
+
+    saveDayResult();
+
+    document.getElementById("doneBanner").classList.add("show");
+    document.getElementById("completeDayBtn").textContent = "✓ Day 13 completed";
+    document.getElementById("completeDayBtn").disabled = true;
+
+    touchedSections = new Set([
+      "listen","meeting","speaker","deep","dictation","decode","shadow","speak"
+    ]);
+
+    updateSectionProgress();
+  });
+
+  function loadSavedState(){
+    updateListenUI();
+
+    const progress = getCourseProgress();
+
+    if(progress.completed.includes(13)){
+      document.getElementById("doneBanner").classList.add("show");
+      document.getElementById("completeDayBtn").textContent = "✓ Day 13 completed";
+      document.getElementById("completeDayBtn").disabled = true;
+
+      touchedSections = new Set([
+        "listen","meeting","speaker","deep","dictation","decode","shadow","speak"
+      ]);
+
+      updateSectionProgress();
+    }
+
+    try{
+      const saved = JSON.parse(localStorage.getItem(DAY_KEY) || "null");
+
+      if(saved){
+        if(typeof saved.speakerScore === "number") speakerScore = saved.speakerScore;
+        if(typeof saved.deepScore === "number") deepScore = saved.deepScore;
+        if(Array.isArray(saved.dictationScores)) dictationScores = saved.dictationScores;
+      }
+    }catch(e){}
+
+    updateResults();
+  }
+
+  renderSpeakerQuiz();
+  renderDeepQuestions();
+  renderDictation();
+  renderChunks();
+  renderShadowing();
+  setupRecorder("shadow");
+  setupRecorder("speak");
+  loadSavedState();
+
+  if("speechSynthesis" in window){
+    speechSynthesis.onvoiceschanged = ()=>getVoices();
+  }
+</script>
+</body>
+</html>
