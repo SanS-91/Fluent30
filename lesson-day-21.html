@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fluent30 Day 21 — Abstract Topics" />
+  <title>Fluent30 — Day 21 Abstract Topics</title>
+
+  <style>
+    :root{
+      --bg:#f5f5f6; --surface:#fff; --surface-2:#fafafa; --text:#111; --muted:#6b7280;
+      --line:#e5e7eb; --red:#8f1027; --red-dark:#6f0b1e; --black:#171717;
+      --green:#166534; --green-bg:#ecfdf3; --amber:#92400e; --amber-bg:#fffbeb;
+      --blue:#1d4ed8; --blue-bg:#eff6ff; --shadow:0 18px 50px rgba(17,24,39,.08);
+      --r-xl:24px; --r-lg:17px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text)
+    }
+
+    button,input,textarea,select{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    .shell{width:min(1160px,calc(100% - 38px));margin:0 auto}
+
+    header{
+      position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);
+      border-bottom:1px solid var(--line);backdrop-filter:blur(14px)
+    }
+
+    .topnav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.04em}
+    .brand-mark{
+      width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
+      background:var(--red);color:#fff;font-size:.88rem
+    }
+    .brand span span{color:var(--red)}
+    .toplinks{display:flex;align-items:center;gap:9px}
+
+    .navbtn{
+      display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;
+      border:1px solid var(--line);border-radius:10px;background:#fff;color:#333;
+      font-size:.88rem;font-weight:700
+    }
+    .navbtn:hover{border-color:#c8ccd2}
+
+    main{padding:34px 0 70px}
+
+    .phase-banner{
+      background:var(--black);color:#fff;border-radius:16px;padding:15px 18px;margin-bottom:18px;
+      display:flex;justify-content:space-between;gap:16px;align-items:center
+    }
+    .phase-banner strong{font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
+    .phase-banner span{color:#c2c6cd;font-size:.82rem}
+
+    .hero{
+      display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.55fr);gap:20px
+    }
+
+    .hero-main,.hero-side{border-radius:var(--r-xl);box-shadow:var(--shadow)}
+
+    .hero-main{
+      background:linear-gradient(135deg,#fff 0%,#fbfbfc 72%,#f2f2f3 100%);
+      border:1px solid var(--line);padding:38px
+    }
+
+    .eyebrow{
+      color:var(--red);font-weight:850;font-size:.76rem;letter-spacing:.12em;
+      text-transform:uppercase;margin-bottom:12px
+    }
+
+    h1{margin:0;font-size:clamp(2.4rem,5vw,4.8rem);line-height:.96;letter-spacing:-.06em}
+
+    .hero-copy{
+      max-width:850px;color:var(--muted);line-height:1.65;margin:18px 0 0
+    }
+
+    .hero-side{
+      background:var(--black);color:#fff;padding:28px;display:flex;
+      flex-direction:column;justify-content:space-between;gap:20px
+    }
+
+    .hero-side .muted{color:#b9bec7}
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .meta-card{background:#202020;border:1px solid #343434;border-radius:12px;padding:14px}
+    .meta-card strong{display:block;font-size:1.2rem;margin-bottom:2px}
+    .meta-card span{font-size:.78rem;color:#afb4bd}
+    .progress-track{height:9px;border-radius:999px;background:#343434;overflow:hidden;margin-top:13px}
+    .progress-fill{height:100%;width:0%;background:#fff;transition:.25s ease}
+
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) 292px;gap:22px;margin-top:24px}
+
+    .lesson-card{
+      background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+      padding:26px;margin-bottom:18px
+    }
+
+    .lesson-card h2{margin:0;font-size:1.42rem;letter-spacing:-.035em}
+    .lesson-card h3{margin:18px 0 8px;font-size:1rem}
+    .lesson-card p{line-height:1.62}
+    .muted{color:var(--muted)}
+
+    .step-head{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px
+    }
+
+    .step-label{
+      color:var(--red);font-size:.74rem;font-weight:850;letter-spacing:.1em;
+      text-transform:uppercase;margin-bottom:6px
+    }
+
+    .time-pill{
+      flex:0 0 auto;padding:6px 9px;background:#f3f4f6;border-radius:999px;
+      color:#5b616c;font-size:.76rem;font-weight:750
+    }
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:43px;
+      padding:0 15px;border-radius:11px;border:1px solid transparent;font-weight:800;transition:.18s ease
+    }
+
+    .btn.primary{background:var(--red);color:#fff}
+    .btn.primary:hover{background:var(--red-dark);transform:translateY(-1px)}
+    .btn.secondary{background:#fff;border-color:var(--line);color:#222}
+    .btn.secondary:hover{border-color:#c9cdd3}
+    .btn:disabled{opacity:.45;cursor:not-allowed}
+    .btn-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+
+    .audio-panel{
+      border:1px solid var(--line);border-radius:14px;background:var(--surface-2);padding:17px
+    }
+
+    .audio-title{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      margin-bottom:10px;font-weight:800
+    }
+
+    .listen-counter{font-size:.78rem;color:var(--muted);font-weight:700}
+    .speed-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+
+    .speed-btn{
+      border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 10px;
+      font-size:.78rem;font-weight:750
+    }
+
+    .speed-btn.active{border-color:var(--red);color:var(--red);background:#fff5f6}
+
+    .question{padding:17px 0;border-top:1px solid var(--line)}
+    .question:first-of-type{border-top:0;padding-top:4px}
+    .question-title{font-weight:800;line-height:1.5;margin-bottom:10px}
+    .options{display:grid;gap:8px}
+
+    .option{
+      display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid var(--line);
+      border-radius:11px;cursor:pointer;background:#fff
+    }
+
+    .option:hover{border-color:#c9cdd3}
+    .option input{margin-top:3px}
+
+    .feedback{
+      margin-top:12px;border-radius:11px;padding:11px 13px;
+      font-size:.9rem;line-height:1.5;display:none
+    }
+
+    .feedback.show{display:block}
+    .feedback.good{background:var(--green-bg);color:var(--green)}
+    .feedback.warn{background:var(--amber-bg);color:var(--amber)}
+    .feedback.info{background:var(--blue-bg);color:var(--blue)}
+
+    textarea,input[type="text"],select{
+      width:100%;border:1px solid #d2d6dc;border-radius:11px;padding:12px 13px;
+      background:#fff;color:#111;outline:none
+    }
+
+    textarea:focus,input[type="text"]:focus,select:focus{
+      border-color:#ba6a7c;box-shadow:0 0 0 3px rgba(143,16,39,.08)
+    }
+
+    textarea{resize:vertical;min-height:105px}
+
+    .concept-grid,.logic-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px
+    }
+
+    .concept-card,.logic-card{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff
+    }
+
+    .concept-card strong,.logic-card strong{display:block;margin-bottom:6px}
+    .concept-card .example,.logic-card .example{color:var(--red);font-weight:850;margin-bottom:6px}
+    .concept-card span,.logic-card span{font-size:.86rem;color:var(--muted);line-height:1.45}
+
+    .map-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:12px
+    }
+
+    .map-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;background:#fff
+    }
+
+    .map-item label{display:block;font-weight:800;margin-bottom:8px}
+    .map-item small{display:block;color:var(--muted);line-height:1.45;margin-bottom:10px}
+
+    .dictation-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;margin-top:12px;background:#fff
+    }
+
+    .dictation-result{
+      margin-top:10px;padding:10px 12px;background:#f8f9fa;border-radius:10px;
+      line-height:1.55;display:none
+    }
+
+    .dictation-result.show{display:block}
+
+    .lockbox{
+      border:1px dashed #c8cdd3;border-radius:13px;padding:18px;background:#fafafa;text-align:center
+    }
+
+    .transcript{
+      display:none;margin-top:14px;padding:18px;border-left:4px solid var(--red);
+      border-radius:10px;background:#fafafa;line-height:1.8
+    }
+
+    .transcript.show{display:block}
+
+    .decode-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px
+    }
+
+    .decode-card{
+      border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff
+    }
+
+    .decode-card strong{display:block;margin-bottom:5px}
+    .decode-card span{font-size:.88rem;color:var(--muted);line-height:1.45}
+
+    .chunk{
+      display:grid;grid-template-columns:1.2fr 1.8fr auto;gap:12px;align-items:center;
+      border-top:1px solid var(--line);padding:13px 0
+    }
+
+    .chunk:first-of-type{border-top:0}
+    .chunk strong{font-size:.92rem}
+    .chunk span{font-size:.86rem;color:var(--muted);line-height:1.45}
+
+    .save-chunk{
+      border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 9px;
+      font-size:.76rem;font-weight:750
+    }
+
+    .save-chunk.saved{background:var(--green-bg);color:var(--green);border-color:#ccebd5}
+
+    .recorder{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fafafa;margin-top:12px
+    }
+
+    .record-status{font-size:.84rem;color:var(--muted);margin-top:8px}
+    audio{width:100%;margin-top:12px}
+
+    .prompt-box{
+      border-left:4px solid var(--red);background:#fafafa;padding:16px 17px;
+      border-radius:10px;line-height:1.6;margin:12px 0
+    }
+
+    .rating-grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px
+    }
+
+    .rating{border:1px solid var(--line);border-radius:12px;padding:13px}
+    .rating label{display:block;font-size:.8rem;font-weight:800;margin-bottom:8px}
+    .rating output{font-weight:900;color:var(--red)}
+    input[type="range"]{width:100%}
+
+    .result-card{background:var(--black);color:#fff;border-radius:18px;padding:24px}
+    .result-score{font-size:3.2rem;font-weight:900;letter-spacing:-.05em;line-height:1;margin-top:8px}
+    .result-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px
+    }
+    .result-box{
+      background:#202020;border:1px solid #353535;border-radius:12px;padding:13px
+    }
+    .result-box strong{display:block;font-size:1.2rem}
+    .result-box span{color:#b8bdc6;font-size:.78rem}
+
+    .sidebar{position:sticky;top:92px;align-self:start}
+    .side-card{
+      background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:13px
+    }
+    .side-card h3{margin:0 0 10px;font-size:.96rem}
+    .toc{display:grid;gap:5px}
+    .toc a{padding:8px 9px;border-radius:9px;color:#4b5563;font-size:.84rem}
+    .toc a:hover{background:#f4f4f5;color:var(--red)}
+
+    .mini-progress{height:7px;background:#eceef1;border-radius:999px;overflow:hidden;margin-top:10px}
+    .mini-progress > div{height:100%;width:0;background:var(--red);transition:.25s ease}
+
+    .complete-box{
+      text-align:center;padding:30px 24px;border:1px solid var(--line);
+      border-radius:18px;background:#fff
+    }
+    .complete-box h2{font-size:1.7rem;margin-bottom:8px}
+    .complete-box p{
+      color:var(--muted);max-width:680px;margin:0 auto 18px;line-height:1.6
+    }
+
+    .done-banner{
+      display:none;background:var(--green-bg);color:var(--green);border:1px solid #ccebd5;
+      border-radius:12px;padding:12px 14px;margin-top:14px;font-weight:750
+    }
+    .done-banner.show{display:block}
+
+    footer{
+      border-top:1px solid var(--line);color:var(--muted);padding:28px 0 40px;font-size:.84rem
+    }
+
+    @media(max-width:980px){
+      .hero,.layout{grid-template-columns:1fr}
+      .sidebar{position:static}
+      .concept-grid,.logic-grid,.map-grid,.decode-grid{grid-template-columns:1fr}
+    }
+
+    @media(max-width:720px){
+      .shell{width:min(100% - 26px,1160px)}
+      .hero-main,.hero-side{padding:25px}
+      .lesson-card{padding:20px}
+      .chunk{grid-template-columns:1fr}
+      .rating-grid,.result-grid{grid-template-columns:1fr}
+      .toplinks .hide-mobile{display:none}
+      .phase-banner{align-items:flex-start;flex-direction:column}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="shell topnav">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">F30</span>
+      <span>Fluent<span>30</span></span>
+    </a>
+
+    <div class="toplinks">
+      <a href="lesson-day-20.html" class="navbtn">← Day 20</a>
+      <a href="index.html" class="navbtn hide-mobile">Roadmap</a>
+      <a href="lesson-day-22.html" class="navbtn">Day 22 →</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="shell">
+
+  <div class="phase-banner">
+    <strong>Phase 4 · C1 Processing</strong>
+    <span>Days 21–28 · abstract ideas · analytical reasoning · longer retention · nuance</span>
+  </div>
+
+  <section class="hero">
+    <div class="hero-main">
+      <div class="eyebrow">Day 21 · Abstract Topics</div>
+
+      <h1>Follow ideas<br>you cannot picture.</h1>
+
+      <p class="hero-copy">
+        C1 listening becomes harder when the speaker is not describing a concrete event.
+        Today you train yourself to follow <b>abstract claims, qualified statements, cause–effect chains,
+        competing explanations and nuanced conclusions</b> without needing every idea to be visual.
+      </p>
+    </div>
+
+    <aside class="hero-side">
+      <div>
+        <div class="eyebrow" style="color:#e9a6b4">Today's target</div>
+        <h2 style="margin:0;font-size:1.55rem">Discuss nuanced, less concrete ideas</h2>
+        <p class="muted" style="line-height:1.55">
+          abstraction · nuance · qualification · causality · competing perspectives
+        </p>
+      </div>
+
+      <div>
+        <div class="meta-grid">
+          <div class="meta-card"><strong>90</strong><span>minutes</span></div>
+          <div class="meta-card"><strong>C1</strong><span>processing phase begins</span></div>
+        </div>
+
+        <div class="progress-track"><div class="progress-fill" id="topProgress"></div></div>
+        <div class="muted" id="topProgressText" style="font-size:.82rem;margin-top:6px">0% complete</div>
+      </div>
+    </aside>
+  </section>
+
+  <div class="layout">
+    <div>
+
+      <!-- 1 -->
+      <section class="lesson-card" id="first-listen">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 1 · First Listen</div>
+            <h2>What is the speaker actually arguing?</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <p class="muted">
+          Listen to a mini-essay on whether convenience always improves quality of life.
+          On the first listen, identify the speaker's overall position.
+        </p>
+
+        <div class="audio-panel">
+          <div class="audio-title">
+            <span>🎧 Abstract talk: The paradox of convenience</span>
+            <span class="listen-counter">Listens: <span id="listenCount">0</span></span>
+          </div>
+
+          <button class="btn primary" id="playMainBtn" type="button">▶ Play full talk</button>
+          <button class="btn secondary" id="stopMainBtn" type="button">■ Stop</button>
+
+          <div class="speed-row">
+            <button class="speed-btn" data-rate="0.92" type="button">0.92×</button>
+            <button class="speed-btn active" data-rate="1.00" type="button">1.00×</button>
+            <button class="speed-btn" data-rate="1.08" type="button">1.08×</button>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="question-title">Which statement best captures the speaker's position?</div>
+
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="q1" value="a">
+              <span>Convenience always reduces stress and improves quality of life.</span>
+            </label>
+
+            <label class="option">
+              <input type="radio" name="q1" value="b">
+              <span>Convenience can improve life, but beyond a point it may raise expectations and create new forms of pressure.</span>
+            </label>
+
+            <label class="option">
+              <input type="radio" name="q1" value="c">
+              <span>Modern convenience is mostly harmful and should be avoided.</span>
+            </label>
+          </div>
+
+          <button class="btn secondary" style="margin-top:12px" onclick="checkFirstQuestion()" type="button">Check answer</button>
+          <div class="feedback" id="q1Feedback"></div>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="lesson-card" id="concepts">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 2 · Abstract Thinking Signals</div>
+            <h2>Recognize the logic behind the language.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <strong>Qualification</strong>
+            <div class="example">That is true up to a point.</div>
+            <span>The speaker accepts part of a claim but limits how far it applies.</span>
+          </div>
+
+          <div class="concept-card">
+            <strong>Concession</strong>
+            <div class="example">Of course, convenience has real benefits.</div>
+            <span>Recognizes an opposing point before developing a different argument.</span>
+          </div>
+
+          <div class="concept-card">
+            <strong>Cause–effect</strong>
+            <div class="example">The easier X becomes, the more we expect Y.</div>
+            <span>Describes a relationship rather than a single event.</span>
+          </div>
+
+          <div class="concept-card">
+            <strong>Counter-intuition</strong>
+            <div class="example">Paradoxically, saving time can make us feel more rushed.</div>
+            <span>The result runs against what we would normally expect.</span>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="playLogicDrill()">▶ Play abstract-logic drill</button>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="lesson-card" id="argument-map">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 3 · Argument Map</div>
+            <h2>Build the reasoning chain.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="map-grid" id="mapGrid"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeMap()">Check argument map</button>
+          <span class="muted" id="mapScoreText"></span>
+        </div>
+
+        <div class="feedback" id="mapFeedback"></div>
+      </section>
+
+      <!-- 4 -->
+      <section class="lesson-card" id="deep-listen">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 4 · Deep Listen</div>
+            <h2>Follow nuance, not just topic.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div id="deepQuestions"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeDeepQuiz()">Check 6 answers</button>
+          <span class="muted" id="deepScoreText"></span>
+        </div>
+
+        <div class="feedback" id="deepFeedback"></div>
+      </section>
+
+      <!-- 5 -->
+      <section class="lesson-card" id="dictation">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 5 · Dictation</div>
+            <h2>Capture qualified claims accurately.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div id="dictationList"></div>
+      </section>
+
+      <!-- 6 -->
+      <section class="lesson-card" id="decode">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 6 · Decode</div>
+            <h2>Reveal the full reasoning.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="lockbox" id="transcriptLock">
+          <strong>Transcript locked</strong>
+          <p class="muted" style="margin:7px 0 12px">
+            Complete at least two full listens before revealing the transcript.
+          </p>
+          <button class="btn secondary" id="revealBtn" type="button" disabled>Reveal transcript</button>
+        </div>
+
+        <div class="transcript" id="transcriptBox">
+          <strong>Transcript — The paradox of convenience</strong>
+
+          <p>
+            We usually assume that convenience improves quality of life.
+            If something saves us time, reduces effort or removes friction, the logic seems straightforward:
+            life should become easier.
+          </p>
+
+          <p>
+            And to a large extent, that's true.
+            Online banking, navigation apps and same-day delivery remove tasks that once required far more time and energy.
+            It would be hard to argue that none of this has improved daily life.
+          </p>
+
+          <p>
+            But there is a more complicated effect that is easy to miss.
+            As certain tasks become easier, our expectations often rise with them.
+            If sending a message takes seconds, we start to expect replies in minutes.
+            If delivery becomes faster, waiting two days can suddenly feel slow.
+          </p>
+
+          <p>
+            In other words, convenience doesn't simply remove friction.
+            It can also redefine what counts as acceptable friction.
+            The standard moves.
+          </p>
+
+          <p>
+            This may help explain why people can have access to more time-saving tools and still feel constantly rushed.
+            The tools reduce the time required for individual tasks,
+            but the number of tasks — and the expectation that we complete them quickly — may increase at the same time.
+          </p>
+
+          <p>
+            Of course, that doesn't mean convenience is bad.
+            The stronger point is that its benefits are partly shaped by the expectations that grow around it.
+            Saving time only improves quality of life if some of that time remains available to us.
+          </p>
+
+          <p>
+            So the question may not be “How can we make everything faster?”
+            It may be “Which forms of friction are actually worth removing, and which ones protect our attention, patience or boundaries?”
+          </p>
+        </div>
+
+        <div class="decode-grid">
+          <div class="decode-card">
+            <strong>“to a large extent”</strong>
+            <span>Mostly true, but not completely or without exceptions.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“the standard moves”</strong>
+            <span>Expectations change, so what once felt fast may later feel slow.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“may help explain why…”</strong>
+            <span>A cautious causal interpretation, not a proven explanation.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“the stronger point is…”</strong>
+            <span>Signals the speaker's refined central argument.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“partly shaped by…”</strong>
+            <span>One factor influences the outcome, but does not fully determine it.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“protect our attention”</strong>
+            <span>Some friction may create useful limits against constant demands.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section class="lesson-card" id="shadowing">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 7 · Shadowing & Abstract Chunks</div>
+            <h2>Practice nuanced C1 phrasing.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div id="chunkList"></div>
+
+        <h3>Shadowing lines</h3>
+        <div id="shadowList"></div>
+
+        <div class="recorder">
+          <strong>🎙 Record your shadowing</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="shadowRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="shadowStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="shadowRecordStatus">
+            Focus on contrast and qualification. Do not flatten every sentence into the same stress pattern.
+          </div>
+
+          <audio id="shadowPlayback" controls style="display:none"></audio>
+        </div>
+      </section>
+
+      <!-- 8 -->
+      <section class="lesson-card" id="speak-back">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 8 · Speak Back</div>
+            <h2>Discuss an abstract idea with nuance.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="prompt-box">
+          <strong>90-second response</strong><br>
+          Do you agree that convenience can create new pressure?
+          Give <b>one benefit, one unintended consequence, one example, and one qualified conclusion.</b>
+          Try to use at least three chunks from today's lesson.
+        </div>
+
+        <textarea id="speakOutline" placeholder="Keywords only: benefit / rising expectations / example / not always / depends on boundaries"></textarea>
+
+        <div class="recorder">
+          <strong>🎙 Record your response</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="speakRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="speakStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="speakRecordStatus">
+            Aim for a qualified conclusion rather than a simple yes/no opinion.
+          </div>
+
+          <audio id="speakPlayback" controls style="display:none"></audio>
+        </div>
+
+        <h3>Self-check</h3>
+
+        <div class="rating-grid">
+          <div class="rating">
+            <label>Nuance · <output id="nuanceOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="nuanceRate">
+          </div>
+
+          <div class="rating">
+            <label>Reasoning · <output id="reasoningOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="reasoningRate">
+          </div>
+
+          <div class="rating">
+            <label>Example relevance · <output id="exampleOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="exampleRate">
+          </div>
+
+          <div class="rating">
+            <label>Natural delivery · <output id="naturalOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="naturalRate">
+          </div>
+        </div>
+      </section>
+
+      <!-- RESULT -->
+      <section class="lesson-card" id="result">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Day 21 Result</div>
+            <h2>Your abstract-processing score</h2>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <div class="muted" style="color:#b8bdc6">Argument map + deep listening + dictation</div>
+
+          <div class="result-score">
+            <span id="overallScore">—</span><span style="font-size:1.3rem">%</span>
+          </div>
+
+          <div class="muted" id="scoreInterpretation" style="color:#b8bdc6;margin-top:7px">
+            Complete argument map, deep listening and dictation to calculate your score.
+          </div>
+
+          <div class="result-grid">
+            <div class="result-box">
+              <strong id="mapResult">—</strong>
+              <span>Argument map</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="deepResult">—</strong>
+              <span>Nuanced comprehension</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="dictationResult">—</strong>
+              <span>Dictation</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPLETE -->
+      <section class="complete-box" id="complete">
+        <h2>Complete Day 21</h2>
+
+        <p>
+          Save today's result and continue to Day 22: Economics & Business.
+          Your roadmap progress will update automatically.
+        </p>
+
+        <button class="btn primary" id="completeDayBtn" type="button">✓ Mark Day 21 complete</button>
+        <a href="lesson-day-22.html" class="btn secondary">Go to Day 22 →</a>
+
+        <div class="done-banner" id="doneBanner">
+          Day 21 is saved as completed in this browser.
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="sidebar">
+      <div class="side-card">
+        <h3>Day 21</h3>
+        <div class="muted" style="font-size:.84rem">Abstract Topics</div>
+
+        <div class="mini-progress"><div id="sideProgress"></div></div>
+        <div class="muted" id="sideProgressText" style="font-size:.78rem;margin-top:7px">
+          0/8 sections touched
+        </div>
+      </div>
+
+      <div class="side-card">
+        <h3>Jump to</h3>
+
+        <nav class="toc">
+          <a href="#first-listen">1. First Listen</a>
+          <a href="#concepts">2. Abstract Signals</a>
+          <a href="#argument-map">3. Argument Map</a>
+          <a href="#deep-listen">4. Deep Listen</a>
+          <a href="#dictation">5. Dictation</a>
+          <a href="#decode">6. Decode</a>
+          <a href="#shadowing">7. Shadowing</a>
+          <a href="#speak-back">8. Speak Back</a>
+          <a href="#result">Result</a>
+        </nav>
+      </div>
+
+      <div class="side-card">
+        <h3>Rule for today</h3>
+        <p class="muted" style="font-size:.84rem;line-height:1.55;margin:0">
+          For abstract listening, stop asking “What happened?” and ask:
+          <b>What claim is being made, how strong is it, and what logic connects the ideas?</b>
+        </p>
+      </div>
+    </aside>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="shell">Fluent30 · Day 21 · Abstract Topics</div>
+</footer>
+
+<script>
+  const COURSE_KEY = "fluent30-progress-v1";
+  const DAY_KEY = "fluent30-day-21-result";
+
+  const audioScript = `We usually assume that convenience improves quality of life. If something saves us time, reduces effort or removes friction, the logic seems straightforward: life should become easier.
+
+And to a large extent, that's true. Online banking, navigation apps and same-day delivery remove tasks that once required far more time and energy. It would be hard to argue that none of this has improved daily life.
+
+But there is a more complicated effect that is easy to miss. As certain tasks become easier, our expectations often rise with them. If sending a message takes seconds, we start to expect replies in minutes. If delivery becomes faster, waiting two days can suddenly feel slow.
+
+In other words, convenience doesn't simply remove friction. It can also redefine what counts as acceptable friction. The standard moves.
+
+This may help explain why people can have access to more time-saving tools and still feel constantly rushed. The tools reduce the time required for individual tasks, but the number of tasks — and the expectation that we complete them quickly — may increase at the same time.
+
+Of course, that doesn't mean convenience is bad. The stronger point is that its benefits are partly shaped by the expectations that grow around it. Saving time only improves quality of life if some of that time remains available to us.
+
+So the question may not be “How can we make everything faster?” It may be “Which forms of friction are actually worth removing, and which ones protect our attention, patience or boundaries?”`;
+
+  const logicDrill = [
+    "That is true up to a point.",
+    "To a large extent, that's true.",
+    "Paradoxically, saving time can make us feel more rushed.",
+    "This may help explain why expectations rise.",
+    "The stronger point is that benefits depend partly on context.",
+    "It doesn't necessarily follow that faster is always better."
+  ];
+
+  const mapItems = [
+    {
+      label:"Starting assumption",
+      hint:"What common belief does the speaker begin with?",
+      options:[
+        "Convenience should make life easier.",
+        "Convenience is harmful.",
+        "People dislike technology."
+      ],
+      answer:0
+    },
+    {
+      label:"Complication",
+      hint:"What makes the issue less simple?",
+      options:[
+        "As tasks become easier, expectations may rise too.",
+        "Technology always fails.",
+        "People have less free time because they work fewer hours."
+      ],
+      answer:0
+    },
+    {
+      label:"Explanation",
+      hint:"Why can people still feel rushed?",
+      options:[
+        "Time per task falls, but task volume and speed expectations may rise.",
+        "People stop using time-saving tools.",
+        "Convenience removes all boundaries automatically."
+      ],
+      answer:0
+    },
+    {
+      label:"Qualified conclusion",
+      hint:"What does the speaker finally argue?",
+      options:[
+        "Convenience is useful, but its value depends partly on the expectations surrounding it.",
+        "All friction should be removed.",
+        "Slow systems are always better."
+      ],
+      answer:0
+    }
+  ];
+
+  const deepQuestions = [
+    {
+      q:"Why does the speaker say the logic of convenience seems straightforward?",
+      options:[
+        "Because saving time and effort should make life easier.",
+        "Because convenience eliminates all expectations.",
+        "Because people prefer slower systems."
+      ],
+      answer:0
+    },
+    {
+      q:"What happens as some tasks become easier?",
+      options:[
+        "Expectations can rise.",
+        "People stop valuing speed.",
+        "All tasks disappear."
+      ],
+      answer:0
+    },
+    {
+      q:"What does “the standard moves” mean?",
+      options:[
+        "What counts as acceptable speed or effort changes.",
+        "The law changes.",
+        "People physically move location."
+      ],
+      answer:0
+    },
+    {
+      q:"Why might time-saving tools fail to make people feel less rushed?",
+      options:[
+        "Because task volume and expectations may increase at the same time.",
+        "Because the tools always take longer.",
+        "Because people completely stop using them."
+      ],
+      answer:0
+    },
+    {
+      q:"Does the speaker argue that convenience is bad?",
+      options:[
+        "No. The speaker argues that its benefits depend partly on surrounding expectations.",
+        "Yes. The speaker rejects convenience entirely.",
+        "The speaker gives no opinion."
+      ],
+      answer:0
+    },
+    {
+      q:"What alternative question does the speaker propose?",
+      options:[
+        "Which friction is worth removing and which may protect useful boundaries?",
+        "How can every task be made faster?",
+        "How can people avoid all technology?"
+      ],
+      answer:0
+    }
+  ];
+
+  const dictationItems = [
+    "As certain tasks become easier, our expectations often rise with them.",
+    "Convenience doesn't simply remove friction.",
+    "This may help explain why people can have access to more time-saving tools and still feel constantly rushed.",
+    "The stronger point is that its benefits are partly shaped by the expectations that grow around it."
+  ];
+
+  const chunks = [
+    ["to a large extent","mostly true, but not completely","To a large extent, that's true."],
+    ["up to a point","true only within limits","That argument works up to a point."],
+    ["may help explain why","offers a cautious explanation","This may help explain why people still feel rushed."],
+    ["it doesn't necessarily follow that","rejects an automatic conclusion","It doesn't necessarily follow that faster is better."],
+    ["the stronger point is","introduces the refined central argument","The stronger point is that expectations matter."],
+    ["partly shaped by","influenced by one factor among others","The outcome is partly shaped by expectations."]
+  ];
+
+  const shadowSentences = [
+    "To a large extent, that's true.",
+    "As certain tasks become easier, our expectations often rise with them.",
+    "This may help explain why people still feel constantly rushed.",
+    "It doesn't necessarily follow that faster is always better.",
+    "The stronger point is that its benefits are partly shaped by the expectations around it."
+  ];
+
+  let speechRate = 1.00;
+  let listenCount = Number(localStorage.getItem("fluent30-day21-listens") || 0);
+  let mapScore = null;
+  let deepScore = null;
+  let dictationScores = [null,null,null,null];
+  let touched = new Set();
+
+  function getVoices(){
+    if(!("speechSynthesis" in window)) return [];
+    return speechSynthesis.getVoices();
+  }
+
+  function getVoice(){
+    const voices = getVoices();
+    const us = voices.filter(v => /en-US/i.test(v.lang));
+    const en = voices.filter(v => /^en/i.test(v.lang));
+
+    const preferred = [
+      /Google US English/i,
+      /Samantha/i,
+      /Jenny/i,
+      /Aria/i,
+      /Joanna/i,
+      /Ava/i
+    ];
+
+    for(const pattern of preferred){
+      const match = us.find(v => pattern.test(v.name)) || en.find(v => pattern.test(v.name));
+      if(match) return match;
+    }
+
+    return us[0] || en[0] || null;
+  }
+
+  function speak(text,rate=1,onEnd=null){
+    if(!("speechSynthesis" in window)){
+      alert("Speech synthesis is not supported in this browser.");
+      return;
+    }
+
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US";
+    u.rate = rate;
+    u.pitch = 1.0;
+
+    const v = getVoice();
+    if(v) u.voice = v;
+    if(onEnd) u.onend = onEnd;
+
+    speechSynthesis.speak(u);
+  }
+
+  function stopSpeech(){
+    if("speechSynthesis" in window) speechSynthesis.cancel();
+  }
+
+  document.getElementById("playMainBtn").addEventListener("click",()=>{
+    listenCount++;
+    localStorage.setItem("fluent30-day21-listens",String(listenCount));
+    updateListenUI();
+    markTouched("listen");
+
+    stopSpeech();
+    speak(audioScript,speechRate);
+  });
+
+  document.getElementById("stopMainBtn").addEventListener("click",stopSpeech);
+
+  document.querySelectorAll(".speed-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      speechRate = Number(btn.dataset.rate);
+      document.querySelectorAll(".speed-btn").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+
+  function updateListenUI(){
+    document.getElementById("listenCount").textContent = listenCount;
+    document.getElementById("revealBtn").disabled = listenCount < 2;
+
+    if(listenCount >= 2){
+      const lock = document.getElementById("transcriptLock");
+      lock.querySelector("strong").textContent = "Transcript ready";
+      lock.querySelector("p").textContent =
+        "You have completed at least two listens. Now inspect the qualification and cause–effect language.";
+    }
+  }
+
+  document.getElementById("revealBtn").addEventListener("click",()=>{
+    document.getElementById("transcriptBox").classList.add("show");
+    document.getElementById("transcriptLock").style.display = "none";
+    markTouched("decode");
+  });
+
+  function checkFirstQuestion(){
+    const chosen = document.querySelector('input[name="q1"]:checked');
+    const box = document.getElementById("q1Feedback");
+    box.className = "feedback show";
+
+    if(!chosen){
+      box.classList.add("warn");
+      box.textContent = "Choose one answer first.";
+      return;
+    }
+
+    if(chosen.value === "b"){
+      box.classList.add("good");
+      box.textContent = "Correct. The speaker is not anti-convenience; the argument is about rising expectations and unintended pressure.";
+    }else{
+      box.classList.add("warn");
+      box.textContent = "Not quite. Listen for the qualification: the speaker accepts real benefits before introducing the complication.";
+    }
+
+    markTouched("listen");
+  }
+
+  function playLogicDrill(){
+    markTouched("logic");
+    stopSpeech();
+
+    let i = 0;
+    const next = ()=>{
+      if(i >= logicDrill.length) return;
+      speak(logicDrill[i],1.00,()=>{
+        i++;
+        setTimeout(next,220);
+      });
+    };
+    next();
+  }
+
+  function renderMap(){
+    const container = document.getElementById("mapGrid");
+
+    container.innerHTML = mapItems.map((item,index)=>`
+      <div class="map-item">
+        <label>${index+1}. ${item.label}</label>
+        <small>${item.hint}</small>
+        <select id="mapSelect${index}">
+          <option value="">Choose...</option>
+          ${item.options.map((option,optIndex)=>`
+            <option value="${optIndex}">${option}</option>
+          `).join("")}
+        </select>
+      </div>
+    `).join("");
+  }
+
+  function gradeMap(){
+    let correct = 0;
+    let answered = 0;
+
+    mapItems.forEach((item,index)=>{
+      const value = document.getElementById(`mapSelect${index}`).value;
+      if(value !== ""){
+        answered++;
+        if(Number(value) === item.answer) correct++;
+      }
+    });
+
+    const box = document.getElementById("mapFeedback");
+    box.className = "feedback show";
+
+    if(answered < mapItems.length){
+      box.classList.add("warn");
+      box.textContent = `You completed ${answered}/${mapItems.length}. Finish all four first.`;
+      return;
+    }
+
+    mapScore = Math.round((correct/mapItems.length)*100);
+    document.getElementById("mapScoreText").textContent = `${correct}/${mapItems.length} correct · ${mapScore}%`;
+
+    box.classList.add(mapScore >= 75 ? "good" : "info");
+    box.textContent = mapScore >= 75
+      ? "Good. You can reduce an abstract argument to a clear reasoning chain."
+      : "Replay and track assumption → complication → explanation → qualified conclusion.";
+
+    markTouched("map");
+    updateResults();
+  }
+
+  function renderDeepQuestions(){
+    const container = document.getElementById("deepQuestions");
+
+    container.innerHTML = deepQuestions.map((item,index)=>`
+      <div class="question">
+        <div class="question-title">${index+1}. ${item.q}</div>
+
+        <div class="options">
+          ${item.options.map((option,optIndex)=>`
+            <label class="option">
+              <input type="radio" name="deep${index}" value="${optIndex}">
+              <span>${option}</span>
+            </label>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function gradeDeepQuiz(){
+    let correct = 0;
+    let answered = 0;
+
+    deepQuestions.forEach((item,index)=>{
+      const selected = document.querySelector(`input[name="deep${index}"]:checked`);
+      if(selected){
+        answered++;
+        if(Number(selected.value) === item.answer) correct++;
+      }
+    });
+
+    const box = document.getElementById("deepFeedback");
+    box.className = "feedback show";
+
+    if(answered < deepQuestions.length){
+      box.classList.add("warn");
+      box.textContent = `You answered ${answered}/${deepQuestions.length}. Complete all questions first.`;
+      return;
+    }
+
+    deepScore = Math.round((correct/deepQuestions.length)*100);
+    document.getElementById("deepScoreText").textContent = `${correct}/${deepQuestions.length} correct · ${deepScore}%`;
+
+    if(deepScore >= 84){
+      box.classList.add("good");
+      box.textContent = "Strong nuanced comprehension. You followed both the main claim and its limits.";
+    }else if(deepScore >= 67){
+      box.classList.add("info");
+      box.textContent = "Good overall. Some qualification or causal logic is still getting flattened.";
+    }else{
+      box.classList.add("warn");
+      box.textContent = "Replay and ask after each paragraph: claim, strength, cause, or contrast?";
+    }
+
+    markTouched("deep");
+    updateResults();
+  }
+
+  function renderDictation(){
+    const container = document.getElementById("dictationList");
+
+    container.innerHTML = dictationItems.map((sentence,index)=>`
+      <div class="dictation-item">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+          <strong>Sentence ${index+1}</strong>
+          <button class="btn secondary" type="button" onclick="playDictation(${index})">▶ Play</button>
+        </div>
+
+        <input type="text" id="dictInput${index}" style="margin-top:12px" placeholder="Type exactly what you hear">
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="checkDictation(${index})">Check</button>
+        </div>
+
+        <div class="dictation-result" id="dictResult${index}"></div>
+      </div>
+    `).join("");
+  }
+
+  function playDictation(index){
+    stopSpeech();
+    speak(dictationItems[index],1.00);
+    markTouched("dictation");
+  }
+
+  function normalize(text){
+    return text
+      .toLowerCase()
+      .replace(/[’‘]/g,"'")
+      .replace(/[^a-z0-9'\s-]/g,"")
+      .replace(/\s+/g," ")
+      .trim();
+  }
+
+  function wordSimilarity(userText,targetText){
+    const a = normalize(userText).split(" ").filter(Boolean);
+    const b = normalize(targetText).split(" ").filter(Boolean);
+
+    const dp = Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));
+
+    for(let i=1;i<=a.length;i++){
+      for(let j=1;j<=b.length;j++){
+        if(a[i-1] === b[j-1]) dp[i][j] = dp[i-1][j-1] + 1;
+        else dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+      }
+    }
+
+    return b.length ? Math.round((dp[a.length][b.length]/b.length)*100) : 0;
+  }
+
+  function checkDictation(index){
+    const input = document.getElementById(`dictInput${index}`);
+    const result = document.getElementById(`dictResult${index}`);
+
+    if(!input.value.trim()){
+      result.className = "dictation-result show";
+      result.textContent = "Type what you hear first.";
+      return;
+    }
+
+    const score = wordSimilarity(input.value,dictationItems[index]);
+    dictationScores[index] = score;
+
+    result.className = "dictation-result show";
+    result.innerHTML = `<strong>${score}% match</strong><div style="margin-top:6px"><span class="muted">Target:</span> ${dictationItems[index]}</div>`;
+
+    markTouched("dictation");
+    updateResults();
+  }
+
+  function getDictAvg(){
+    if(dictationScores.some(v => typeof v !== "number")) return null;
+    return Math.round(dictationScores.reduce((a,b)=>a+b,0)/dictationScores.length);
+  }
+
+  function renderChunks(){
+    const saved = JSON.parse(localStorage.getItem("fluent30-saved-chunks") || "[]");
+    const container = document.getElementById("chunkList");
+
+    container.innerHTML = chunks.map((chunk,index)=>{
+      const isSaved = saved.includes(chunk[0]);
+
+      return `
+        <div class="chunk">
+          <div>
+            <strong>${chunk[0]}</strong>
+            <div style="margin-top:5px;font-size:.82rem;color:#8b8f96">“${chunk[2]}”</div>
+          </div>
+
+          <span>${chunk[1]}</span>
+
+          <button
+            class="save-chunk ${isSaved ? "saved" : ""}"
+            type="button"
+            onclick="toggleChunk(${index},this)"
+          >${isSaved ? "Saved ✓" : "Save"}</button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function toggleChunk(index,button){
+    let saved = JSON.parse(localStorage.getItem("fluent30-saved-chunks") || "[]");
+    const phrase = chunks[index][0];
+
+    if(saved.includes(phrase)){
+      saved = saved.filter(x=>x!==phrase);
+      button.classList.remove("saved");
+      button.textContent = "Save";
+    }else{
+      saved.push(phrase);
+      button.classList.add("saved");
+      button.textContent = "Saved ✓";
+    }
+
+    localStorage.setItem("fluent30-saved-chunks",JSON.stringify(saved));
+    markTouched("shadow");
+  }
+
+  function renderShadowing(){
+    const container = document.getElementById("shadowList");
+
+    container.innerHTML = shadowSentences.map((sentence,index)=>`
+      <div class="dictation-item">
+        <strong>${index+1}. ${sentence}</strong>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="playShadow(${index},0.92)">Slow</button>
+          <button class="btn primary" type="button" onclick="playShadow(${index},1.00)">Natural</button>
+          <button class="btn secondary" type="button" onclick="playShadow(${index},1.08)">Fast</button>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function playShadow(index,rate){
+    stopSpeech();
+    speak(shadowSentences[index],rate);
+    markTouched("shadow");
+  }
+
+  function setupRecorder(prefix){
+    const recordBtn = document.getElementById(`${prefix}RecordBtn`);
+    const stopBtn = document.getElementById(`${prefix}StopBtn`);
+    const status = document.getElementById(`${prefix}RecordStatus`);
+    const playback = document.getElementById(`${prefix}Playback`);
+
+    let recorder = null;
+    let blobs = [];
+    let stream = null;
+    let startTime = null;
+
+    recordBtn.addEventListener("click",async()=>{
+      if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+        status.textContent = "Microphone recording is not supported in this browser.";
+        return;
+      }
+
+      try{
+        stream = await navigator.mediaDevices.getUserMedia({audio:true});
+        recorder = new MediaRecorder(stream);
+        blobs = [];
+        startTime = Date.now();
+
+        recorder.ondataavailable = e=>{
+          if(e.data.size > 0) blobs.push(e.data);
+        };
+
+        recorder.onstop = ()=>{
+          const blob = new Blob(blobs,{type:recorder.mimeType || "audio/webm"});
+          playback.src = URL.createObjectURL(blob);
+          playback.style.display = "block";
+
+          const seconds = Math.round((Date.now()-startTime)/1000);
+          status.textContent = `Recorded ${seconds} seconds. Check whether your conclusion sounds qualified rather than absolute.`;
+
+          if(stream) stream.getTracks().forEach(track=>track.stop());
+
+          if(prefix === "speak") markTouched("speak");
+          if(prefix === "shadow") markTouched("shadow");
+        };
+
+        recorder.start();
+        recordBtn.disabled = true;
+        stopBtn.disabled = false;
+        status.textContent = "Recording…";
+
+      }catch(e){
+        status.textContent = "Microphone permission was not granted.";
+      }
+    });
+
+    stopBtn.addEventListener("click",()=>{
+      if(recorder && recorder.state !== "inactive") recorder.stop();
+      recordBtn.disabled = false;
+      stopBtn.disabled = true;
+    });
+  }
+
+  ["nuance","reasoning","example","natural"].forEach(name=>{
+    const range = document.getElementById(`${name}Rate`);
+    const out = document.getElementById(`${name}Out`);
+
+    range.addEventListener("input",()=>{
+      out.value = range.value;
+      markTouched("speak");
+    });
+  });
+
+  function speakingAverage(){
+    const values = [
+      Number(document.getElementById("nuanceRate").value),
+      Number(document.getElementById("reasoningRate").value),
+      Number(document.getElementById("exampleRate").value),
+      Number(document.getElementById("naturalRate").value)
+    ];
+
+    return values.reduce((a,b)=>a+b,0)/values.length;
+  }
+
+  function updateResults(){
+    const dictAvg = getDictAvg();
+
+    document.getElementById("mapResult").textContent = mapScore === null ? "—" : `${mapScore}%`;
+    document.getElementById("deepResult").textContent = deepScore === null ? "—" : `${deepScore}%`;
+    document.getElementById("dictationResult").textContent = dictAvg === null ? "—" : `${dictAvg}%`;
+
+    if(mapScore !== null && deepScore !== null && dictAvg !== null){
+      const overall = Math.round(
+        mapScore * 0.30 +
+        deepScore * 0.40 +
+        dictAvg * 0.30
+      );
+
+      document.getElementById("overallScore").textContent = overall;
+
+      let text = "";
+      if(overall >= 88){
+        text = "Excellent. You can follow abstract reasoning while preserving qualification and causal nuance.";
+      }else if(overall >= 75){
+        text = "Strong. Abstract ideas are stable, with only occasional loss of qualification or logical connection.";
+      }else if(overall >= 60){
+        text = "Developing. You understand the topic, but some nuanced claims are still collapsing into simpler yes/no meanings.";
+      }else{
+        text = "Abstract processing is still unstable. Track claim strength and logic explicitly: assumption → complication → explanation → conclusion.";
+      }
+
+      document.getElementById("scoreInterpretation").textContent = text;
+    }
+  }
+
+  function markTouched(section){
+    touched.add(section);
+    updateProgress();
+  }
+
+  function updateProgress(){
+    const count = touched.size;
+    const percent = Math.round((count/8)*100);
+
+    document.getElementById("topProgress").style.width = `${percent}%`;
+    document.getElementById("sideProgress").style.width = `${percent}%`;
+    document.getElementById("topProgressText").textContent = `${percent}% complete`;
+    document.getElementById("sideProgressText").textContent = `${count}/8 sections touched`;
+  }
+
+  function getCourseProgress(){
+    try{
+      return JSON.parse(localStorage.getItem(COURSE_KEY)) || {completed:[],streak:0,minutes:0,lastDay:null};
+    }catch(e){
+      return {completed:[],streak:0,minutes:0,lastDay:null};
+    }
+  }
+
+  function saveDayResult(){
+    const dictAvg = getDictAvg();
+    const overall = (
+      mapScore !== null &&
+      deepScore !== null &&
+      dictAvg !== null
+    ) ? Math.round(
+      mapScore * 0.30 +
+      deepScore * 0.40 +
+      dictAvg * 0.30
+    ) : null;
+
+    const result = {
+      day:21,
+      mapScore,
+      deepScore,
+      dictationScore:dictAvg,
+      dictationScores:[...dictationScores],
+      speakingSelf:Number(speakingAverage().toFixed(1)),
+      overall,
+      listens:listenCount,
+      savedAt:new Date().toISOString()
+    };
+
+    localStorage.setItem(DAY_KEY,JSON.stringify(result));
+  }
+
+  document.getElementById("completeDayBtn").addEventListener("click",()=>{
+    const progress = getCourseProgress();
+    const alreadyDone = progress.completed.includes(21);
+
+    if(!alreadyDone){
+      progress.completed.push(21);
+      progress.completed.sort((a,b)=>a-b);
+      progress.streak = Math.max(1,Number(progress.streak || 0)+1);
+      progress.minutes = Number(progress.minutes || 0)+90;
+      progress.lastDay = 21;
+      localStorage.setItem(COURSE_KEY,JSON.stringify(progress));
+    }
+
+    saveDayResult();
+
+    document.getElementById("doneBanner").classList.add("show");
+    document.getElementById("completeDayBtn").textContent = "✓ Day 21 completed";
+    document.getElementById("completeDayBtn").disabled = true;
+
+    touched = new Set(["listen","logic","map","deep","dictation","decode","shadow","speak"]);
+    updateProgress();
+  });
+
+  function loadSavedState(){
+    updateListenUI();
+
+    const progress = getCourseProgress();
+    if(progress.completed.includes(21)){
+      document.getElementById("doneBanner").classList.add("show");
+      document.getElementById("completeDayBtn").textContent = "✓ Day 21 completed";
+      document.getElementById("completeDayBtn").disabled = true;
+
+      touched = new Set(["listen","logic","map","deep","dictation","decode","shadow","speak"]);
+      updateProgress();
+    }
+
+    try{
+      const saved = JSON.parse(localStorage.getItem(DAY_KEY) || "null");
+
+      if(saved){
+        if(typeof saved.mapScore === "number") mapScore = saved.mapScore;
+        if(typeof saved.deepScore === "number") deepScore = saved.deepScore;
+        if(Array.isArray(saved.dictationScores)) dictationScores = saved.dictationScores;
+      }
+    }catch(e){}
+
+    updateResults();
+  }
+
+  renderMap();
+  renderDeepQuestions();
+  renderDictation();
+  renderChunks();
+  renderShadowing();
+  setupRecorder("shadow");
+  setupRecorder("speak");
+  loadSavedState();
+
+  if("speechSynthesis" in window){
+    speechSynthesis.onvoiceschanged = ()=>getVoice();
+  }
+</script>
+</body>
+</html>
