@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fluent30 Day 03 — Weak Forms" />
+  <title>Fluent30 — Day 03 Weak Forms</title>
+
+  <style>
+    :root{
+      --bg:#f5f5f6;
+      --surface:#fff;
+      --surface-2:#fafafa;
+      --text:#111;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --red:#8f1027;
+      --red-dark:#6f0b1e;
+      --black:#171717;
+      --green:#166534;
+      --green-bg:#ecfdf3;
+      --amber:#92400e;
+      --amber-bg:#fffbeb;
+      --blue:#1d4ed8;
+      --blue-bg:#eff6ff;
+      --shadow:0 18px 50px rgba(17,24,39,.08);
+      --r-xl:24px;
+      --r-lg:17px;
+      --r-md:12px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    button,input,textarea{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+
+    .shell{width:min(1160px,calc(100% - 38px));margin:0 auto}
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(255,255,255,.95);
+      border-bottom:1px solid var(--line);
+      backdrop-filter:blur(14px);
+    }
+
+    .topnav{
+      min-height:70px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      letter-spacing:-.04em;
+    }
+
+    .brand-mark{
+      width:34px;
+      height:34px;
+      display:grid;
+      place-items:center;
+      border-radius:10px;
+      background:var(--red);
+      color:#fff;
+      font-size:.88rem;
+    }
+
+    .brand span span{color:var(--red)}
+
+    .toplinks{display:flex;align-items:center;gap:9px}
+
+    .navbtn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:9px 12px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#fff;
+      color:#333;
+      font-size:.88rem;
+      font-weight:700;
+    }
+
+    .navbtn:hover{border-color:#c8ccd2}
+
+    main{padding:34px 0 70px}
+
+    .hero{
+      display:grid;
+      grid-template-columns:minmax(0,1.45fr) minmax(280px,.55fr);
+      gap:20px;
+    }
+
+    .hero-main,.hero-side{border-radius:var(--r-xl);box-shadow:var(--shadow)}
+
+    .hero-main{
+      background:linear-gradient(135deg,#fff 0%,#fbfbfc 72%,#f2f2f3 100%);
+      border:1px solid var(--line);
+      padding:38px;
+    }
+
+    .eyebrow{
+      color:var(--red);
+      font-weight:850;
+      font-size:.76rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      margin-bottom:12px;
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(2.4rem,5vw,4.8rem);
+      line-height:.96;
+      letter-spacing:-.06em;
+    }
+
+    .hero-copy{
+      max-width:780px;
+      color:var(--muted);
+      line-height:1.65;
+      margin:18px 0 0;
+    }
+
+    .hero-side{
+      background:var(--black);
+      color:#fff;
+      padding:28px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .hero-side .muted{color:#b9bec7}
+
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .meta-card{
+      background:#202020;
+      border:1px solid #343434;
+      border-radius:12px;
+      padding:14px;
+    }
+    .meta-card strong{display:block;font-size:1.2rem;margin-bottom:2px}
+    .meta-card span{font-size:.78rem;color:#afb4bd}
+
+    .progress-track{
+      height:9px;
+      border-radius:999px;
+      background:#343434;
+      overflow:hidden;
+      margin-top:13px;
+    }
+
+    .progress-fill{height:100%;width:0%;background:#fff;transition:.25s ease}
+
+    .layout{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 292px;
+      gap:22px;
+      margin-top:24px;
+    }
+
+    .lesson-card{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:var(--r-lg);
+      padding:26px;
+      margin-bottom:18px;
+    }
+
+    .lesson-card h2{margin:0;font-size:1.42rem;letter-spacing:-.035em}
+    .lesson-card h3{margin:18px 0 8px;font-size:1rem}
+    .lesson-card p{line-height:1.62}
+    .muted{color:var(--muted)}
+
+    .step-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:16px;
+    }
+
+    .step-label{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color:var(--red);
+      font-size:.74rem;
+      font-weight:850;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      margin-bottom:6px;
+    }
+
+    .time-pill{
+      flex:0 0 auto;
+      padding:6px 9px;
+      background:#f3f4f6;
+      border-radius:999px;
+      color:#5b616c;
+      font-size:.76rem;
+      font-weight:750;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:43px;
+      padding:0 15px;
+      border-radius:11px;
+      border:1px solid transparent;
+      font-weight:800;
+      transition:.18s ease;
+    }
+
+    .btn.primary{background:var(--red);color:#fff}
+    .btn.primary:hover{background:var(--red-dark);transform:translateY(-1px)}
+    .btn.secondary{background:#fff;border-color:var(--line);color:#222}
+    .btn.secondary:hover{border-color:#c9cdd3}
+    .btn.dark{background:var(--black);color:#fff}
+    .btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
+
+    .btn-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      margin-top:14px;
+    }
+
+    .audio-panel{
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:var(--surface-2);
+      padding:17px;
+    }
+
+    .audio-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:10px;
+      font-weight:800;
+    }
+
+    .listen-counter{font-size:.78rem;color:var(--muted);font-weight:700}
+
+    .speed-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+
+    .speed-btn{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:.78rem;
+      font-weight:750;
+    }
+
+    .speed-btn.active{
+      border-color:var(--red);
+      color:var(--red);
+      background:#fff5f6;
+    }
+
+    .question{padding:17px 0;border-top:1px solid var(--line)}
+    .question:first-of-type{border-top:0;padding-top:4px}
+    .question-title{font-weight:800;line-height:1.5;margin-bottom:10px}
+    .options{display:grid;gap:8px}
+
+    .option{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:11px 12px;
+      border:1px solid var(--line);
+      border-radius:11px;
+      cursor:pointer;
+      transition:.15s ease;
+      background:#fff;
+    }
+
+    .option:hover{border-color:#c9cdd3}
+    .option input{margin-top:3px}
+
+    .feedback{
+      margin-top:12px;
+      border-radius:11px;
+      padding:11px 13px;
+      font-size:.9rem;
+      line-height:1.5;
+      display:none;
+    }
+
+    .feedback.show{display:block}
+    .feedback.good{background:var(--green-bg);color:var(--green)}
+    .feedback.warn{background:var(--amber-bg);color:var(--amber)}
+    .feedback.info{background:var(--blue-bg);color:var(--blue)}
+
+    textarea,input[type="text"]{
+      width:100%;
+      border:1px solid #d2d6dc;
+      border-radius:11px;
+      padding:12px 13px;
+      background:#fff;
+      color:#111;
+      outline:none;
+    }
+
+    textarea:focus,input[type="text"]:focus{
+      border-color:#ba6a7c;
+      box-shadow:0 0 0 3px rgba(143,16,39,.08);
+    }
+
+    textarea{resize:vertical;min-height:100px}
+
+    .weak-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .weak-card{
+      border:1px solid var(--line);
+      border-radius:13px;
+      padding:15px;
+      background:#fff;
+    }
+
+    .weak-card .word{
+      font-weight:900;
+      font-size:1rem;
+      margin-bottom:6px;
+    }
+
+    .weak-card .sound{
+      color:var(--red);
+      font-weight:850;
+      margin-bottom:6px;
+    }
+
+    .weak-card p{
+      font-size:.84rem;
+      color:var(--muted);
+      margin:0;
+      line-height:1.45;
+    }
+
+    .contrast{
+      margin-top:14px;
+      border:1px solid var(--line);
+      border-radius:13px;
+      overflow:hidden;
+    }
+
+    .contrast-row{
+      display:grid;
+      grid-template-columns:1fr 1fr 1.4fr;
+      gap:12px;
+      padding:12px 14px;
+      border-top:1px solid var(--line);
+      align-items:center;
+    }
+
+    .contrast-row:first-child{
+      border-top:0;
+      background:#fafafa;
+      font-weight:800;
+      font-size:.82rem;
+    }
+
+    .contrast-row span{font-size:.86rem}
+    .contrast-row .weak{color:var(--red);font-weight:850}
+
+    .dictation-item{
+      border:1px solid var(--line);
+      border-radius:13px;
+      padding:16px;
+      margin-top:12px;
+      background:#fff;
+    }
+
+    .dictation-result{
+      margin-top:10px;
+      padding:10px 12px;
+      background:#f8f9fa;
+      border-radius:10px;
+      line-height:1.55;
+      display:none;
+    }
+
+    .dictation-result.show{display:block}
+    .miss{color:#b91c1c;text-decoration:underline;text-decoration-style:wavy}
+
+    .lockbox{
+      border:1px dashed #c8cdd3;
+      border-radius:13px;
+      padding:18px;
+      background:#fafafa;
+      text-align:center;
+    }
+
+    .transcript{
+      display:none;
+      margin-top:14px;
+      padding:18px;
+      border-left:4px solid var(--red);
+      border-radius:10px;
+      background:#fafafa;
+      line-height:1.8;
+    }
+
+    .transcript.show{display:block}
+
+    .decode-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .decode-card{
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:14px;
+      background:#fff;
+    }
+
+    .decode-card strong{display:block;margin-bottom:5px}
+    .decode-card span{font-size:.88rem;color:var(--muted);line-height:1.45}
+
+    .chunk{
+      display:grid;
+      grid-template-columns:1.2fr 1.8fr auto;
+      gap:12px;
+      align-items:center;
+      border-top:1px solid var(--line);
+      padding:13px 0;
+    }
+
+    .chunk:first-of-type{border-top:0}
+    .chunk strong{font-size:.92rem}
+    .chunk span{font-size:.86rem;color:var(--muted);line-height:1.45}
+
+    .save-chunk{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:9px;
+      padding:7px 9px;
+      font-size:.76rem;
+      font-weight:750;
+    }
+
+    .save-chunk.saved{
+      background:var(--green-bg);
+      color:var(--green);
+      border-color:#ccebd5;
+    }
+
+    .recorder{
+      border:1px solid var(--line);
+      border-radius:13px;
+      padding:15px;
+      background:#fafafa;
+      margin-top:12px;
+    }
+
+    .record-status{font-size:.84rem;color:var(--muted);margin-top:8px}
+    audio{width:100%;margin-top:12px}
+
+    .prompt-box{
+      border-left:4px solid var(--red);
+      background:#fafafa;
+      padding:16px 17px;
+      border-radius:10px;
+      line-height:1.6;
+      margin:12px 0;
+    }
+
+    .rating-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:16px;
+    }
+
+    .rating{
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:13px;
+    }
+
+    .rating label{
+      display:block;
+      font-size:.8rem;
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .rating output{font-weight:900;color:var(--red)}
+    input[type="range"]{width:100%}
+
+    .result-card{
+      background:var(--black);
+      color:#fff;
+      border-radius:18px;
+      padding:24px;
+    }
+
+    .result-score{
+      font-size:3.2rem;
+      font-weight:900;
+      letter-spacing:-.05em;
+      line-height:1;
+      margin-top:8px;
+    }
+
+    .result-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .result-box{
+      background:#202020;
+      border:1px solid #353535;
+      border-radius:12px;
+      padding:13px;
+    }
+
+    .result-box strong{display:block;font-size:1.2rem}
+    .result-box span{color:#b8bdc6;font-size:.78rem}
+
+    .sidebar{position:sticky;top:92px;align-self:start}
+
+    .side-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:18px;
+      margin-bottom:13px;
+    }
+
+    .side-card h3{margin:0 0 10px;font-size:.96rem}
+
+    .toc{display:grid;gap:5px}
+    .toc a{
+      padding:8px 9px;
+      border-radius:9px;
+      color:#4b5563;
+      font-size:.84rem;
+    }
+
+    .toc a:hover{background:#f4f4f5;color:var(--red)}
+
+    .mini-progress{
+      height:7px;
+      background:#eceef1;
+      border-radius:999px;
+      overflow:hidden;
+      margin-top:10px;
+    }
+
+    .mini-progress > div{
+      height:100%;
+      width:0;
+      background:var(--red);
+      transition:.25s ease;
+    }
+
+    .complete-box{
+      text-align:center;
+      padding:30px 24px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .complete-box h2{font-size:1.7rem;margin-bottom:8px}
+
+    .complete-box p{
+      color:var(--muted);
+      max-width:620px;
+      margin:0 auto 18px;
+      line-height:1.6;
+    }
+
+    .done-banner{
+      display:none;
+      background:var(--green-bg);
+      color:var(--green);
+      border:1px solid #ccebd5;
+      border-radius:12px;
+      padding:12px 14px;
+      margin-top:14px;
+      font-weight:750;
+    }
+
+    .done-banner.show{display:block}
+
+    footer{
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      padding:28px 0 40px;
+      font-size:.84rem;
+    }
+
+    @media(max-width:980px){
+      .hero,.layout{grid-template-columns:1fr}
+      .sidebar{position:static}
+      .decode-grid{grid-template-columns:1fr}
+      .weak-grid{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media(max-width:720px){
+      .shell{width:min(100% - 26px,1160px)}
+      .hero-main,.hero-side{padding:25px}
+      .lesson-card{padding:20px}
+      .chunk,.contrast-row{grid-template-columns:1fr}
+      .weak-grid{grid-template-columns:1fr}
+      .rating-grid,.result-grid{grid-template-columns:1fr}
+      .toplinks .hide-mobile{display:none}
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="shell topnav">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">F30</span>
+        <span>Fluent<span>30</span></span>
+      </a>
+
+      <div class="toplinks">
+        <a href="lesson-day-02.html" class="navbtn">← Day 02</a>
+        <a href="index.html" class="navbtn hide-mobile">Roadmap</a>
+        <a href="lesson-day-04.html" class="navbtn">Day 04 →</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="shell">
+
+      <section class="hero">
+        <div class="hero-main">
+          <div class="eyebrow">Day 03 · Weak Forms</div>
+          <h1>The words are there.<br>They just got smaller.</h1>
+
+          <p class="hero-copy">
+            In natural English, grammar words such as <b>to, for, and, can, have, you</b> are often unstressed.
+            Their vowels weaken, their consonants link, and the sentence rhythm is carried by the important words.
+            Today you train yourself to hear those “small” words without waiting for their dictionary pronunciation.
+          </p>
+        </div>
+
+        <aside class="hero-side">
+          <div>
+            <div class="eyebrow" style="color:#e9a6b4">Today's target</div>
+            <h2 style="margin:0;font-size:1.55rem">Hear unstressed grammar words</h2>
+            <p class="muted" style="line-height:1.55">
+              Schwa /ə/ · function words · rhythm · stress contrast · chunking
+            </p>
+          </div>
+
+          <div>
+            <div class="meta-grid">
+              <div class="meta-card"><strong>90</strong><span>minutes</span></div>
+              <div class="meta-card"><strong>8</strong><span>core tasks</span></div>
+            </div>
+
+            <div class="progress-track">
+              <div class="progress-fill" id="topProgress"></div>
+            </div>
+
+            <div class="muted" id="topProgressText" style="font-size:.82rem;margin-top:6px">
+              0% complete
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <div class="layout">
+        <div>
+
+          <!-- 1 FIRST LISTEN -->
+          <section class="lesson-card" id="first-listen">
+            <div class="step-head">
+              <div>
+                <div class="step-label">Step 1 · First Listen</div>
+                <h2>Listen for the stressed words first.</h2>
+              </div>
+              <div class="time-pill">10 min</div>
+            </div>
+
+            <p class="muted">
+              Jordan is leaving a voice message for Nina about tomorrow. On the first listen, ignore small grammar words
+              and focus on the words that carry meaning: times, places, actions and decisions.
+            </p>
+
+            <div class="audio-panel">
+              <div class="audio-title">
+                <span>🎧 Jordan's voice message</span>
+                <span class="listen-counter">Listens: <span id="listenCount">0</span></span>
+              </div>
+
+              <button class="btn primary" id="playMainBtn" type="button">▶ Play full message</button>
+              <button class="btn secondary" id="stopMainBtn" type="button">■ Stop</button>
+
+              <div class="speed-row">
+                <button class="speed-btn" data-rate="0.9" type="button">0.9×</button>
+                <button class="speed-btn active" data-rate="1" type="button">1.0×</button>
+                <button class="speed-btn" data-rate="1.08" type="button">1.08×</button>
+              </div>
+            </div>
+
+            <div class="question">
+              <div class="question-title">What is Jordan mainly trying to do?</div>
+              <div class="options">
+                <label class="option">
+                  <input type="radio" name="q1" value="a">
+                  <span>Reschedule a morning meeting and organize lunch afterwards.</span>
+                </label>
+                <label class="option">
+                  <input type="radio" name="q1" value="b">
+                  <span>Cancel the meeting because the client cannot attend.</span>
+                </label>
+                <label class="option">
+                  <input type="radio" name="q1" value="c">
+                  <span>Ask Nina to prepare a presentation for Friday.</span>
+                </label>
+              </div>
+
+              <button class="btn secondary" style="margin-top:12px" onclick="checkFirstQuestion()" type="button">
+                Check answer
+              </button>
+
+              <div class="feedback" id="q1Feedback"></div>
+            </div>
+          </section>
+
+          <!-- 2 WEAK FORMS -->
+          <section class="lesson-card" id="weak-forms">
+            <div class="step-head">
+              <div>
+                <div class="step-label">Step 2 · Weak Forms</div>
+                <h2>Meet the sounds that disappear.</h2>
+              </div>
+              <div class="time-pill">15 min</div>
+            </div>
+
+            <p class="muted">
+              English rhythm highlights content words. Function words often reduce toward the neutral vowel <b>/ə/</b> (schwa).
+              Do not expect the full dictionary form unless the word is being emphasized.
+            </p>
+
+            <div class="weak-grid">
+              <div class="weak-card">
+                <div class="word">to</div>
+                <div class="sound">/tə/</div>
+                <p>“need <b>to</b> leave” → “need-tə-leave”</p>
+              </div>
+
+              <div class="weak-card">
+                <div class="word">for</div>
+                <div class="sound">/fər/</div>
+                <p>“works <b>for</b> me” → “works-fər-me”</p>
+              </div>
+
+              <div class="weak-card">
+                <div class="word">and</div>
+                <div class="sound">/ən/</div>
+                <p>“coffee <b>and</b> lunch” → “coffee-n-lunch”</p>
+              </div>
+
+              <div class="weak-card">
+                <div class="word">can</div>
+                <div class="sound">/kən/</div>
+                <p>“I <b>can</b> make it” → “I-kən-make-it”</p>
+              </div>
+
+              <div class="weak-card">
+                <div class="word">have</div>
+                <div class="sound">/əv/</div>
+                <p>“should <b>have</b> checked” → “should-əv-checked”</p>
+              </div>
+
+              <div class="weak-card">
+                <div class="word">you</div>
+                <div class="sound">/jə/</div>
+                <p>“do <b>you</b> want…” → “d'ya-want…”</p>
+              </div>
+            </div>
+
+            <div class="contrast">
+              <div class="contrast-row">
+                <span>Word</span>
+                <span>Weak form</span>
+                <span>Strong form appears when…</span>
+              </div>
+
+              <div class="contrast-row">
+                <span>can</span>
+                <span class="weak">/kən/</span>
+                <span>contrast/emphasis: “Yes, I <b>CAN</b>.”</span>
+              </div>
+
+              <div class="contrast-row">
+                <span>to</span>
+                <span class="weak">/tə/</span>
+                <span>contrast/emphasis: “I said <b>TO</b>, not from.”</span>
+              </div>
+
+              <div class="contrast-row">
+                <span>for</span>
+                <span class="weak">/fər/</span>
+                <span>contrast/emphasis: “It's <b>FOR</b> Nina.”</span>
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button class="btn secondary" type="button" onclick="playWeakDrill()">▶ Play weak-form drill</button>
+            </div>
+          </section>
+
+          <!-- 3 DISCRIMINATION -->
+          <section class="lesson-card" id="discrimination">
+            <div class="step-head">
+              <div>
+                <div class="step-label">Step 3 · Ear Training</div>
+                <h2>Can you identify the weak word?</h2>
+              </div>
+              <div class="time-pill">10 min</div>
+            </div>
+
+            <p class="muted">
+              Play each line and choose which function word is reduced in the middle.
+            </p>
+
+            <div id="weakQuiz"></div>
+
+            <div class="btn-row">
+              <button class="btn primary" type="button" onclick="gradeWeakQuiz()">Check weak-form quiz</button>
+              <span class="muted" id="weakScoreText"></span>
+            </div>
+
+            <div class="feedback" id="weakFeedback"></div>
+          </section>
+
+          <!-- 4 DEEP LISTEN -->
+          <section class="lesson-card" id="deep-listen">
+            <div class="step-head">
+              <div>
+                <div class="step-label">Step 4 · Deep Listen</div>
+                <h2>Listen again for exact detail.</h2>
+              </div>
+              <div class="time-pill">15 min</div>
+            </div>
+
+            <div id="deepQuestions"></div>
+
+            <div class="btn-row">
+              <button class="btn primary" type="button" onclick="gradeDeepQuiz()">Check 5 answers</button>
+              <span class="muted" id="deepScoreText"></span>
+            </div>
+
+            <div class="feedback" id="deepFeedback"></div>
+          </section>
+
+          <!-- 5 DICTATION -->
+          <section class="lesson-card" id="dictation">
+            <div class="step-head">
+              <div>
+                <div class="step-label">Step 5 · Dictation</div>
+                <h2>Recover the “invisible” words.</h2>
+              </div>
+              <div class="time-pill">15 min</div>
+            </div>
+
+            <p class="muted">
+              The hard part is not the nouns or verbs. It is hearing the unstressed grammar words between them.
+            </p>
+
+            <div id="dictationList"></div>
+          </section>
+
+          <!-- 6 DECODE -->
+          <section class="lesson-card" id="decode">
+            <div class="step-head">
+              <div>
+                <div class="step-label">Step 6 · Decode</div>
+                <h2>Reveal the full message.</h2>
+              </div>
+              <div class="time-pill">10 min</div>
+            </div>
+
+            <div class="lockbox" id="transcriptLock">
+              <strong>Transcript locked</strong>
+              <p class="muted" style="margin:7px 0 12px">
+                Complete at least two full listens before revealing the transcript.
+              </p>
+              <button class="btn secondary" id="revealBtn" type="button" disabled>Reveal transcript</button>
+            </div>
+
+            <div class="transcript" id="transcriptBox">
+              <strong>Transcript — Jordan's voice message</strong>
+
+              <p>
+                Hey Nina, just wanted to check what works for you tomorrow.
+                I was supposed to meet Daniel at nine, but he asked if we can push it back to ten.
+              </p>
+
+              <p>
+                That actually works better for me because I've got a couple of things to finish before I leave the house.
+                If you're free, do you want to meet at the café around eleven-thirty?
+              </p>
+
+              <p>
+                We can go over the notes for Friday and then grab lunch somewhere nearby.
+                I don't have to be back at the office until two, so there's no rush.
+              </p>
+
+              <p>
+                Oh, and I meant to ask you about the client file.
+                You don't have to send the whole thing — just the summary and the latest numbers should be enough.
+              </p>
+
+              <p>
+                Anyway, let me know what works for you. If eleven-thirty is too early, we can make it twelve.
+              </p>
+            </div>
+
+            <div class="decode-grid">
+              <div class="decode-card">
+                <strong>“works for you” → “works fər yə”</strong>
+                <span>Both <b>for</b> and <b>you</b> weaken because the stress lands on “works”.</span>
+              </div>
+
+              <div class="decode-card">
+                <strong>“supposed to” → “supposed tə”</strong>
+                <span>The vowel in <b>to</b> reduces to schwa /ə/.</span>
+              </div>
+
+              <div class="decode-card">
+                <strong>“if we can” → “if we kən”</strong>
+                <span><b>can</b> is weak unless the speaker emphasizes ability or contrast.</span>
+              </div>
+
+              <div class="decode-card">
+                <strong>“and then” → “ən then”</strong>
+                <span><b>and</b> is often reduced to /ən/ or even just /n/.</span>
+              </div>
+
+              <div class="decode-card">
+                <strong>“have to” → “hafta”</strong>
+                <span>In fast speech, “have to” commonly compresses heavily.</span>
+              </div>
+
+              <div class="decode-card">
+                <strong>“let me” → “lemme”</strong>
+                <span>Frequent chunks become highly compressed because listeners recognize them as a unit.</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- 7 VOCAB + SHADOWING -->
+          <section class="lesson-card" id="shadowing">
+            <div class="step-head">
+              <div>
+                <div class="step-label">Step 7 · Shadowing & Chunks</div>
+                <h2>Keep the important words strong.</h2>
+              </div>
+              <div class="time-pill">10 min</div>
+            </div>
+
+            <p class="muted">
+              Stress the content words; let the grammar words shrink naturally.
+            </p>
+
+            <div id="chunkList"></div>
+
+            <h3>Shadowing lines</h3>
+            <div id="shadowList"></div>
+
+            <div class="recorder">
+              <strong>🎙 Record your shadowing</strong>
+
+              <div class="btn-row">
+                <button class="btn primary" id="shadowRecordBtn" type="button">Start recording</button>
+                <button class="btn secondary" id="shadowStopBtn" type="button" disabled>Stop</button>
+              </div>
+
+              <div class="record-status" id="shadowRecordStatus">
+                Focus on stress contrast: strong content words, weak grammar words.
+              </div>
+
+              <audio id="shadowPlayback" controls style="display:none"></audio>
+            </div>
+          </section>
+
+          <!-- 8 SPEAK BACK -->
+          <section class="lesson-card" id="speak-back">
+            <div class="step-head">
+              <div>
+                <div class="step-label">Step 8 · Speak Back</div>
+                <h2>Use weak forms without forcing them.</h2>
+              </div>
+              <div class="time-pill">10 min</div>
+            </div>
+
+            <div class="prompt-box">
+              <strong>60–90 second response</strong><br>
+              Reply to Jordan. Confirm whether 11:30 works, say what you can bring to the café,
+              and explain what you need to do before returning to the office.
+            </div>
+
+            <textarea id="speakOutline" placeholder="Optional keywords only: 11:30 / café / notes / client summary / office"></textarea>
+
+            <div class="recorder">
+              <strong>🎙 Record your response</strong>
+
+              <div class="btn-row">
+                <button class="btn primary" id="speakRecordBtn" type="button">Start recording</button>
+                <button class="btn secondary" id="speakStopBtn" type="button" disabled>Stop</button>
+              </div>
+
+              <div class="record-status" id="speakRecordStatus">
+                Try to keep “to / for / and / can / you” light and unstressed.
+              </div>
+
+              <audio id="speakPlayback" controls style="display:none"></audio>
+            </div>
+
+            <h3>Self-check</h3>
+
+            <div class="rating-grid">
+              <div class="rating">
+                <label>Rhythm · <output id="rhythmOut">3</output>/5</label>
+                <input type="range" min="1" max="5" value="3" id="rhythmRate">
+              </div>
+
+              <div class="rating">
+                <label>Weak forms · <output id="weakOut">3</output>/5</label>
+                <input type="range" min="1" max="5" value="3" id="weakRate">
+              </div>
+
+              <div class="rating">
+                <label>Natural flow · <output id="naturalOut">3</output>/5</label>
+                <input type="range" min="1" max="5" value="3" id="naturalRate">
+              </div>
+            </div>
+          </section>
+
+          <!-- RESULT -->
+          <section class="lesson-card" id="result">
+            <div class="step-head">
+              <div>
+                <div class="step-label">Day 03 Result</div>
+                <h2>Your weak-form recognition score</h2>
+              </div>
+            </div>
+
+            <div class="result-card">
+              <div class="muted" style="color:#b8bdc6">Listening + weak-form + dictation diagnostic</div>
+
+              <div class="result-score">
+                <span id="overallScore">—</span><span style="font-size:1.3rem">%</span>
+              </div>
+
+              <div class="muted" id="scoreInterpretation" style="color:#b8bdc6;margin-top:7px">
+                Complete the weak-form quiz, deep listening and dictation to calculate your score.
+              </div>
+
+              <div class="result-grid">
+                <div class="result-box">
+                  <strong id="weakResult">—</strong>
+                  <span>Weak-form ID</span>
+                </div>
+
+                <div class="result-box">
+                  <strong id="deepResult">—</strong>
+                  <span>Deep listening</span>
+                </div>
+
+                <div class="result-box">
+                  <strong id="dictationResult">—</strong>
+                  <span>Dictation</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="muted" style="font-size:.82rem;margin-bottom:0">
+              This is a training score, not an official CEFR assessment.
+            </p>
+          </section>
+
+          <!-- COMPLETE -->
+          <section class="complete-box" id="complete">
+            <h2>Complete Day 03</h2>
+
+            <p>
+              Save today's result and continue to Day 04: Linking & Reductions.
+              Your Week 1 progress on the roadmap will update automatically.
+            </p>
+
+            <button class="btn primary" id="completeDayBtn" type="button">✓ Mark Day 03 complete</button>
+            <a href="lesson-day-04.html" class="btn secondary">Go to Day 04 →</a>
+
+            <div class="done-banner" id="doneBanner">
+              Day 03 is saved as completed in this browser.
+            </div>
+          </section>
+
+        </div>
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+          <div class="side-card">
+            <h3>Day 03</h3>
+            <div class="muted" style="font-size:.84rem">Weak Forms</div>
+
+            <div class="mini-progress">
+              <div id="sideProgress"></div>
+            </div>
+
+            <div class="muted" id="sideProgressText" style="font-size:.78rem;margin-top:7px">
+              0/8 sections touched
+            </div>
+          </div>
+
+          <div class="side-card">
+            <h3>Jump to</h3>
+
+            <nav class="toc">
+              <a href="#first-listen">1. First Listen</a>
+              <a href="#weak-forms">2. Weak Forms</a>
+              <a href="#discrimination">3. Ear Training</a>
+              <a href="#deep-listen">4. Deep Listen</a>
+              <a href="#dictation">5. Dictation</a>
+              <a href="#decode">6. Decode</a>
+              <a href="#shadowing">7. Shadowing</a>
+              <a href="#speak-back">8. Speak Back</a>
+              <a href="#result">Result</a>
+            </nav>
+          </div>
+
+          <div class="side-card">
+            <h3>Rule for today</h3>
+
+            <p class="muted" style="font-size:.84rem;line-height:1.55;margin:0">
+              Don't try to pronounce every word clearly. Natural English is clear because of rhythm,
+              not because every word receives equal stress.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="shell">Fluent30 · Day 03 · Weak Forms</div>
+  </footer>
+
+  <script>
+    const COURSE_KEY = "fluent30-progress-v1";
+    const DAY_KEY = "fluent30-day-03-result";
+
+    const mainScript = `Hey Nina, just wanted to check what works for you tomorrow.
+
+I was supposed to meet Daniel at nine, but he asked if we can push it back to ten.
+
+That actually works better for me because I've got a couple of things to finish before I leave the house.
+
+If you're free, do you want to meet at the café around eleven-thirty?
+
+We can go over the notes for Friday and then grab lunch somewhere nearby.
+
+I don't have to be back at the office until two, so there's no rush.
+
+Oh, and I meant to ask you about the client file.
+
+You don't have to send the whole thing — just the summary and the latest numbers should be enough.
+
+Anyway, let me know what works for you.
+
+If eleven-thirty is too early, we can make it twelve.`;
+
+    const weakQuestions = [
+      {
+        sentence:"That works for me.",
+        prompt:"Which word is most likely reduced?",
+        options:["works","for","me"],
+        answer:1
+      },
+      {
+        sentence:"We can make it twelve.",
+        prompt:"Which word is usually weak unless emphasized?",
+        options:["can","make","twelve"],
+        answer:0
+      },
+      {
+        sentence:"Coffee and lunch.",
+        prompt:"Which word often reduces toward /ən/ or /n/?",
+        options:["coffee","and","lunch"],
+        answer:1
+      },
+      {
+        sentence:"Do you want to meet?",
+        prompt:"Which pair commonly reduces in natural speech?",
+        options:["do you","want meet","meet you"],
+        answer:0
+      }
+    ];
+
+    const deepQuestions = [
+      {
+        q:"Why is the 10 a.m. meeting time actually better for Jordan?",
+        options:[
+          "He wants to avoid traffic.",
+          "He has things to finish before leaving home.",
+          "He needs extra time to call the client."
+        ],
+        answer:1
+      },
+      {
+        q:"Where does Jordan suggest meeting Nina?",
+        options:[
+          "At the office",
+          "At a café",
+          "At the client's office"
+        ],
+        answer:1
+      },
+      {
+        q:"What do they plan to review together?",
+        options:[
+          "Notes for Friday",
+          "A new budget",
+          "A presentation for Daniel"
+        ],
+        answer:0
+      },
+      {
+        q:"What does Jordan need from the client file?",
+        options:[
+          "The whole file",
+          "Only the contract",
+          "The summary and latest numbers"
+        ],
+        answer:2
+      },
+      {
+        q:"What alternative time does Jordan offer?",
+        options:[
+          "11:00",
+          "12:00",
+          "12:30"
+        ],
+        answer:1
+      }
+    ];
+
+    const dictationItems = [
+      "I was supposed to meet Daniel at nine.",
+      "He asked if we can push it back to ten.",
+      "Do you want to meet at the café around eleven-thirty?",
+      "We can go over the notes for Friday and then grab lunch somewhere nearby."
+    ];
+
+    const chunks = [
+      ["what works for you","what is convenient or suitable for you","Let me know what works for you."],
+      ["push it back","move something to a later time","Can we push it back to ten?"],
+      ["go over something","review or discuss something","We can go over the notes for Friday."],
+      ["grab lunch","have an informal lunch","Then we can grab lunch somewhere nearby."],
+      ["there's no rush","it does not need to happen quickly","I don't have to be back until two, so there's no rush."],
+      ["meant to ask","intended to ask earlier","I meant to ask you about the client file."]
+    ];
+
+    const shadowSentences = [
+      "I was supposed to meet Daniel at nine.",
+      "He asked if we can push it back to ten.",
+      "Do you want to meet at the café around eleven-thirty?",
+      "We can go over the notes for Friday and then grab lunch.",
+      "Let me know what works for you."
+    ];
+
+    const weakDrill = [
+      "I need to leave in ten minutes.",
+      "That works for me.",
+      "Coffee and lunch would be fine.",
+      "I can make it at eleven-thirty.",
+      "You should have told me earlier.",
+      "Do you want to meet at the café?"
+    ];
+
+    let speechRate = 1;
+    let listenCount = Number(localStorage.getItem("fluent30-day03-listens") || 0);
+    let weakScore = null;
+    let deepScore = null;
+    let dictationScores = [null,null,null,null];
+    let touchedSections = new Set();
+
+    function getUSVoice(){
+      if(!("speechSynthesis" in window)) return null;
+
+      const voices = speechSynthesis.getVoices();
+
+      return (
+        voices.find(v => /en-US/i.test(v.lang) && /Google|Samantha|Jenny|Aria|Guy|Joanna|Matthew/i.test(v.name)) ||
+        voices.find(v => /en-US/i.test(v.lang)) ||
+        voices.find(v => /^en/i.test(v.lang)) ||
+        null
+      );
+    }
+
+    function speak(text,rate=1,onEnd=null){
+      if(!("speechSynthesis" in window)){
+        alert("Speech synthesis is not supported in this browser.");
+        return;
+      }
+
+      speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-US";
+      utterance.rate = rate;
+      utterance.pitch = 1;
+
+      const voice = getUSVoice();
+      if(voice) utterance.voice = voice;
+      if(onEnd) utterance.onend = onEnd;
+
+      speechSynthesis.speak(utterance);
+    }
+
+    document.getElementById("playMainBtn").addEventListener("click",()=>{
+      listenCount += 1;
+      localStorage.setItem("fluent30-day03-listens",String(listenCount));
+      updateListenUI();
+      markTouched("listen");
+      speak(mainScript,speechRate);
+    });
+
+    document.getElementById("stopMainBtn").addEventListener("click",()=>{
+      if("speechSynthesis" in window) speechSynthesis.cancel();
+    });
+
+    document.querySelectorAll(".speed-btn").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        speechRate = Number(btn.dataset.rate);
+        document.querySelectorAll(".speed-btn").forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+      });
+    });
+
+    function updateListenUI(){
+      document.getElementById("listenCount").textContent = listenCount;
+      document.getElementById("revealBtn").disabled = listenCount < 2;
+
+      if(listenCount >= 2){
+        const lock = document.getElementById("transcriptLock");
+        lock.querySelector("strong").textContent = "Transcript ready";
+        lock.querySelector("p").textContent =
+          "You have completed at least two listens. Now compare the weak forms with the written sentence.";
+      }
+    }
+
+    document.getElementById("revealBtn").addEventListener("click",()=>{
+      document.getElementById("transcriptBox").classList.add("show");
+      document.getElementById("transcriptLock").style.display = "none";
+      markTouched("decode");
+    });
+
+    function checkFirstQuestion(){
+      const chosen = document.querySelector('input[name="q1"]:checked');
+      const box = document.getElementById("q1Feedback");
+
+      box.className = "feedback show";
+
+      if(!chosen){
+        box.classList.add("warn");
+        box.textContent = "Choose one answer first.";
+        return;
+      }
+
+      if(chosen.value === "a"){
+        box.classList.add("good");
+        box.textContent = "Correct. Jordan is coordinating the morning schedule and suggesting lunch after meeting Nina.";
+      }else{
+        box.classList.add("warn");
+        box.textContent = "Not quite. Focus on the overall purpose of the message, not one detail.";
+      }
+
+      markTouched("listen");
+    }
+
+    function playWeakDrill(){
+      markTouched("weak");
+
+      let i = 0;
+
+      const next = ()=>{
+        if(i >= weakDrill.length) return;
+
+        speak(weakDrill[i],0.95,()=>{
+          i++;
+          setTimeout(next,250);
+        });
+      };
+
+      next();
+    }
+
+    function renderWeakQuiz(){
+      const container = document.getElementById("weakQuiz");
+
+      container.innerHTML = weakQuestions.map((item,index)=>`
+        <div class="question">
+          <div class="question-title">
+            ${index+1}. “${item.sentence}”<br>
+            <span class="muted" style="font-weight:500">${item.prompt}</span>
+          </div>
+
+          <div class="btn-row" style="margin-top:0;margin-bottom:10px">
+            <button class="btn secondary" type="button" onclick="playWeakQuestion(${index})">▶ Play</button>
+          </div>
+
+          <div class="options">
+            ${item.options.map((option,optIndex)=>`
+              <label class="option">
+                <input type="radio" name="weak${index}" value="${optIndex}">
+                <span>${option}</span>
+              </label>
+            `).join("")}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function playWeakQuestion(index){
+      speak(weakQuestions[index].sentence,1);
+      markTouched("weak");
+    }
+
+    function gradeWeakQuiz(){
+      let correct = 0;
+      let answered = 0;
+
+      weakQuestions.forEach((item,index)=>{
+        const selected = document.querySelector(`input[name="weak${index}"]:checked`);
+
+        if(selected){
+          answered++;
+          if(Number(selected.value) === item.answer) correct++;
+        }
+      });
+
+      const feedback = document.getElementById("weakFeedback");
+      feedback.className = "feedback show";
+
+      if(answered < weakQuestions.length){
+        feedback.classList.add("warn");
+        feedback.textContent = `You answered ${answered}/${weakQuestions.length}. Complete all questions first.`;
+        return;
+      }
+
+      weakScore = Math.round((correct/weakQuestions.length)*100);
+
+      document.getElementById("weakScoreText").textContent =
+        `${correct}/${weakQuestions.length} correct · ${weakScore}%`;
+
+      if(weakScore >= 75){
+        feedback.classList.add("good");
+        feedback.textContent = "Good weak-form awareness. Now apply it to longer natural speech.";
+      }else{
+        feedback.classList.add("warn");
+        feedback.textContent = "Repeat the weak-form drill and pay attention to rhythm rather than individual word clarity.";
+      }
+
+      markTouched("weak");
+      updateResults();
+    }
+
+    function renderDeepQuestions(){
+      const container = document.getElementById("deepQuestions");
+
+      container.innerHTML = deepQuestions.map((item,index)=>`
+        <div class="question">
+          <div class="question-title">${index+1}. ${item.q}</div>
+
+          <div class="options">
+            ${item.options.map((option,optIndex)=>`
+              <label class="option">
+                <input type="radio" name="deep${index}" value="${optIndex}">
+                <span>${option}</span>
+              </label>
+            `).join("")}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function gradeDeepQuiz(){
+      let correct = 0;
+      let answered = 0;
+
+      deepQuestions.forEach((item,index)=>{
+        const selected = document.querySelector(`input[name="deep${index}"]:checked`);
+
+        if(selected){
+          answered++;
+          if(Number(selected.value) === item.answer) correct++;
+        }
+      });
+
+      const feedback = document.getElementById("deepFeedback");
+      feedback.className = "feedback show";
+
+      if(answered < deepQuestions.length){
+        feedback.classList.add("warn");
+        feedback.textContent = `You answered ${answered}/${deepQuestions.length}. Complete all questions first.`;
+        return;
+      }
+
+      deepScore = Math.round((correct/deepQuestions.length)*100);
+
+      document.getElementById("deepScoreText").textContent =
+        `${correct}/${deepQuestions.length} correct · ${deepScore}%`;
+
+      if(deepScore >= 80){
+        feedback.classList.add("good");
+        feedback.textContent = "Strong detail comprehension. Your next goal is hearing weak grammar words without consciously searching for them.";
+      }else if(deepScore >= 60){
+        feedback.classList.add("info");
+        feedback.textContent = "You have the main meaning, but some detail is still being lost in unstressed parts of the sentence.";
+      }else{
+        feedback.classList.add("warn");
+        feedback.textContent = "Replay at 0.9×, focus on stressed content words first, then reconstruct the weak words between them.";
+      }
+
+      markTouched("deep");
+      updateResults();
+    }
+
+    function renderDictation(){
+      const container = document.getElementById("dictationList");
+
+      container.innerHTML = dictationItems.map((sentence,index)=>`
+        <div class="dictation-item">
+          <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+            <strong>Sentence ${index+1}</strong>
+            <button class="btn secondary" type="button" onclick="speakDictation(${index})">▶ Play</button>
+          </div>
+
+          <input
+            type="text"
+            id="dictInput${index}"
+            style="margin-top:12px"
+            placeholder="Type exactly what you hear"
+            autocomplete="off"
+          >
+
+          <div class="btn-row">
+            <button class="btn secondary" type="button" onclick="checkDictation(${index})">Check</button>
+          </div>
+
+          <div class="dictation-result" id="dictResult${index}"></div>
+        </div>
+      `).join("");
+    }
+
+    function speakDictation(index){
+      speak(dictationItems[index],1);
+      markTouched("dictation");
+    }
+
+    function normalize(text){
+      return text
+        .toLowerCase()
+        .replace(/[’‘]/g,"'")
+        .replace(/[^a-z0-9'\s-]/g,"")
+        .replace(/\s+/g," ")
+        .trim();
+    }
+
+    function wordSimilarity(userText,targetText){
+      const a = normalize(userText).split(" ").filter(Boolean);
+      const b = normalize(targetText).split(" ").filter(Boolean);
+
+      const dp = Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));
+
+      for(let i=1;i<=a.length;i++){
+        for(let j=1;j<=b.length;j++){
+          if(a[i-1] === b[j-1]){
+            dp[i][j] = dp[i-1][j-1] + 1;
+          }else{
+            dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+          }
+        }
+      }
+
+      return b.length ? Math.round((dp[a.length][b.length]/b.length)*100) : 0;
+    }
+
+    function checkDictation(index){
+      const input = document.getElementById(`dictInput${index}`);
+      const result = document.getElementById(`dictResult${index}`);
+
+      if(!input.value.trim()){
+        result.className = "dictation-result show";
+        result.innerHTML = `<span class="miss">Type what you hear first.</span>`;
+        return;
+      }
+
+      const score = wordSimilarity(input.value,dictationItems[index]);
+      dictationScores[index] = score;
+
+      const label =
+        score >= 90 ? "Excellent" :
+        score >= 75 ? "Good" :
+        score >= 60 ? "Developing" :
+        "Needs work";
+
+      result.className = "dictation-result show";
+      result.innerHTML = `
+        <div><strong>${label} · ${score}% match</strong></div>
+        <div style="margin-top:6px"><span class="muted">Target:</span> ${dictationItems[index]}</div>
+      `;
+
+      markTouched("dictation");
+      updateResults();
+    }
+
+    function getAverageDictation(){
+      const scored = dictationScores.filter(v => typeof v === "number");
+      if(scored.length !== dictationScores.length) return null;
+
+      return Math.round(scored.reduce((a,b)=>a+b,0)/scored.length);
+    }
+
+    function renderChunks(){
+      const saved = JSON.parse(localStorage.getItem("fluent30-saved-chunks") || "[]");
+      const container = document.getElementById("chunkList");
+
+      container.innerHTML = chunks.map((chunk,index)=>{
+        const isSaved = saved.includes(chunk[0]);
+
+        return `
+          <div class="chunk">
+            <div>
+              <strong>${chunk[0]}</strong>
+              <div style="margin-top:5px;font-size:.82rem;color:#8b8f96">
+                “${chunk[2]}”
+              </div>
+            </div>
+
+            <span>${chunk[1]}</span>
+
+            <button
+              class="save-chunk ${isSaved ? "saved" : ""}"
+              type="button"
+              onclick="toggleChunk(${index},this)"
+            >${isSaved ? "Saved ✓" : "Save"}</button>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function toggleChunk(index,button){
+      let saved = JSON.parse(localStorage.getItem("fluent30-saved-chunks") || "[]");
+      const phrase = chunks[index][0];
+
+      if(saved.includes(phrase)){
+        saved = saved.filter(x => x !== phrase);
+        button.classList.remove("saved");
+        button.textContent = "Save";
+      }else{
+        saved.push(phrase);
+        button.classList.add("saved");
+        button.textContent = "Saved ✓";
+      }
+
+      localStorage.setItem("fluent30-saved-chunks",JSON.stringify(saved));
+      markTouched("shadow");
+    }
+
+    function renderShadowing(){
+      const container = document.getElementById("shadowList");
+
+      container.innerHTML = shadowSentences.map((sentence,index)=>`
+        <div class="dictation-item">
+          <strong>${index+1}. ${sentence}</strong>
+
+          <div class="btn-row">
+            <button class="btn secondary" type="button" onclick="playShadow(${index},0.84)">Slow model</button>
+            <button class="btn primary" type="button" onclick="playShadow(${index},1)">Natural model</button>
+            <button class="btn secondary" type="button" onclick="playShadow(${index},1.08)">Fast model</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function playShadow(index,rate){
+      speak(shadowSentences[index],rate);
+      markTouched("shadow");
+    }
+
+    function setupRecorder(prefix){
+      const recordBtn = document.getElementById(`${prefix}RecordBtn`);
+      const stopBtn = document.getElementById(`${prefix}StopBtn`);
+      const status = document.getElementById(`${prefix}RecordStatus`);
+      const playback = document.getElementById(`${prefix}Playback`);
+
+      let recorder = null;
+      let blobs = [];
+      let stream = null;
+      let startTime = null;
+
+      recordBtn.addEventListener("click",async()=>{
+        if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+          status.textContent = "Microphone recording is not supported in this browser.";
+          return;
+        }
+
+        try{
+          stream = await navigator.mediaDevices.getUserMedia({audio:true});
+          recorder = new MediaRecorder(stream);
+          blobs = [];
+          startTime = Date.now();
+
+          recorder.ondataavailable = event=>{
+            if(event.data.size > 0) blobs.push(event.data);
+          };
+
+          recorder.onstop = ()=>{
+            const blob = new Blob(blobs,{type:recorder.mimeType || "audio/webm"});
+            playback.src = URL.createObjectURL(blob);
+            playback.style.display = "block";
+
+            const seconds = Math.round((Date.now()-startTime)/1000);
+
+            status.textContent =
+              `Recorded ${seconds} seconds. Listen back for stress contrast and weak grammar words.`;
+
+            if(prefix === "speak") markTouched("speak");
+            if(prefix === "shadow") markTouched("shadow");
+
+            if(stream){
+              stream.getTracks().forEach(track=>track.stop());
+            }
+          };
+
+          recorder.start();
+          recordBtn.disabled = true;
+          stopBtn.disabled = false;
+          status.textContent = "Recording…";
+
+        }catch(error){
+          status.textContent = "Microphone permission was not granted.";
+        }
+      });
+
+      stopBtn.addEventListener("click",()=>{
+        if(recorder && recorder.state !== "inactive"){
+          recorder.stop();
+        }
+
+        recordBtn.disabled = false;
+        stopBtn.disabled = true;
+      });
+    }
+
+    ["rhythm","weak","natural"].forEach(name=>{
+      const range = document.getElementById(`${name}Rate`);
+      const out = document.getElementById(`${name}Out`);
+
+      range.addEventListener("input",()=>{
+        out.value = range.value;
+        markTouched("speak");
+      });
+    });
+
+    function updateResults(){
+      const dictAvg = getAverageDictation();
+
+      document.getElementById("weakResult").textContent =
+        weakScore === null ? "—" : `${weakScore}%`;
+
+      document.getElementById("deepResult").textContent =
+        deepScore === null ? "—" : `${deepScore}%`;
+
+      document.getElementById("dictationResult").textContent =
+        dictAvg === null ? "—" : `${dictAvg}%`;
+
+      if(weakScore !== null && deepScore !== null && dictAvg !== null){
+        const overall = Math.round(
+          weakScore * 0.25 +
+          deepScore * 0.35 +
+          dictAvg * 0.40
+        );
+
+        document.getElementById("overallScore").textContent = overall;
+
+        let interpretation = "";
+
+        if(overall >= 88){
+          interpretation =
+            "Excellent. You are hearing unstressed grammar words without needing full dictionary pronunciation.";
+        }else if(overall >= 75){
+          interpretation =
+            "Strong. Meaning is clear and most weak forms are recoverable, but some still disappear under speed.";
+        }else if(overall >= 60){
+          interpretation =
+            "Developing. Focus on sentence rhythm: hear the stressed words first, then reconstruct the weak words between them.";
+        }else{
+          interpretation =
+            "Weak forms are still a major bottleneck. Repeat the ear-training section and shadow slowly before returning to natural speed.";
+        }
+
+        document.getElementById("scoreInterpretation").textContent = interpretation;
+      }
+    }
+
+    function markTouched(section){
+      touchedSections.add(section);
+      updateSectionProgress();
+    }
+
+    function updateSectionProgress(){
+      const count = touchedSections.size;
+      const percent = Math.round((count/8)*100);
+
+      document.getElementById("topProgress").style.width = `${percent}%`;
+      document.getElementById("sideProgress").style.width = `${percent}%`;
+      document.getElementById("topProgressText").textContent = `${percent}% complete`;
+      document.getElementById("sideProgressText").textContent = `${count}/8 sections touched`;
+    }
+
+    function getCourseProgress(){
+      try{
+        return JSON.parse(localStorage.getItem(COURSE_KEY)) || {
+          completed:[],
+          streak:0,
+          minutes:0,
+          lastDay:null
+        };
+      }catch(e){
+        return {
+          completed:[],
+          streak:0,
+          minutes:0,
+          lastDay:null
+        };
+      }
+    }
+
+    function speakingAverage(){
+      const values = [
+        Number(document.getElementById("rhythmRate").value),
+        Number(document.getElementById("weakRate").value),
+        Number(document.getElementById("naturalRate").value)
+      ];
+
+      return values.reduce((a,b)=>a+b,0)/values.length;
+    }
+
+    function saveDayResult(){
+      const dictAvg = getAverageDictation();
+
+      const overall = (
+        weakScore !== null &&
+        deepScore !== null &&
+        dictAvg !== null
+      )
+        ? Math.round(
+            weakScore * 0.25 +
+            deepScore * 0.35 +
+            dictAvg * 0.40
+          )
+        : null;
+
+      const result = {
+        day:3,
+        weakScore,
+        deepScore,
+        dictationScore:dictAvg,
+        dictationScores:[...dictationScores],
+        speakingSelf:Number(speakingAverage().toFixed(1)),
+        overall,
+        listens:listenCount,
+        savedAt:new Date().toISOString()
+      };
+
+      localStorage.setItem(DAY_KEY,JSON.stringify(result));
+    }
+
+    document.getElementById("completeDayBtn").addEventListener("click",()=>{
+      const progress = getCourseProgress();
+      const alreadyDone = progress.completed.includes(3);
+
+      if(!alreadyDone){
+        progress.completed.push(3);
+        progress.completed.sort((a,b)=>a-b);
+        progress.streak = Math.max(1,Number(progress.streak || 0)+1);
+        progress.minutes = Number(progress.minutes || 0)+90;
+        progress.lastDay = 3;
+
+        localStorage.setItem(COURSE_KEY,JSON.stringify(progress));
+      }
+
+      saveDayResult();
+
+      document.getElementById("doneBanner").classList.add("show");
+      document.getElementById("completeDayBtn").textContent = "✓ Day 03 completed";
+      document.getElementById("completeDayBtn").disabled = true;
+
+      touchedSections = new Set([
+        "listen",
+        "weak",
+        "ear",
+        "deep",
+        "dictation",
+        "decode",
+        "shadow",
+        "speak"
+      ]);
+
+      updateSectionProgress();
+    });
+
+    function loadSavedState(){
+      updateListenUI();
+
+      const progress = getCourseProgress();
+
+      if(progress.completed.includes(3)){
+        document.getElementById("doneBanner").classList.add("show");
+        document.getElementById("completeDayBtn").textContent = "✓ Day 03 completed";
+        document.getElementById("completeDayBtn").disabled = true;
+
+        touchedSections = new Set([
+          "listen",
+          "weak",
+          "ear",
+          "deep",
+          "dictation",
+          "decode",
+          "shadow",
+          "speak"
+        ]);
+
+        updateSectionProgress();
+      }
+
+      try{
+        const saved = JSON.parse(localStorage.getItem(DAY_KEY) || "null");
+
+        if(saved){
+          if(typeof saved.weakScore === "number") weakScore = saved.weakScore;
+          if(typeof saved.deepScore === "number") deepScore = saved.deepScore;
+          if(Array.isArray(saved.dictationScores)) dictationScores = saved.dictationScores;
+        }
+      }catch(e){}
+
+      updateResults();
+    }
+
+    renderWeakQuiz();
+    renderDeepQuestions();
+    renderDictation();
+    renderChunks();
+    renderShadowing();
+    setupRecorder("shadow");
+    setupRecorder("speak");
+    loadSavedState();
+
+    if("speechSynthesis" in window){
+      speechSynthesis.onvoiceschanged = ()=>getUSVoice();
+    }
+  </script>
+</body>
+</html>
