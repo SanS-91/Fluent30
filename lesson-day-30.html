@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fluent30 Day 30 — Final C1 Challenge" />
+  <title>Fluent30 — Day 30 Final C1 Challenge</title>
+
+  <style>
+    :root{
+      --bg:#f5f5f6; --surface:#fff; --surface-2:#fafafa; --text:#111; --muted:#6b7280;
+      --line:#e5e7eb; --red:#8f1027; --red-dark:#6f0b1e; --black:#171717;
+      --green:#166534; --green-bg:#ecfdf3; --amber:#92400e; --amber-bg:#fffbeb;
+      --blue:#1d4ed8; --blue-bg:#eff6ff; --shadow:0 18px 50px rgba(17,24,39,.08);
+      --r-xl:24px; --r-lg:17px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text)
+    }
+
+    button,input,textarea,select{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    .shell{width:min(1160px,calc(100% - 38px));margin:0 auto}
+
+    header{
+      position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);
+      border-bottom:1px solid var(--line);backdrop-filter:blur(14px)
+    }
+
+    .topnav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.04em}
+    .brand-mark{
+      width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
+      background:var(--red);color:#fff;font-size:.88rem
+    }
+    .brand span span{color:var(--red)}
+    .toplinks{display:flex;align-items:center;gap:9px}
+
+    .navbtn{
+      display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;
+      border:1px solid var(--line);border-radius:10px;background:#fff;color:#333;
+      font-size:.88rem;font-weight:700
+    }
+
+    main{padding:34px 0 70px}
+
+    .phase-banner{
+      background:var(--black);color:#fff;border-radius:16px;padding:15px 18px;margin-bottom:18px;
+      display:flex;justify-content:space-between;gap:16px;align-items:center
+    }
+    .phase-banner strong{font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
+    .phase-banner span{color:#c2c6cd;font-size:.82rem}
+
+    .hero{
+      display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.55fr);gap:20px
+    }
+    .hero-main,.hero-side{border-radius:var(--r-xl);box-shadow:var(--shadow)}
+    .hero-main{
+      background:linear-gradient(135deg,#fff 0%,#fbfbfc 72%,#f2f2f3 100%);
+      border:1px solid var(--line);padding:38px
+    }
+    .hero-side{
+      background:var(--black);color:#fff;padding:28px;display:flex;flex-direction:column;justify-content:space-between;gap:20px
+    }
+
+    .eyebrow{
+      color:var(--red);font-weight:850;font-size:.76rem;letter-spacing:.12em;
+      text-transform:uppercase;margin-bottom:12px
+    }
+
+    h1{margin:0;font-size:clamp(2.4rem,5vw,4.8rem);line-height:.96;letter-spacing:-.06em}
+    .hero-copy{max-width:875px;color:var(--muted);line-height:1.65;margin:18px 0 0}
+    .hero-side .muted{color:#b9bec7}
+
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .meta-card{background:#202020;border:1px solid #343434;border-radius:12px;padding:14px}
+    .meta-card strong{display:block;font-size:1.2rem;margin-bottom:2px}
+    .meta-card span{font-size:.78rem;color:#afb4bd}
+
+    .progress-track{height:9px;border-radius:999px;background:#343434;overflow:hidden;margin-top:13px}
+    .progress-fill{height:100%;width:0%;background:#fff;transition:.25s ease}
+
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) 292px;gap:22px;margin-top:24px}
+
+    .lesson-card{
+      background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+      padding:26px;margin-bottom:18px
+    }
+
+    .lesson-card h2{margin:0;font-size:1.42rem;letter-spacing:-.035em}
+    .lesson-card h3{margin:18px 0 8px;font-size:1rem}
+    .lesson-card p{line-height:1.62}
+    .muted{color:var(--muted)}
+
+    .step-head{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px
+    }
+
+    .step-label{
+      color:var(--red);font-size:.74rem;font-weight:850;letter-spacing:.1em;
+      text-transform:uppercase;margin-bottom:6px
+    }
+
+    .time-pill{
+      flex:0 0 auto;padding:6px 9px;background:#f3f4f6;border-radius:999px;
+      color:#5b616c;font-size:.76rem;font-weight:750
+    }
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:43px;
+      padding:0 15px;border-radius:11px;border:1px solid transparent;font-weight:800
+    }
+    .btn.primary{background:var(--red);color:#fff}
+    .btn.secondary{background:#fff;border-color:var(--line);color:#222}
+    .btn:disabled{opacity:.45;cursor:not-allowed}
+    .btn-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+
+    .audio-panel{
+      border:1px solid var(--line);border-radius:14px;background:var(--surface-2);padding:17px
+    }
+    .audio-title{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      margin-bottom:10px;font-weight:800
+    }
+    .listen-counter{font-size:.78rem;color:var(--muted);font-weight:700}
+    .speed-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+    .speed-btn{
+      border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 10px;
+      font-size:.78rem;font-weight:750
+    }
+    .speed-btn.active{border-color:var(--red);color:var(--red);background:#fff5f6}
+
+    .question{padding:17px 0;border-top:1px solid var(--line)}
+    .question:first-of-type{border-top:0;padding-top:4px}
+    .question-title{font-weight:800;line-height:1.5;margin-bottom:10px}
+    .options{display:grid;gap:8px}
+
+    .option{
+      display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid var(--line);
+      border-radius:11px;cursor:pointer;background:#fff
+    }
+    .option input{margin-top:3px}
+
+    .feedback{
+      margin-top:12px;border-radius:11px;padding:11px 13px;
+      font-size:.9rem;line-height:1.5;display:none
+    }
+    .feedback.show{display:block}
+    .feedback.good{background:var(--green-bg);color:var(--green)}
+    .feedback.warn{background:var(--amber-bg);color:var(--amber)}
+    .feedback.info{background:var(--blue-bg);color:var(--blue)}
+
+    textarea,input[type="text"],select{
+      width:100%;border:1px solid #d2d6dc;border-radius:11px;padding:12px 13px;
+      background:#fff;color:#111;outline:none
+    }
+
+    textarea:focus,input[type="text"]:focus,select:focus{
+      border-color:#ba6a7c;box-shadow:0 0 0 3px rgba(143,16,39,.08)
+    }
+
+    textarea{resize:vertical;min-height:105px}
+
+    .challenge-grid,.precision-grid,.synthesis-grid,.reflection-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px
+    }
+
+    .challenge-card,.precision-card,.synthesis-card,.reflection-card{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff
+    }
+
+    .challenge-card strong,.precision-card strong,.synthesis-card strong,.reflection-card strong{
+      display:block;margin-bottom:6px
+    }
+
+    .challenge-card .example,.synthesis-card .example{
+      color:var(--red);font-weight:850;margin-bottom:6px
+    }
+
+    .challenge-card span,.precision-card span,.synthesis-card span,.reflection-card span{
+      font-size:.86rem;color:var(--muted);line-height:1.45
+    }
+
+    .dictation-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;margin-top:12px;background:#fff
+    }
+
+    .dictation-result{
+      margin-top:10px;padding:10px 12px;background:#f8f9fa;border-radius:10px;
+      line-height:1.55;display:none
+    }
+
+    .dictation-result.show{display:block}
+
+    .prompt-box{
+      border-left:4px solid var(--red);background:#fafafa;padding:16px 17px;
+      border-radius:10px;line-height:1.6;margin:12px 0
+    }
+
+    .recorder{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fafafa;margin-top:12px
+    }
+
+    .record-status{font-size:.84rem;color:var(--muted);margin-top:8px}
+    audio{width:100%;margin-top:12px}
+
+    .rating-grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px
+    }
+    .rating{border:1px solid var(--line);border-radius:12px;padding:13px}
+    .rating label{display:block;font-size:.8rem;font-weight:800;margin-bottom:8px}
+    .rating output{font-weight:900;color:var(--red)}
+    input[type="range"]{width:100%}
+
+    .result-card{background:var(--black);color:#fff;border-radius:18px;padding:24px}
+    .result-score{font-size:3.2rem;font-weight:900;letter-spacing:-.05em;line-height:1;margin-top:8px}
+    .result-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:18px}
+    .result-box{
+      background:#202020;border:1px solid #353535;border-radius:12px;padding:13px
+    }
+    .result-box strong{display:block;font-size:1.15rem}
+    .result-box span{color:#b8bdc6;font-size:.76rem}
+
+    .lockbox{
+      border:1px dashed #c8cdd3;border-radius:13px;padding:18px;background:#fafafa;text-align:center
+    }
+
+    .transcript{
+      display:none;margin-top:14px;padding:18px;border-left:4px solid var(--red);
+      border-radius:10px;background:#fafafa;line-height:1.8
+    }
+    .transcript.show{display:block}
+    .speaker{display:inline-block;margin-right:7px;font-weight:900;color:var(--red)}
+
+    .final-badge{
+      display:inline-flex;align-items:center;justify-content:center;
+      background:#fff5f6;color:var(--red);border:1px solid #f1cbd3;
+      border-radius:999px;padding:7px 11px;font-size:.8rem;font-weight:850;margin-bottom:12px
+    }
+
+    .sidebar{position:sticky;top:92px;align-self:start}
+    .side-card{
+      background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:13px
+    }
+    .side-card h3{margin:0 0 10px;font-size:.96rem}
+    .toc{display:grid;gap:5px}
+    .toc a{padding:8px 9px;border-radius:9px;color:#4b5563;font-size:.84rem}
+    .toc a:hover{background:#f4f4f5;color:var(--red)}
+
+    .mini-progress{height:7px;background:#eceef1;border-radius:999px;overflow:hidden;margin-top:10px}
+    .mini-progress > div{height:100%;width:0;background:var(--red);transition:.25s ease}
+
+    .complete-box{
+      text-align:center;padding:34px 24px;border:1px solid var(--line);
+      border-radius:18px;background:#fff
+    }
+    .complete-box h2{font-size:1.9rem;margin:8px 0}
+    .complete-box p{color:var(--muted);max-width:720px;margin:0 auto 18px;line-height:1.65}
+    .done-banner{
+      display:none;background:var(--green-bg);color:var(--green);border:1px solid #ccebd5;
+      border-radius:12px;padding:12px 14px;margin-top:14px;font-weight:750
+    }
+    .done-banner.show{display:block}
+
+    footer{border-top:1px solid var(--line);color:var(--muted);padding:28px 0 40px;font-size:.84rem}
+
+    @media(max-width:980px){
+      .hero,.layout{grid-template-columns:1fr}
+      .sidebar{position:static}
+      .challenge-grid,.precision-grid,.synthesis-grid,.reflection-grid{grid-template-columns:1fr}
+      .result-grid{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media(max-width:720px){
+      .shell{width:min(100% - 26px,1160px)}
+      .hero-main,.hero-side{padding:25px}
+      .lesson-card{padding:20px}
+      .rating-grid,.result-grid{grid-template-columns:1fr}
+      .toplinks .hide-mobile{display:none}
+      .phase-banner{align-items:flex-start;flex-direction:column}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="shell topnav">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">F30</span>
+      <span>Fluent<span>30</span></span>
+    </a>
+
+    <div class="toplinks">
+      <a href="lesson-day-29.html" class="navbtn">← Day 29</a>
+      <a href="index.html" class="navbtn hide-mobile">Roadmap</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="shell">
+
+  <div class="phase-banner">
+    <strong>Final Sprint · C1 Assessment</strong>
+    <span>Day 30 · final integrated challenge · listening · synthesis · speaking · reflection</span>
+  </div>
+
+  <section class="hero">
+    <div class="hero-main">
+      <div class="final-badge">FINAL DAY</div>
+      <div class="eyebrow">Day 30 · Final C1 Challenge</div>
+
+      <h1>Understand.<br>Compress. Respond.</h1>
+
+      <p class="hero-copy">
+        The final challenge tests the full Fluent30 loop with minimal support:
+        <b>listen → retain → distinguish → synthesize → speak.</b>
+        This is a training-based C1-readiness challenge, not an official CEFR examination.
+      </p>
+    </div>
+
+    <aside class="hero-side">
+      <div>
+        <div class="eyebrow" style="color:#e9a6b4">Final target</div>
+        <h2 style="margin:0;font-size:1.55rem">Integrated real-world communication</h2>
+        <p class="muted" style="line-height:1.55">
+          abstract listening · business reasoning · precision · synthesis · 4-minute response
+        </p>
+      </div>
+
+      <div>
+        <div class="meta-grid">
+          <div class="meta-card"><strong>90</strong><span>minutes</span></div>
+          <div class="meta-card"><strong>30/30</strong><span>final challenge</span></div>
+        </div>
+
+        <div class="progress-track"><div class="progress-fill" id="topProgress"></div></div>
+        <div class="muted" id="topProgressText" style="font-size:.82rem;margin-top:6px">0% complete</div>
+      </div>
+    </aside>
+  </section>
+
+  <div class="layout">
+    <div>
+
+      <!-- 1 -->
+      <section class="lesson-card" id="setup">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 1 · Final Setup</div>
+            <h2>Use the skills — not the transcript.</h2>
+          </div>
+          <div class="time-pill">5 min</div>
+        </div>
+
+        <div class="challenge-grid">
+          <div class="challenge-card">
+            <strong>Listening A</strong>
+            <div class="example">Everyday / abstract</div>
+            <span>Interpret how familiarity changes risk perception and judgment.</span>
+          </div>
+
+          <div class="challenge-card">
+            <strong>Listening B</strong>
+            <div class="example">Business / analytical</div>
+            <span>Follow how averages can hide concentration risk and fragile growth.</span>
+          </div>
+
+          <div class="challenge-card">
+            <strong>Integrated synthesis</strong>
+            <div class="example">One principle, two domains</div>
+            <span>Connect the texts without pretending they make the same argument.</span>
+          </div>
+
+          <div class="challenge-card">
+            <strong>Final speaking</strong>
+            <div class="example">4-minute response</div>
+            <span>Accurate summary first, original analysis second.</span>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="markTouched('setup')">Begin final challenge</button>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="lesson-card" id="listening-a">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 2 · Listening A</div>
+            <h2>When familiarity feels like safety</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <p class="muted">
+          Listen for the distinction between <b>familiarity, actual risk and perceived control.</b>
+          Try to answer after no more than two listens.
+        </p>
+
+        <div class="audio-panel">
+          <div class="audio-title">
+            <span>🎧 Listening A · Familiarity and risk perception</span>
+            <span class="listen-counter">Listens: <span id="listenACount">0</span></span>
+          </div>
+
+          <button class="btn primary" id="playABtn" type="button">▶ Play Listening A</button>
+          <button class="btn secondary" id="stopABtn" type="button">■ Stop</button>
+
+          <div class="speed-row">
+            <button class="speed-btn" data-group="a" data-rate="0.92" type="button">0.92×</button>
+            <button class="speed-btn active" data-group="a" data-rate="1.00" type="button">1.00×</button>
+            <button class="speed-btn" data-group="a" data-rate="1.08" type="button">1.08×</button>
+          </div>
+        </div>
+
+        <div id="aQuestions"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeA()">Check Listening A</button>
+          <span class="muted" id="aScoreText"></span>
+        </div>
+
+        <div class="feedback" id="aFeedback"></div>
+      </section>
+
+      <!-- 3 -->
+      <section class="lesson-card" id="listening-b">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 3 · Listening B</div>
+            <h2>Growth can look diversified when it is not</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <p class="muted">
+          This business commentary is deliberately information-dense.
+          Protect the distinction between <b>headline growth, customer concentration and quality of revenue.</b>
+        </p>
+
+        <div class="audio-panel">
+          <div class="audio-title">
+            <span>🎧 Listening B · Concentration risk behind growth</span>
+            <span class="listen-counter">Listens: <span id="listenBCount">0</span></span>
+          </div>
+
+          <button class="btn primary" id="playBBtn" type="button">▶ Play Listening B</button>
+          <button class="btn secondary" id="stopBBtn" type="button">■ Stop</button>
+
+          <div class="speed-row">
+            <button class="speed-btn" data-group="b" data-rate="0.92" type="button">0.92×</button>
+            <button class="speed-btn active" data-group="b" data-rate="1.00" type="button">1.00×</button>
+            <button class="speed-btn" data-group="b" data-rate="1.08" type="button">1.08×</button>
+          </div>
+        </div>
+
+        <div id="bQuestions"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeB()">Check Listening B</button>
+          <span class="muted" id="bScoreText"></span>
+        </div>
+
+        <div class="feedback" id="bFeedback"></div>
+      </section>
+
+      <!-- 4 -->
+      <section class="lesson-card" id="precision">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 4 · Precision Test</div>
+            <h2>Recover the details that could change the conclusion.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="precision-grid" id="precisionGrid"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradePrecision()">Check precision</button>
+          <span class="muted" id="precisionScoreText"></span>
+        </div>
+
+        <div class="feedback" id="precisionFeedback"></div>
+      </section>
+
+      <!-- 5 -->
+      <section class="lesson-card" id="dictation">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 5 · Final Dictation</div>
+            <h2>Capture qualification under load.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div id="dictationList"></div>
+      </section>
+
+      <!-- 6 -->
+      <section class="lesson-card" id="synthesis">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 6 · Cross-text Synthesis</div>
+            <h2>What do these two texts have in common?</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="synthesis-grid" id="synthesisGrid"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeSynthesis()">Check synthesis</button>
+          <span class="muted" id="synthesisScoreText"></span>
+        </div>
+
+        <div class="feedback" id="synthesisFeedback"></div>
+
+        <div class="prompt-box">
+          <strong>Written synthesis · 100–140 words</strong><br>
+          Explain the shared analytical principle behind both texts.
+          Your answer should include <b>one difference between them</b> and avoid vague language such as “both are about risk.”
+        </div>
+
+        <textarea id="synthesisText" placeholder="Both texts examine how a visible or familiar signal can be mistaken for the underlying reality..."></textarea>
+      </section>
+
+      <!-- 7 -->
+      <section class="lesson-card" id="speaking">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 7 · Final Speaking Challenge</div>
+            <h2>4-minute integrated response</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div class="prompt-box">
+          <strong>Final response</strong><br>
+          First summarize both listening texts accurately. Then respond to:
+          <b>Why do people and organizations sometimes confuse an easy-to-observe signal with the underlying reality?</b><br><br>
+          Use:
+          <b>1 example from Listening A, 1 from Listening B, 1 original example, 1 counterpoint, and a qualified conclusion.</b>
+        </div>
+
+        <textarea id="speakingOutline" placeholder="A summary / B summary / common principle / my example / counterpoint / qualified conclusion"></textarea>
+
+        <div class="recorder">
+          <strong>🎙 Record your final response</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="speakRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="speakStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="speakRecordStatus">
+            Target: 3–4 minutes. Source accuracy first; your own view second.
+          </div>
+
+          <audio id="speakPlayback" controls style="display:none"></audio>
+        </div>
+
+        <h3>Self-check</h3>
+
+        <div class="rating-grid">
+          <div class="rating">
+            <label>Source accuracy · <output id="accuracyOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="accuracyRate">
+          </div>
+
+          <div class="rating">
+            <label>Synthesis · <output id="synthOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="synthRate">
+          </div>
+
+          <div class="rating">
+            <label>Argument & qualification · <output id="argumentOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="argumentRate">
+          </div>
+
+          <div class="rating">
+            <label>Natural delivery · <output id="naturalOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="naturalRate">
+          </div>
+        </div>
+      </section>
+
+      <!-- 8 -->
+      <section class="lesson-card" id="report">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 8 · Final Report & Reflection</div>
+            <h2>Your Fluent30 final result</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="result-card">
+          <div class="muted" style="color:#b8bdc6">Objective final-challenge score</div>
+
+          <div class="result-score">
+            <span id="overallScore">—</span><span style="font-size:1.3rem">%</span>
+          </div>
+
+          <div class="muted" id="scoreInterpretation" style="color:#b8bdc6;margin-top:7px">
+            Complete both listening tests, precision, dictation and synthesis.
+          </div>
+
+          <div class="result-grid">
+            <div class="result-box">
+              <strong id="aResult">—</strong>
+              <span>Listening A</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="bResult">—</strong>
+              <span>Listening B</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="precisionResult">—</strong>
+              <span>Precision</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="dictationResult">—</strong>
+              <span>Dictation</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="synthesisResult">—</strong>
+              <span>Synthesis</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reflection-grid">
+          <div class="reflection-card">
+            <strong>What is now easier?</strong>
+            <textarea id="reflectionEasy" placeholder="e.g. natural-speed listening, meeting decisions, long-form summaries..."></textarea>
+          </div>
+
+          <div class="reflection-card">
+            <strong>What still breaks first?</strong>
+            <textarea id="reflectionHard" placeholder="e.g. numbers, long clauses, accents, speaking under pressure..."></textarea>
+          </div>
+
+          <div class="reflection-card">
+            <strong>Next 30-day priority</strong>
+            <textarea id="reflectionNext" placeholder="Choose one measurable priority..."></textarea>
+          </div>
+
+          <div class="reflection-card">
+            <strong>Your strongest C1 behavior</strong>
+            <textarea id="reflectionStrength" placeholder="What skill do you now trust most?"></textarea>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="saveReflection()">Save reflection</button>
+          <span class="muted" id="reflectionStatus"></span>
+        </div>
+
+        <div class="lockbox" id="transcriptLock" style="margin-top:18px">
+          <strong>Final transcripts locked</strong>
+          <p class="muted" style="margin:7px 0 12px">
+            Listen to both texts at least twice before revealing the transcripts.
+          </p>
+          <button class="btn secondary" id="revealBtn" type="button" disabled>Reveal transcripts</button>
+        </div>
+
+        <div class="transcript" id="transcriptBox">
+          <strong>Listening A — When familiarity feels like safety</strong>
+
+          <p>
+            People often use familiarity as a shortcut for safety.
+            A route we have driven a hundred times feels less risky than an unfamiliar one,
+            even when the objective risk may be similar.
+            A financial product we recognize may feel more trustworthy than one we do not,
+            even when recognition tells us very little about its quality.
+          </p>
+
+          <p>
+            This shortcut is understandable.
+            Familiar situations require less mental effort.
+            We know what to expect, we recognize the cues, and we feel more able to predict what happens next.
+            That sense of predictability can easily become a sense of control.
+          </p>
+
+          <p>
+            But perceived control and actual control are not the same thing.
+            On a familiar road, for example, people may pay less attention precisely because the route feels routine.
+            Familiarity can reduce anxiety while also reducing vigilance.
+          </p>
+
+          <p>
+            The reverse can happen with unfamiliar situations.
+            Novelty creates uncertainty, and uncertainty often feels like risk.
+            But sometimes the unfamiliar option is not more dangerous; it simply requires more conscious processing.
+          </p>
+
+          <p>
+            None of this means familiarity is useless information.
+            Experience can absolutely improve judgment.
+            A person who has done a task many times may recognize patterns that a beginner misses.
+            The problem arises when the feeling of familiarity is treated as evidence by itself.
+          </p>
+
+          <p>
+            A useful question is therefore not only, “Does this feel familiar?”
+            but “What information is the familiarity actually giving me?”
+            Sometimes it reflects genuine experience.
+            Sometimes it reflects repetition, branding, routine or simple exposure.
+          </p>
+
+          <p>
+            Good judgment requires separating the comfort of recognition from the evidence relevant to the decision.
+            Familiarity can be informative, but it should not be allowed to quietly substitute for analysis.
+          </p>
+
+          <strong style="display:block;margin-top:24px">Listening B — Growth can look diversified when it is not</strong>
+
+          <p>
+            A company can report healthy top-line growth and still become more fragile underneath.
+            One common reason is customer concentration.
+            If total revenue grows fifteen percent, the headline looks positive.
+            But suppose most of that increase comes from two large customers.
+            The company is growing, yet a larger share of future cash flow now depends on a smaller number of relationships.
+          </p>
+
+          <p>
+            This is why aggregate growth can be misleading.
+            It tells you what happened to the total, but not how the total is distributed.
+            Two businesses with the same revenue growth can have very different risk profiles.
+          </p>
+
+          <p>
+            Consider a company where the largest customer represented twelve percent of revenue last year.
+            This year, after a major expansion, that customer represents twenty-one percent.
+            Revenue is higher, but concentration has increased sharply.
+          </p>
+
+          <p>
+            The quality of that growth also matters.
+            If the large customer has a long contract, strong payment history and high switching costs,
+            the concentration may be manageable.
+            If the revenue is project-based, low-margin or easy to terminate, the same percentage deserves more concern.
+          </p>
+
+          <p>
+            There is also a negotiation effect.
+            As one customer becomes more important to the supplier, the balance of power may change.
+            Renewal pricing, payment terms, service levels and customization requests can all become harder to resist.
+          </p>
+
+          <p>
+            So concentration is not a reason to reject large customers.
+            Large accounts can create scale, references and operating leverage.
+            The point is to avoid letting headline growth hide the dependence being created underneath it.
+          </p>
+
+          <p>
+            A stronger review therefore looks at both growth and distribution:
+            top-customer share, top-five share, contract duration, margin, payment quality and replacement difficulty.
+            Growth answers the question, “How much bigger are we?”
+            Concentration analysis asks, “How many things now have to go right for that growth to remain durable?”
+          </p>
+        </div>
+      </section>
+
+      <section class="complete-box" id="complete">
+        <div class="final-badge">FLUENT30 · DAY 30</div>
+        <h2>Complete the 30-day sprint</h2>
+
+        <p>
+          Save your final result and reflection. The result is a training benchmark for your listening and communication progress;
+          it does not replace an official CEFR assessment.
+        </p>
+
+        <button class="btn primary" id="completeDayBtn" type="button">✓ Complete Fluent30</button>
+        <a href="index.html" class="btn secondary">Return to Roadmap</a>
+
+        <div class="done-banner" id="doneBanner">
+          Day 30 is saved as completed. Fluent30 progress is now 30/30 in this browser.
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="sidebar">
+      <div class="side-card">
+        <h3>Day 30</h3>
+        <div class="muted" style="font-size:.84rem">Final C1 Challenge</div>
+
+        <div class="mini-progress"><div id="sideProgress"></div></div>
+        <div class="muted" id="sideProgressText" style="font-size:.78rem;margin-top:7px">
+          0/8 sections touched
+        </div>
+      </div>
+
+      <div class="side-card">
+        <h3>Jump to</h3>
+        <nav class="toc">
+          <a href="#setup">1. Final Setup</a>
+          <a href="#listening-a">2. Listening A</a>
+          <a href="#listening-b">3. Listening B</a>
+          <a href="#precision">4. Precision</a>
+          <a href="#dictation">5. Dictation</a>
+          <a href="#synthesis">6. Synthesis</a>
+          <a href="#speaking">7. Final Speaking</a>
+          <a href="#report">8. Final Report</a>
+        </nav>
+      </div>
+
+      <div class="side-card">
+        <h3>Final rule</h3>
+        <p class="muted" style="font-size:.84rem;line-height:1.55;margin:0">
+          C1 communication is not “understanding every word.”
+          It is being able to <b>preserve meaning, qualification and structure — then respond clearly.</b>
+        </p>
+      </div>
+    </aside>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="shell">Fluent30 · Day 30 · Final C1 Challenge</div>
+</footer>
+
+<script>
+  const COURSE_KEY = "fluent30-progress-v1";
+  const DAY_KEY = "fluent30-day-30-result";
+
+  const audioA = `People often use familiarity as a shortcut for safety. A route we have driven a hundred times feels less risky than an unfamiliar one, even when the objective risk may be similar. A financial product we recognize may feel more trustworthy than one we do not, even when recognition tells us very little about its quality.
+
+This shortcut is understandable. Familiar situations require less mental effort. We know what to expect, we recognize the cues, and we feel more able to predict what happens next. That sense of predictability can easily become a sense of control.
+
+But perceived control and actual control are not the same thing. On a familiar road, for example, people may pay less attention precisely because the route feels routine. Familiarity can reduce anxiety while also reducing vigilance.
+
+The reverse can happen with unfamiliar situations. Novelty creates uncertainty, and uncertainty often feels like risk. But sometimes the unfamiliar option is not more dangerous; it simply requires more conscious processing.
+
+None of this means familiarity is useless information. Experience can absolutely improve judgment. A person who has done a task many times may recognize patterns that a beginner misses. The problem arises when the feeling of familiarity is treated as evidence by itself.
+
+A useful question is therefore not only, “Does this feel familiar?” but “What information is the familiarity actually giving me?” Sometimes it reflects genuine experience. Sometimes it reflects repetition, branding, routine or simple exposure.
+
+Good judgment requires separating the comfort of recognition from the evidence relevant to the decision. Familiarity can be informative, but it should not be allowed to quietly substitute for analysis.`;
+
+  const audioB = `A company can report healthy top-line growth and still become more fragile underneath. One common reason is customer concentration. If total revenue grows fifteen percent, the headline looks positive. But suppose most of that increase comes from two large customers. The company is growing, yet a larger share of future cash flow now depends on a smaller number of relationships.
+
+This is why aggregate growth can be misleading. It tells you what happened to the total, but not how the total is distributed. Two businesses with the same revenue growth can have very different risk profiles.
+
+Consider a company where the largest customer represented twelve percent of revenue last year. This year, after a major expansion, that customer represents twenty-one percent. Revenue is higher, but concentration has increased sharply.
+
+The quality of that growth also matters. If the large customer has a long contract, strong payment history and high switching costs, the concentration may be manageable. If the revenue is project-based, low-margin or easy to terminate, the same percentage deserves more concern.
+
+There is also a negotiation effect. As one customer becomes more important to the supplier, the balance of power may change. Renewal pricing, payment terms, service levels and customization requests can all become harder to resist.
+
+So concentration is not a reason to reject large customers. Large accounts can create scale, references and operating leverage. The point is to avoid letting headline growth hide the dependence being created underneath it.
+
+A stronger review therefore looks at both growth and distribution: top-customer share, top-five share, contract duration, margin, payment quality and replacement difficulty. Growth answers the question, “How much bigger are we?” Concentration analysis asks, “How many things now have to go right for that growth to remain durable?”`;
+
+  const questionsA = [
+    {
+      q:"Why can familiarity feel like safety?",
+      options:[
+        "It reduces mental effort and increases the sense of predictability and control.",
+        "Familiar situations are always objectively safer.",
+        "People remember all familiar risks accurately."
+      ],
+      answer:0
+    },
+    {
+      q:"What can happen on a familiar road?",
+      options:[
+        "Reduced anxiety may be accompanied by reduced vigilance.",
+        "Objective risk automatically falls.",
+        "Drivers always pay more attention."
+      ],
+      answer:0
+    },
+    {
+      q:"Why can unfamiliar situations feel riskier?",
+      options:[
+        "Novelty creates uncertainty and requires more conscious processing.",
+        "They are always more dangerous.",
+        "People have no ability to evaluate them."
+      ],
+      answer:0
+    },
+    {
+      q:"What important qualification does the speaker make?",
+      options:[
+        "Experience and familiarity can genuinely improve judgment in some situations.",
+        "Familiarity is never useful.",
+        "Only experts should make decisions."
+      ],
+      answer:0
+    },
+    {
+      q:"What is the final recommendation?",
+      options:[
+        "Separate the comfort of recognition from evidence relevant to the decision.",
+        "Avoid familiar options.",
+        "Choose unfamiliar options whenever possible."
+      ],
+      answer:0
+    }
+  ];
+
+  const questionsB = [
+    {
+      q:"Why can 15% revenue growth still represent greater fragility?",
+      options:[
+        "Most of the increase may come from only a few large customers.",
+        "Growth always reduces margins.",
+        "Revenue growth is not measurable."
+      ],
+      answer:0
+    },
+    {
+      q:"What happened to the largest customer's share in the example?",
+      options:[
+        "It increased from 12% to 21%.",
+        "It fell from 21% to 12%.",
+        "It stayed at 15%."
+      ],
+      answer:0
+    },
+    {
+      q:"When might a high customer concentration be more manageable?",
+      options:[
+        "When the contract is long, payment quality is strong and switching costs are high.",
+        "When the revenue is easy to terminate.",
+        "When the margin is very low."
+      ],
+      answer:0
+    },
+    {
+      q:"What negotiation effect can concentration create?",
+      options:[
+        "The customer may gain more leverage over pricing, terms and service demands.",
+        "The supplier always gains more power.",
+        "Contract terms become irrelevant."
+      ],
+      answer:0
+    },
+    {
+      q:"Does the speaker argue that companies should avoid large customers?",
+      options:[
+        "No. Large customers can create valuable scale and references.",
+        "Yes. Large customers should always be rejected.",
+        "Only if revenue is growing."
+      ],
+      answer:0
+    },
+    {
+      q:"What does concentration analysis add to a growth analysis?",
+      options:[
+        "It shows how dependent durable growth is on a limited set of relationships.",
+        "It replaces all revenue analysis.",
+        "It measures only historical size."
+      ],
+      answer:0
+    }
+  ];
+
+  const precisionItems = [
+    {label:"Listening A · familiar route", target:"100 times", aliases:["100 times","a hundred times","hundred times","100"]},
+    {label:"Listening B · total revenue growth", target:"15%", aliases:["15%","fifteen percent","15 percent"]},
+    {label:"Listening B · number of large customers driving most growth", target:"2", aliases:["2","two"]},
+    {label:"Listening B · largest customer last year", target:"12%", aliases:["12%","twelve percent","12 percent"]},
+    {label:"Listening B · largest customer this year", target:"21%", aliases:["21%","twenty-one percent","twenty one percent","21 percent"]}
+  ];
+
+  const dictationItems = [
+    "Perceived control and actual control are not the same thing.",
+    "Familiarity can be informative, but it should not be allowed to quietly substitute for analysis.",
+    "Aggregate growth can be misleading because it tells you what happened to the total, but not how the total is distributed.",
+    "The point is to avoid letting headline growth hide the dependence being created underneath it."
+  ];
+
+  const synthesisItems = [
+    {
+      q:"What is the strongest shared principle?",
+      options:[
+        "An easy-to-observe or emotionally comfortable signal can hide the underlying structure relevant to the decision.",
+        "All familiar signals are wrong.",
+        "All growth is risky."
+      ],
+      answer:0
+    },
+    {
+      q:"How are the two texts different?",
+      options:[
+        "A examines individual perception; B examines business concentration and revenue quality.",
+        "They analyze the same type of financial decision.",
+        "Both focus mainly on memory."
+      ],
+      answer:0
+    },
+    {
+      q:"Which statement would overstate both texts?",
+      options:[
+        "Simple signals should never be used.",
+        "Simple signals need context before they can support a strong conclusion.",
+        "Additional evidence can change interpretation."
+      ],
+      answer:0
+    },
+    {
+      q:"What analytical habit fits both texts?",
+      options:[
+        "Ask what the visible signal leaves out.",
+        "Trust the first impression if it is familiar.",
+        "Ignore aggregate information entirely."
+      ],
+      answer:0
+    }
+  ];
+
+  let rateA = 1.00;
+  let rateB = 1.00;
+  let listenACount = Number(localStorage.getItem("fluent30-day30-listens-a") || 0);
+  let listenBCount = Number(localStorage.getItem("fluent30-day30-listens-b") || 0);
+
+  let aScore = null;
+  let bScore = null;
+  let precisionScore = null;
+  let dictationScores = [null,null,null,null];
+  let synthesisScore = null;
+  let touched = new Set();
+
+  function getVoices(){
+    if(!("speechSynthesis" in window)) return [];
+    return speechSynthesis.getVoices();
+  }
+
+  function getVoice(){
+    const voices = getVoices();
+    const us = voices.filter(v => /en-US/i.test(v.lang));
+    const en = voices.filter(v => /^en/i.test(v.lang));
+
+    const preferred = [
+      /Google US English/i,
+      /Samantha/i,
+      /Jenny/i,
+      /Aria/i,
+      /Joanna/i,
+      /Ava/i
+    ];
+
+    for(const pattern of preferred){
+      const match = us.find(v => pattern.test(v.name)) || en.find(v => pattern.test(v.name));
+      if(match) return match;
+    }
+
+    return us[0] || en[0] || null;
+  }
+
+  function speak(text,rate=1,onEnd=null){
+    if(!("speechSynthesis" in window)){
+      alert("Speech synthesis is not supported in this browser.");
+      return;
+    }
+
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US";
+    u.rate = rate;
+    u.pitch = 1.0;
+
+    const v = getVoice();
+    if(v) u.voice = v;
+    if(onEnd) u.onend = onEnd;
+
+    speechSynthesis.speak(u);
+  }
+
+  function stopSpeech(){
+    if("speechSynthesis" in window) speechSynthesis.cancel();
+  }
+
+  document.getElementById("playABtn").addEventListener("click",()=>{
+    listenACount++;
+    localStorage.setItem("fluent30-day30-listens-a",String(listenACount));
+    updateListenUI();
+    markTouched("a");
+    stopSpeech();
+    speak(audioA,rateA);
+  });
+
+  document.getElementById("stopABtn").addEventListener("click",stopSpeech);
+
+  document.getElementById("playBBtn").addEventListener("click",()=>{
+    listenBCount++;
+    localStorage.setItem("fluent30-day30-listens-b",String(listenBCount));
+    updateListenUI();
+    markTouched("b");
+    stopSpeech();
+    speak(audioB,rateB);
+  });
+
+  document.getElementById("stopBBtn").addEventListener("click",stopSpeech);
+
+  document.querySelectorAll(".speed-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const group = btn.dataset.group;
+      const rate = Number(btn.dataset.rate);
+
+      if(group === "a") rateA = rate;
+      if(group === "b") rateB = rate;
+
+      document.querySelectorAll(`.speed-btn[data-group="${group}"]`).forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+
+  function updateListenUI(){
+    document.getElementById("listenACount").textContent = listenACount;
+    document.getElementById("listenBCount").textContent = listenBCount;
+
+    document.getElementById("revealBtn").disabled =
+      !(listenACount >= 2 && listenBCount >= 2);
+
+    if(listenACount >= 2 && listenBCount >= 2){
+      const lock = document.getElementById("transcriptLock");
+      lock.querySelector("strong").textContent = "Final transcripts ready";
+      lock.querySelector("p").textContent =
+        "You have completed at least two listens of both texts. Reveal after finishing the test sections.";
+    }
+  }
+
+  document.getElementById("revealBtn").addEventListener("click",()=>{
+    document.getElementById("transcriptBox").classList.add("show");
+    document.getElementById("transcriptLock").style.display = "none";
+    markTouched("report");
+  });
+
+  function renderQuestions(items,containerId,prefix){
+    const container = document.getElementById(containerId);
+
+    container.innerHTML = items.map((item,index)=>`
+      <div class="question">
+        <div class="question-title">${index+1}. ${item.q}</div>
+        <div class="options">
+          ${item.options.map((option,optIndex)=>`
+            <label class="option">
+              <input type="radio" name="${prefix}${index}" value="${optIndex}">
+              <span>${option}</span>
+            </label>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function gradeGeneric(items,prefix){
+    let correct = 0;
+    let answered = 0;
+
+    items.forEach((item,index)=>{
+      const selected = document.querySelector(`input[name="${prefix}${index}"]:checked`);
+      if(selected){
+        answered++;
+        if(Number(selected.value) === item.answer) correct++;
+      }
+    });
+
+    return {correct,answered,score:Math.round((correct/items.length)*100)};
+  }
+
+  function gradeA(){
+    const result = gradeGeneric(questionsA,"a");
+    const box = document.getElementById("aFeedback");
+    box.className = "feedback show";
+
+    if(result.answered < questionsA.length){
+      box.classList.add("warn");
+      box.textContent = `You answered ${result.answered}/${questionsA.length}. Complete all questions first.`;
+      return;
+    }
+
+    aScore = result.score;
+    document.getElementById("aScoreText").textContent =
+      `${result.correct}/${questionsA.length} correct · ${aScore}%`;
+
+    box.classList.add(aScore >= 80 ? "good" : "info");
+    box.textContent = aScore >= 80
+      ? "Strong abstract listening: you preserved both the mechanism and the qualification."
+      : "Review the distinction between familiarity, perceived control and actual evidence.";
+
+    markTouched("a");
+    updateResults();
+  }
+
+  function gradeB(){
+    const result = gradeGeneric(questionsB,"b");
+    const box = document.getElementById("bFeedback");
+    box.className = "feedback show";
+
+    if(result.answered < questionsB.length){
+      box.classList.add("warn");
+      box.textContent = `You answered ${result.answered}/${questionsB.length}. Complete all questions first.`;
+      return;
+    }
+
+    bScore = result.score;
+    document.getElementById("bScoreText").textContent =
+      `${result.correct}/${questionsB.length} correct · ${bScore}%`;
+
+    box.classList.add(bScore >= 84 ? "good" : "info");
+    box.textContent = bScore >= 84
+      ? "Strong business listening: you separated headline growth from concentration and revenue quality."
+      : "Review the distinction between total growth, concentration and durability.";
+
+    markTouched("b");
+    updateResults();
+  }
+
+  function normalizeSimple(text){
+    return text
+      .toLowerCase()
+      .replace(/[’‘]/g,"'")
+      .replace(/[^a-z0-9%+\-\s]/g,"")
+      .replace(/\s+/g," ")
+      .trim();
+  }
+
+  function renderPrecision(){
+    const container = document.getElementById("precisionGrid");
+
+    container.innerHTML = precisionItems.map((item,index)=>`
+      <div class="precision-card">
+        <strong>${index+1}. ${item.label}</strong>
+        <span>Enter the exact detail.</span>
+        <input type="text" id="precisionInput${index}" style="margin-top:10px" placeholder="Your answer">
+      </div>
+    `).join("");
+  }
+
+  function gradePrecision(){
+    let correct = 0;
+    let answered = 0;
+
+    precisionItems.forEach((item,index)=>{
+      const value = normalizeSimple(document.getElementById(`precisionInput${index}`).value);
+
+      if(value){
+        answered++;
+        if(item.aliases.some(alias=>normalizeSimple(alias) === value)) correct++;
+      }
+    });
+
+    const box = document.getElementById("precisionFeedback");
+    box.className = "feedback show";
+
+    if(answered < precisionItems.length){
+      box.classList.add("warn");
+      box.textContent = `You completed ${answered}/${precisionItems.length}. Finish all five first.`;
+      return;
+    }
+
+    precisionScore = Math.round((correct/precisionItems.length)*100);
+
+    document.getElementById("precisionScoreText").textContent =
+      `${correct}/${precisionItems.length} correct · ${precisionScore}%`;
+
+    box.classList.add(precisionScore >= 80 ? "good" : "info");
+    box.textContent = precisionScore >= 80
+      ? "Strong final precision."
+      : "The main ideas may be secure, but some high-risk details are still dropping.";
+
+    markTouched("precision");
+    updateResults();
+  }
+
+  function renderDictation(){
+    const container = document.getElementById("dictationList");
+
+    container.innerHTML = dictationItems.map((sentence,index)=>`
+      <div class="dictation-item">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+          <strong>Sentence ${index+1}</strong>
+          <button class="btn secondary" type="button" onclick="playDictation(${index})">▶ Play</button>
+        </div>
+
+        <input
+          type="text"
+          id="dictInput${index}"
+          style="margin-top:12px"
+          placeholder="Type exactly what you hear"
+          autocomplete="off"
+        >
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="checkDictation(${index})">Check</button>
+        </div>
+
+        <div class="dictation-result" id="dictResult${index}"></div>
+      </div>
+    `).join("");
+  }
+
+  function playDictation(index){
+    stopSpeech();
+    speak(dictationItems[index],1.00);
+    markTouched("dictation");
+  }
+
+  function normalize(text){
+    return text
+      .toLowerCase()
+      .replace(/[’‘]/g,"'")
+      .replace(/[^a-z0-9'\s-]/g,"")
+      .replace(/\s+/g," ")
+      .trim();
+  }
+
+  function wordSimilarity(userText,targetText){
+    const a = normalize(userText).split(" ").filter(Boolean);
+    const b = normalize(targetText).split(" ").filter(Boolean);
+
+    const dp = Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));
+
+    for(let i=1;i<=a.length;i++){
+      for(let j=1;j<=b.length;j++){
+        if(a[i-1] === b[j-1]){
+          dp[i][j] = dp[i-1][j-1] + 1;
+        }else{
+          dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+        }
+      }
+    }
+
+    return b.length ? Math.round((dp[a.length][b.length]/b.length)*100) : 0;
+  }
+
+  function checkDictation(index){
+    const input = document.getElementById(`dictInput${index}`);
+    const result = document.getElementById(`dictResult${index}`);
+
+    if(!input.value.trim()){
+      result.className = "dictation-result show";
+      result.textContent = "Type what you hear first.";
+      return;
+    }
+
+    const score = wordSimilarity(input.value,dictationItems[index]);
+    dictationScores[index] = score;
+
+    result.className = "dictation-result show";
+    result.innerHTML = `
+      <div><strong>${score}% match</strong></div>
+      <div style="margin-top:6px"><span class="muted">Target:</span> ${dictationItems[index]}</div>
+    `;
+
+    markTouched("dictation");
+    updateResults();
+  }
+
+  function dictationAverage(){
+    if(dictationScores.some(v=>typeof v !== "number")) return null;
+    return Math.round(dictationScores.reduce((a,b)=>a+b,0)/dictationScores.length);
+  }
+
+  function renderSynthesis(){
+    const container = document.getElementById("synthesisGrid");
+
+    container.innerHTML = synthesisItems.map((item,index)=>`
+      <div class="synthesis-card">
+        <strong>${index+1}. ${item.q}</strong>
+        <select id="synthesisSelect${index}" style="margin-top:8px">
+          <option value="">Choose...</option>
+          ${item.options.map((option,optIndex)=>`
+            <option value="${optIndex}">${option}</option>
+          `).join("")}
+        </select>
+      </div>
+    `).join("");
+  }
+
+  function gradeSynthesis(){
+    let correct = 0;
+    let answered = 0;
+
+    synthesisItems.forEach((item,index)=>{
+      const value = document.getElementById(`synthesisSelect${index}`).value;
+
+      if(value !== ""){
+        answered++;
+        if(Number(value) === item.answer) correct++;
+      }
+    });
+
+    const box = document.getElementById("synthesisFeedback");
+    box.className = "feedback show";
+
+    if(answered < synthesisItems.length){
+      box.classList.add("warn");
+      box.textContent = `You completed ${answered}/${synthesisItems.length}. Finish all four first.`;
+      return;
+    }
+
+    synthesisScore = Math.round((correct/synthesisItems.length)*100);
+
+    document.getElementById("synthesisScoreText").textContent =
+      `${correct}/${synthesisItems.length} correct · ${synthesisScore}%`;
+
+    box.classList.add(synthesisScore >= 75 ? "good" : "info");
+    box.textContent = synthesisScore >= 75
+      ? "Strong cross-text synthesis. You found the shared analytical habit without flattening the differences."
+      : "Ask what visible signal each text warns against over-interpreting.";
+
+    markTouched("synthesis");
+    updateResults();
+  }
+
+  function setupRecorder(){
+    const recordBtn = document.getElementById("speakRecordBtn");
+    const stopBtn = document.getElementById("speakStopBtn");
+    const status = document.getElementById("speakRecordStatus");
+    const playback = document.getElementById("speakPlayback");
+
+    let recorder = null;
+    let blobs = [];
+    let stream = null;
+    let startTime = null;
+
+    recordBtn.addEventListener("click",async()=>{
+      if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+        status.textContent = "Microphone recording is not supported in this browser.";
+        return;
+      }
+
+      try{
+        stream = await navigator.mediaDevices.getUserMedia({audio:true});
+        recorder = new MediaRecorder(stream);
+        blobs = [];
+        startTime = Date.now();
+
+        recorder.ondataavailable = e=>{
+          if(e.data.size > 0) blobs.push(e.data);
+        };
+
+        recorder.onstop = ()=>{
+          const blob = new Blob(blobs,{type:recorder.mimeType || "audio/webm"});
+          playback.src = URL.createObjectURL(blob);
+          playback.style.display = "block";
+
+          const seconds = Math.round((Date.now()-startTime)/1000);
+          status.textContent =
+            `Recorded ${seconds} seconds. Review whether the source summaries remained separate from your own argument.`;
+
+          if(stream) stream.getTracks().forEach(track=>track.stop());
+          markTouched("speaking");
+        };
+
+        recorder.start();
+        recordBtn.disabled = true;
+        stopBtn.disabled = false;
+        status.textContent = "Recording…";
+      }catch(e){
+        status.textContent = "Microphone permission was not granted.";
+      }
+    });
+
+    stopBtn.addEventListener("click",()=>{
+      if(recorder && recorder.state !== "inactive") recorder.stop();
+      recordBtn.disabled = false;
+      stopBtn.disabled = true;
+    });
+  }
+
+  ["accuracy","synth","argument","natural"].forEach(name=>{
+    const range = document.getElementById(`${name}Rate`);
+    const out = document.getElementById(`${name}Out`);
+
+    range.addEventListener("input",()=>{
+      out.value = range.value;
+      markTouched("speaking");
+    });
+  });
+
+  function speakingAverage(){
+    const values = [
+      Number(document.getElementById("accuracyRate").value),
+      Number(document.getElementById("synthRate").value),
+      Number(document.getElementById("argumentRate").value),
+      Number(document.getElementById("naturalRate").value)
+    ];
+
+    return values.reduce((a,b)=>a+b,0)/values.length;
+  }
+
+  function overallObjective(){
+    const d = dictationAverage();
+
+    if([aScore,bScore,precisionScore,d,synthesisScore].some(v=>v===null)) return null;
+
+    return Math.round(
+      aScore * 0.25 +
+      bScore * 0.25 +
+      precisionScore * 0.15 +
+      d * 0.15 +
+      synthesisScore * 0.20
+    );
+  }
+
+  function updateResults(){
+    const d = dictationAverage();
+    const overall = overallObjective();
+
+    document.getElementById("aResult").textContent =
+      aScore === null ? "—" : `${aScore}%`;
+
+    document.getElementById("bResult").textContent =
+      bScore === null ? "—" : `${bScore}%`;
+
+    document.getElementById("precisionResult").textContent =
+      precisionScore === null ? "—" : `${precisionScore}%`;
+
+    document.getElementById("dictationResult").textContent =
+      d === null ? "—" : `${d}%`;
+
+    document.getElementById("synthesisResult").textContent =
+      synthesisScore === null ? "—" : `${synthesisScore}%`;
+
+    if(overall !== null){
+      document.getElementById("overallScore").textContent = overall;
+
+      let text = "";
+
+      if(overall >= 88){
+        text =
+          "Very strong final Fluent30 performance. You are showing stable C1-style listening behaviors across abstract, analytical and synthesis tasks.";
+      }else if(overall >= 78){
+        text =
+          "Strong final performance. Your core listening and synthesis skills are stable, with a smaller number of precision gaps still worth training.";
+      }else if(overall >= 65){
+        text =
+          "Developing C1 readiness. Main meaning is generally secure, but detail, qualification or synthesis still drops under combined load.";
+      }else{
+        text =
+          "The final challenge exposed meaningful instability. Use the lowest-scoring section to define your next training cycle.";
+      }
+
+      document.getElementById("scoreInterpretation").textContent = text;
+    }
+  }
+
+  function saveReflection(){
+    const data = {
+      easier:document.getElementById("reflectionEasy").value,
+      harder:document.getElementById("reflectionHard").value,
+      next:document.getElementById("reflectionNext").value,
+      strength:document.getElementById("reflectionStrength").value
+    };
+
+    localStorage.setItem("fluent30-day30-reflection",JSON.stringify(data));
+    document.getElementById("reflectionStatus").textContent = "Reflection saved.";
+    markTouched("report");
+  }
+
+  function markTouched(section){
+    touched.add(section);
+    updateProgress();
+  }
+
+  function updateProgress(){
+    const count = touched.size;
+    const percent = Math.round((count/8)*100);
+
+    document.getElementById("topProgress").style.width = `${percent}%`;
+    document.getElementById("sideProgress").style.width = `${percent}%`;
+    document.getElementById("topProgressText").textContent = `${percent}% complete`;
+    document.getElementById("sideProgressText").textContent = `${count}/8 sections touched`;
+  }
+
+  function getCourseProgress(){
+    try{
+      return JSON.parse(localStorage.getItem(COURSE_KEY)) || {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }catch(e){
+      return {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }
+  }
+
+  function saveDayResult(){
+    const result = {
+      day:30,
+      listeningA:aScore,
+      listeningB:bScore,
+      precisionScore,
+      dictationScore:dictationAverage(),
+      dictationScores:[...dictationScores],
+      synthesisScore,
+      speakingSelf:Number(speakingAverage().toFixed(1)),
+      synthesisText:document.getElementById("synthesisText").value,
+      overall:overallObjective(),
+      listensA:listenACount,
+      listensB:listenBCount,
+      savedAt:new Date().toISOString()
+    };
+
+    localStorage.setItem(DAY_KEY,JSON.stringify(result));
+  }
+
+  document.getElementById("completeDayBtn").addEventListener("click",()=>{
+    const progress = getCourseProgress();
+    const alreadyDone = progress.completed.includes(30);
+
+    if(!alreadyDone){
+      progress.completed.push(30);
+      progress.completed.sort((a,b)=>a-b);
+      progress.streak = Math.max(1,Number(progress.streak || 0)+1);
+      progress.minutes = Number(progress.minutes || 0)+90;
+      progress.lastDay = 30;
+      localStorage.setItem(COURSE_KEY,JSON.stringify(progress));
+    }
+
+    saveDayResult();
+    saveReflection();
+
+    document.getElementById("doneBanner").classList.add("show");
+    document.getElementById("completeDayBtn").textContent = "✓ Fluent30 completed";
+    document.getElementById("completeDayBtn").disabled = true;
+
+    touched = new Set([
+      "setup","a","b","precision","dictation","synthesis","speaking","report"
+    ]);
+
+    updateProgress();
+  });
+
+  function loadSavedState(){
+    updateListenUI();
+
+    const progress = getCourseProgress();
+
+    if(progress.completed.includes(30)){
+      document.getElementById("doneBanner").classList.add("show");
+      document.getElementById("completeDayBtn").textContent = "✓ Fluent30 completed";
+      document.getElementById("completeDayBtn").disabled = true;
+
+      touched = new Set([
+        "setup","a","b","precision","dictation","synthesis","speaking","report"
+      ]);
+
+      updateProgress();
+    }
+
+    try{
+      const reflection = JSON.parse(localStorage.getItem("fluent30-day30-reflection") || "null");
+
+      if(reflection){
+        document.getElementById("reflectionEasy").value = reflection.easier || "";
+        document.getElementById("reflectionHard").value = reflection.harder || "";
+        document.getElementById("reflectionNext").value = reflection.next || "";
+        document.getElementById("reflectionStrength").value = reflection.strength || "";
+      }
+
+      const saved = JSON.parse(localStorage.getItem(DAY_KEY) || "null");
+
+      if(saved){
+        if(typeof saved.listeningA === "number") aScore = saved.listeningA;
+        if(typeof saved.listeningB === "number") bScore = saved.listeningB;
+        if(typeof saved.precisionScore === "number") precisionScore = saved.precisionScore;
+        if(Array.isArray(saved.dictationScores)) dictationScores = saved.dictationScores;
+        if(typeof saved.synthesisScore === "number") synthesisScore = saved.synthesisScore;
+        if(typeof saved.synthesisText === "string") {
+          document.getElementById("synthesisText").value = saved.synthesisText;
+        }
+      }
+    }catch(e){}
+
+    updateResults();
+  }
+
+  renderQuestions(questionsA,"aQuestions","a");
+  renderQuestions(questionsB,"bQuestions","b");
+  renderPrecision();
+  renderDictation();
+  renderSynthesis();
+  setupRecorder();
+  loadSavedState();
+
+  if("speechSynthesis" in window){
+    speechSynthesis.onvoiceschanged = ()=>getVoice();
+  }
+</script>
+</body>
+</html>
