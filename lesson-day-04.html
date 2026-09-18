@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fluent30 Day 04 — Linking & Reductions" />
+  <title>Fluent30 — Day 04 Linking & Reductions</title>
+
+  <style>
+    :root{
+      --bg:#f5f5f6; --surface:#fff; --surface-2:#fafafa; --text:#111; --muted:#6b7280;
+      --line:#e5e7eb; --red:#8f1027; --red-dark:#6f0b1e; --black:#171717;
+      --green:#166534; --green-bg:#ecfdf3; --amber:#92400e; --amber-bg:#fffbeb;
+      --blue:#1d4ed8; --blue-bg:#eff6ff; --shadow:0 18px 50px rgba(17,24,39,.08);
+      --r-xl:24px; --r-lg:17px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text);
+    }
+    button,input,textarea{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    .shell{width:min(1160px,calc(100% - 38px));margin:0 auto}
+
+    header{
+      position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);
+      border-bottom:1px solid var(--line);backdrop-filter:blur(14px)
+    }
+    .topnav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.04em}
+    .brand-mark{
+      width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
+      background:var(--red);color:#fff;font-size:.88rem
+    }
+    .brand span span{color:var(--red)}
+    .toplinks{display:flex;align-items:center;gap:9px}
+    .navbtn{
+      display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;
+      border:1px solid var(--line);border-radius:10px;background:#fff;color:#333;
+      font-size:.88rem;font-weight:700
+    }
+    .navbtn:hover{border-color:#c8ccd2}
+
+    main{padding:34px 0 70px}
+    .hero{
+      display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.55fr);gap:20px
+    }
+    .hero-main,.hero-side{border-radius:var(--r-xl);box-shadow:var(--shadow)}
+    .hero-main{
+      background:linear-gradient(135deg,#fff 0%,#fbfbfc 72%,#f2f2f3 100%);
+      border:1px solid var(--line);padding:38px
+    }
+    .eyebrow{
+      color:var(--red);font-weight:850;font-size:.76rem;letter-spacing:.12em;
+      text-transform:uppercase;margin-bottom:12px
+    }
+    h1{margin:0;font-size:clamp(2.4rem,5vw,4.8rem);line-height:.96;letter-spacing:-.06em}
+    .hero-copy{max-width:790px;color:var(--muted);line-height:1.65;margin:18px 0 0}
+    .hero-side{
+      background:var(--black);color:#fff;padding:28px;display:flex;
+      flex-direction:column;justify-content:space-between;gap:20px
+    }
+    .hero-side .muted{color:#b9bec7}
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .meta-card{background:#202020;border:1px solid #343434;border-radius:12px;padding:14px}
+    .meta-card strong{display:block;font-size:1.2rem;margin-bottom:2px}
+    .meta-card span{font-size:.78rem;color:#afb4bd}
+    .progress-track{height:9px;border-radius:999px;background:#343434;overflow:hidden;margin-top:13px}
+    .progress-fill{height:100%;width:0%;background:#fff;transition:.25s ease}
+
+    .layout{
+      display:grid;grid-template-columns:minmax(0,1fr) 292px;gap:22px;margin-top:24px
+    }
+    .lesson-card{
+      background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+      padding:26px;margin-bottom:18px
+    }
+    .lesson-card h2{margin:0;font-size:1.42rem;letter-spacing:-.035em}
+    .lesson-card h3{margin:18px 0 8px;font-size:1rem}
+    .lesson-card p{line-height:1.62}
+    .muted{color:var(--muted)}
+    .step-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px}
+    .step-label{
+      color:var(--red);font-size:.74rem;font-weight:850;letter-spacing:.1em;
+      text-transform:uppercase;margin-bottom:6px
+    }
+    .time-pill{
+      flex:0 0 auto;padding:6px 9px;background:#f3f4f6;border-radius:999px;
+      color:#5b616c;font-size:.76rem;font-weight:750
+    }
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:43px;
+      padding:0 15px;border-radius:11px;border:1px solid transparent;font-weight:800;transition:.18s ease
+    }
+    .btn.primary{background:var(--red);color:#fff}
+    .btn.primary:hover{background:var(--red-dark);transform:translateY(-1px)}
+    .btn.secondary{background:#fff;border-color:var(--line);color:#222}
+    .btn.secondary:hover{border-color:#c9cdd3}
+    .btn:disabled{opacity:.45;cursor:not-allowed}
+    .btn-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+
+    .audio-panel{
+      border:1px solid var(--line);border-radius:14px;background:var(--surface-2);padding:17px
+    }
+    .audio-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;font-weight:800}
+    .listen-counter{font-size:.78rem;color:var(--muted);font-weight:700}
+    .speed-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+    .speed-btn{
+      border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 10px;
+      font-size:.78rem;font-weight:750
+    }
+    .speed-btn.active{border-color:var(--red);color:var(--red);background:#fff5f6}
+
+    .question{padding:17px 0;border-top:1px solid var(--line)}
+    .question:first-of-type{border-top:0;padding-top:4px}
+    .question-title{font-weight:800;line-height:1.5;margin-bottom:10px}
+    .options{display:grid;gap:8px}
+    .option{
+      display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid var(--line);
+      border-radius:11px;cursor:pointer;background:#fff
+    }
+    .option:hover{border-color:#c9cdd3}
+    .option input{margin-top:3px}
+    .feedback{
+      margin-top:12px;border-radius:11px;padding:11px 13px;font-size:.9rem;line-height:1.5;display:none
+    }
+    .feedback.show{display:block}
+    .feedback.good{background:var(--green-bg);color:var(--green)}
+    .feedback.warn{background:var(--amber-bg);color:var(--amber)}
+    .feedback.info{background:var(--blue-bg);color:var(--blue)}
+
+    textarea,input[type="text"]{
+      width:100%;border:1px solid #d2d6dc;border-radius:11px;padding:12px 13px;
+      background:#fff;color:#111;outline:none
+    }
+    textarea:focus,input[type="text"]:focus{
+      border-color:#ba6a7c;box-shadow:0 0 0 3px rgba(143,16,39,.08)
+    }
+    textarea{resize:vertical;min-height:100px}
+
+    .pattern-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px
+    }
+    .pattern-card{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff
+    }
+    .pattern-card strong{display:block;margin-bottom:6px}
+    .pattern-card .example{color:var(--red);font-weight:850;margin-bottom:6px}
+    .pattern-card span{font-size:.86rem;color:var(--muted);line-height:1.45}
+
+    .transform-list{
+      margin-top:14px;border:1px solid var(--line);border-radius:13px;overflow:hidden
+    }
+    .transform-row{
+      display:grid;grid-template-columns:1.25fr 1fr 1.5fr;gap:12px;
+      padding:12px 14px;border-top:1px solid var(--line);align-items:center
+    }
+    .transform-row:first-child{border-top:0;background:#fafafa;font-weight:800;font-size:.82rem}
+    .transform-row span{font-size:.86rem}
+    .spoken{color:var(--red);font-weight:850}
+
+    .dictation-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;margin-top:12px;background:#fff
+    }
+    .dictation-result{
+      margin-top:10px;padding:10px 12px;background:#f8f9fa;border-radius:10px;
+      line-height:1.55;display:none
+    }
+    .dictation-result.show{display:block}
+    .miss{color:#b91c1c;text-decoration:underline;text-decoration-style:wavy}
+
+    .lockbox{
+      border:1px dashed #c8cdd3;border-radius:13px;padding:18px;background:#fafafa;text-align:center
+    }
+    .transcript{
+      display:none;margin-top:14px;padding:18px;border-left:4px solid var(--red);
+      border-radius:10px;background:#fafafa;line-height:1.8
+    }
+    .transcript.show{display:block}
+    .decode-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+    .decode-card{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff}
+    .decode-card strong{display:block;margin-bottom:5px}
+    .decode-card span{font-size:.88rem;color:var(--muted);line-height:1.45}
+
+    .chunk{
+      display:grid;grid-template-columns:1.2fr 1.8fr auto;gap:12px;align-items:center;
+      border-top:1px solid var(--line);padding:13px 0
+    }
+    .chunk:first-of-type{border-top:0}
+    .chunk strong{font-size:.92rem}
+    .chunk span{font-size:.86rem;color:var(--muted);line-height:1.45}
+    .save-chunk{
+      border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 9px;
+      font-size:.76rem;font-weight:750
+    }
+    .save-chunk.saved{background:var(--green-bg);color:var(--green);border-color:#ccebd5}
+
+    .recorder{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fafafa;margin-top:12px
+    }
+    .record-status{font-size:.84rem;color:var(--muted);margin-top:8px}
+    audio{width:100%;margin-top:12px}
+
+    .prompt-box{
+      border-left:4px solid var(--red);background:#fafafa;padding:16px 17px;
+      border-radius:10px;line-height:1.6;margin:12px 0
+    }
+    .rating-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+    .rating{border:1px solid var(--line);border-radius:12px;padding:13px}
+    .rating label{display:block;font-size:.8rem;font-weight:800;margin-bottom:8px}
+    .rating output{font-weight:900;color:var(--red)}
+    input[type="range"]{width:100%}
+
+    .result-card{background:var(--black);color:#fff;border-radius:18px;padding:24px}
+    .result-score{font-size:3.2rem;font-weight:900;letter-spacing:-.05em;line-height:1;margin-top:8px}
+    .result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+    .result-box{background:#202020;border:1px solid #353535;border-radius:12px;padding:13px}
+    .result-box strong{display:block;font-size:1.2rem}
+    .result-box span{color:#b8bdc6;font-size:.78rem}
+
+    .sidebar{position:sticky;top:92px;align-self:start}
+    .side-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:13px}
+    .side-card h3{margin:0 0 10px;font-size:.96rem}
+    .toc{display:grid;gap:5px}
+    .toc a{padding:8px 9px;border-radius:9px;color:#4b5563;font-size:.84rem}
+    .toc a:hover{background:#f4f4f5;color:var(--red)}
+    .mini-progress{height:7px;background:#eceef1;border-radius:999px;overflow:hidden;margin-top:10px}
+    .mini-progress > div{height:100%;width:0;background:var(--red);transition:.25s ease}
+
+    .complete-box{
+      text-align:center;padding:30px 24px;border:1px solid var(--line);
+      border-radius:18px;background:#fff
+    }
+    .complete-box h2{font-size:1.7rem;margin-bottom:8px}
+    .complete-box p{color:var(--muted);max-width:620px;margin:0 auto 18px;line-height:1.6}
+    .done-banner{
+      display:none;background:var(--green-bg);color:var(--green);border:1px solid #ccebd5;
+      border-radius:12px;padding:12px 14px;margin-top:14px;font-weight:750
+    }
+    .done-banner.show{display:block}
+
+    footer{border-top:1px solid var(--line);color:var(--muted);padding:28px 0 40px;font-size:.84rem}
+
+    @media(max-width:980px){
+      .hero,.layout{grid-template-columns:1fr}
+      .sidebar{position:static}
+      .decode-grid,.pattern-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:720px){
+      .shell{width:min(100% - 26px,1160px)}
+      .hero-main,.hero-side{padding:25px}
+      .lesson-card{padding:20px}
+      .chunk,.transform-row{grid-template-columns:1fr}
+      .rating-grid,.result-grid{grid-template-columns:1fr}
+      .toplinks .hide-mobile{display:none}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="shell topnav">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">F30</span>
+      <span>Fluent<span>30</span></span>
+    </a>
+    <div class="toplinks">
+      <a href="lesson-day-03.html" class="navbtn">← Day 03</a>
+      <a href="index.html" class="navbtn hide-mobile">Roadmap</a>
+      <a href="lesson-day-05.html" class="navbtn">Day 05 →</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="shell">
+
+  <section class="hero">
+    <div class="hero-main">
+      <div class="eyebrow">Day 04 · Linking & Reductions</div>
+      <h1>Hear the sentence<br>as one stream.</h1>
+      <p class="hero-copy">
+        Native speech does not arrive as neatly separated words. Sounds link across word boundaries,
+        consonants change before neighboring sounds, and frequent phrases compress into faster forms.
+        Today you train your ear to follow those transformations without losing meaning.
+      </p>
+    </div>
+
+    <aside class="hero-side">
+      <div>
+        <div class="eyebrow" style="color:#e9a6b4">Today's target</div>
+        <h2 style="margin:0;font-size:1.55rem">Follow sound changes in real time</h2>
+        <p class="muted" style="line-height:1.55">
+          Linking · assimilation · elision · wanna · gotta · hafta · didja
+        </p>
+      </div>
+      <div>
+        <div class="meta-grid">
+          <div class="meta-card"><strong>90</strong><span>minutes</span></div>
+          <div class="meta-card"><strong>8</strong><span>core tasks</span></div>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="topProgress"></div></div>
+        <div class="muted" id="topProgressText" style="font-size:.82rem;margin-top:6px">0% complete</div>
+      </div>
+    </aside>
+  </section>
+
+  <div class="layout">
+    <div>
+
+      <section class="lesson-card" id="first-listen">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 1 · First Listen</div>
+            <h2>Follow the stream, not the spelling.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <p class="muted">
+          Listen to Sam and Priya talking after work. Focus on the plan they are making and the reason it changes.
+        </p>
+
+        <div class="audio-panel">
+          <div class="audio-title">
+            <span>🎧 Conversation: Sam & Priya</span>
+            <span class="listen-counter">Listens: <span id="listenCount">0</span></span>
+          </div>
+
+          <button class="btn primary" id="playMainBtn" type="button">▶ Play full conversation</button>
+          <button class="btn secondary" id="stopMainBtn" type="button">■ Stop</button>
+
+          <div class="speed-row">
+            <button class="speed-btn" data-rate="0.9" type="button">0.9×</button>
+            <button class="speed-btn active" data-rate="1" type="button">1.0×</button>
+            <button class="speed-btn" data-rate="1.08" type="button">1.08×</button>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="question-title">What are Sam and Priya trying to decide?</div>
+          <div class="options">
+            <label class="option"><input type="radio" name="q1" value="a"><span>Whether to meet the client tonight.</span></label>
+            <label class="option"><input type="radio" name="q1" value="b"><span>Whether to go for dinner now or later after finishing some work.</span></label>
+            <label class="option"><input type="radio" name="q1" value="c"><span>Whether to cancel dinner completely.</span></label>
+          </div>
+
+          <button class="btn secondary" style="margin-top:12px" onclick="checkFirstQuestion()" type="button">Check answer</button>
+          <div class="feedback" id="q1Feedback"></div>
+        </div>
+      </section>
+
+      <section class="lesson-card" id="patterns">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 2 · Linking Patterns</div>
+            <h2>Learn the sound changes first.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div class="pattern-grid">
+          <div class="pattern-card">
+            <strong>Consonant → vowel linking</strong>
+            <div class="example">pick_it_up</div>
+            <span>The final consonant attaches to the next vowel, so word boundaries become less obvious.</span>
+          </div>
+
+          <div class="pattern-card">
+            <strong>Consonant → consonant simplification</strong>
+            <div class="example">next_day → nex day</div>
+            <span>One consonant may weaken or disappear when two similar consonants meet.</span>
+          </div>
+
+          <div class="pattern-card">
+            <strong>Assimilation</strong>
+            <div class="example">did you → didja</div>
+            <span>/d/ + /j/ can blend into a /dʒ/ sound in fast speech.</span>
+          </div>
+
+          <div class="pattern-card">
+            <strong>Frequent reductions</strong>
+            <div class="example">want to → wanna</div>
+            <span>High-frequency phrases compress because listeners process them as familiar chunks.</span>
+          </div>
+        </div>
+
+        <div class="transform-list">
+          <div class="transform-row">
+            <span>Written</span><span>Fast speech</span><span>What changes</span>
+          </div>
+          <div class="transform-row"><span>did you</span><span class="spoken">didja</span><span>/d/ + /j/ blend together</span></div>
+          <div class="transform-row"><span>want to</span><span class="spoken">wanna</span><span>frequent reduction</span></div>
+          <div class="transform-row"><span>got to</span><span class="spoken">gotta</span><span>/t/ becomes a faster flap-like sound</span></div>
+          <div class="transform-row"><span>have to</span><span class="spoken">hafta</span><span>/v/ devoices before /t/</span></div>
+          <div class="transform-row"><span>pick it up</span><span class="spoken">pick-it-up</span><span>final consonant links into the next vowel</span></div>
+          <div class="transform-row"><span>last night</span><span class="spoken">las night</span><span>/t/ may disappear before /n/</span></div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="playTransformDrill()">▶ Play transformation drill</button>
+        </div>
+      </section>
+
+      <section class="lesson-card" id="recognition">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 3 · Recognition Drill</div>
+            <h2>Which written form did you hear?</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div id="recognitionQuiz"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeRecognition()">Check recognition quiz</button>
+          <span class="muted" id="recognitionScoreText"></span>
+        </div>
+
+        <div class="feedback" id="recognitionFeedback"></div>
+      </section>
+
+      <section class="lesson-card" id="deep-listen">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 4 · Deep Listen</div>
+            <h2>Now follow meaning and detail.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div id="deepQuestions"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeDeepQuiz()">Check 5 answers</button>
+          <span class="muted" id="deepScoreText"></span>
+        </div>
+
+        <div class="feedback" id="deepFeedback"></div>
+      </section>
+
+      <section class="lesson-card" id="dictation">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 5 · Dictation</div>
+            <h2>Recover the words behind the compressed sound.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div id="dictationList"></div>
+      </section>
+
+      <section class="lesson-card" id="decode">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 6 · Decode</div>
+            <h2>Reveal the full conversation.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="lockbox" id="transcriptLock">
+          <strong>Transcript locked</strong>
+          <p class="muted" style="margin:7px 0 12px">Complete at least two full listens before revealing the transcript.</p>
+          <button class="btn secondary" id="revealBtn" type="button" disabled>Reveal transcript</button>
+        </div>
+
+        <div class="transcript" id="transcriptBox">
+          <strong>Transcript — Sam & Priya</strong>
+
+          <p><b>Sam:</b> Did you want to grab something to eat now, or are you gonna stay and finish the report?</p>
+          <p><b>Priya:</b> I was gonna finish it first, but I think I've got another hour at least.</p>
+          <p><b>Sam:</b> Then why don't we just go now? We've gotta eat at some point.</p>
+          <p><b>Priya:</b> True. I just have to send one email before we leave.</p>
+          <p><b>Sam:</b> That's fine. I'll pick up my stuff and meet you downstairs.</p>
+          <p><b>Priya:</b> Actually, can we make it fifteen minutes? I need to call Ben back too.</p>
+          <p><b>Sam:</b> Sure. Do you wanna go to that Thai place we tried last month?</p>
+          <p><b>Priya:</b> Yeah, that works. I didn't get a chance to eat there properly last time.</p>
+          <p><b>Sam:</b> Perfect. I'll book a table while you're wrapping up.</p>
+        </div>
+
+        <div class="decode-grid">
+          <div class="decode-card">
+            <strong>“Did you want to…” → “Didja wanna…”</strong>
+            <span>Assimilation plus reduction can transform a perfectly familiar phrase into a very different sound.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“going to” → “gonna”</strong>
+            <span>A common conversational reduction. Recognize it instantly as a chunk.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“we've got to” → “we've gotta”</strong>
+            <span>The phrase compresses because “got to” is highly predictable in context.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“have to” → “hafta”</strong>
+            <span>The /v/ changes before /t/, producing a faster /f/ sound.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“pick up” → “pick-up”</strong>
+            <span>The final consonant of “pick” flows directly into the vowel of “up”.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“didn't get” → “didn' get”</strong>
+            <span>/t/ may disappear before another consonant in fast speech.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="lesson-card" id="shadowing">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 7 · Shadowing & Chunks</div>
+            <h2>Copy the transformations.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div id="chunkList"></div>
+
+        <h3>Shadowing lines</h3>
+        <div id="shadowList"></div>
+
+        <div class="recorder">
+          <strong>🎙 Record your shadowing</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="shadowRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="shadowStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="shadowRecordStatus">
+            Aim for smooth transitions between words instead of exaggerated reductions.
+          </div>
+
+          <audio id="shadowPlayback" controls style="display:none"></audio>
+        </div>
+      </section>
+
+      <section class="lesson-card" id="speak-back">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 8 · Speak Back</div>
+            <h2>Use linking in your own response.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="prompt-box">
+          <strong>60–90 second response</strong><br>
+          You are Priya. Send Sam a quick voice message after dinner.
+          Thank him, mention what you still have to finish tonight, and suggest when you want to continue the report tomorrow.
+        </div>
+
+        <textarea id="speakOutline" placeholder="Optional keywords only: dinner / report / email / tomorrow / morning"></textarea>
+
+        <div class="recorder">
+          <strong>🎙 Record your response</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="speakRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="speakStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="speakRecordStatus">
+            Try using: gonna / have to / want to / pick it up / wrap up.
+          </div>
+
+          <audio id="speakPlayback" controls style="display:none"></audio>
+        </div>
+
+        <h3>Self-check</h3>
+
+        <div class="rating-grid">
+          <div class="rating">
+            <label>Linking · <output id="linkingOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="linkingRate">
+          </div>
+
+          <div class="rating">
+            <label>Reduction control · <output id="reductionOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="reductionRate">
+          </div>
+
+          <div class="rating">
+            <label>Natural flow · <output id="naturalOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="naturalRate">
+          </div>
+        </div>
+      </section>
+
+      <section class="lesson-card" id="result">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Day 04 Result</div>
+            <h2>Your linking & reductions score</h2>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <div class="muted" style="color:#b8bdc6">Recognition + listening + dictation</div>
+
+          <div class="result-score">
+            <span id="overallScore">—</span><span style="font-size:1.3rem">%</span>
+          </div>
+
+          <div class="muted" id="scoreInterpretation" style="color:#b8bdc6;margin-top:7px">
+            Complete the recognition quiz, deep listening and dictation to calculate your score.
+          </div>
+
+          <div class="result-grid">
+            <div class="result-box">
+              <strong id="recognitionResult">—</strong>
+              <span>Sound recognition</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="deepResult">—</strong>
+              <span>Deep listening</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="dictationResult">—</strong>
+              <span>Dictation</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="complete-box" id="complete">
+        <h2>Complete Day 04</h2>
+
+        <p>
+          Save today's result and continue to Day 05: Numbers, Dates & Names.
+          Your Week 1 roadmap progress will update automatically.
+        </p>
+
+        <button class="btn primary" id="completeDayBtn" type="button">✓ Mark Day 04 complete</button>
+        <a href="lesson-day-05.html" class="btn secondary">Go to Day 05 →</a>
+
+        <div class="done-banner" id="doneBanner">
+          Day 04 is saved as completed in this browser.
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="sidebar">
+      <div class="side-card">
+        <h3>Day 04</h3>
+        <div class="muted" style="font-size:.84rem">Linking & Reductions</div>
+
+        <div class="mini-progress"><div id="sideProgress"></div></div>
+
+        <div class="muted" id="sideProgressText" style="font-size:.78rem;margin-top:7px">
+          0/8 sections touched
+        </div>
+      </div>
+
+      <div class="side-card">
+        <h3>Jump to</h3>
+        <nav class="toc">
+          <a href="#first-listen">1. First Listen</a>
+          <a href="#patterns">2. Linking Patterns</a>
+          <a href="#recognition">3. Recognition</a>
+          <a href="#deep-listen">4. Deep Listen</a>
+          <a href="#dictation">5. Dictation</a>
+          <a href="#decode">6. Decode</a>
+          <a href="#shadowing">7. Shadowing</a>
+          <a href="#speak-back">8. Speak Back</a>
+          <a href="#result">Result</a>
+        </nav>
+      </div>
+
+      <div class="side-card">
+        <h3>Rule for today</h3>
+        <p class="muted" style="font-size:.84rem;line-height:1.55;margin:0">
+          Don't memorize “slang spellings.” Train your ear to recognize the sound change while still understanding the standard phrase underneath.
+        </p>
+      </div>
+    </aside>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="shell">Fluent30 · Day 04 · Linking & Reductions</div>
+</footer>
+
+<script>
+  const COURSE_KEY = "fluent30-progress-v1";
+  const DAY_KEY = "fluent30-day-04-result";
+
+  const mainScript = `Sam: Did you want to grab something to eat now, or are you gonna stay and finish the report?
+
+Priya: I was gonna finish it first, but I think I've got another hour at least.
+
+Sam: Then why don't we just go now? We've gotta eat at some point.
+
+Priya: True. I just have to send one email before we leave.
+
+Sam: That's fine. I'll pick up my stuff and meet you downstairs.
+
+Priya: Actually, can we make it fifteen minutes? I need to call Ben back too.
+
+Sam: Sure. Do you wanna go to that Thai place we tried last month?
+
+Priya: Yeah, that works. I didn't get a chance to eat there properly last time.
+
+Sam: Perfect. I'll book a table while you're wrapping up.`;
+
+  const transformDrill = [
+    "Did you want to come?",
+    "I want to leave now.",
+    "We've got to finish this.",
+    "I have to call him back.",
+    "Can you pick it up?",
+    "I saw him last night."
+  ];
+
+  const recognitionQuestions = [
+    {
+      spoken:"Didja wanna come with us?",
+      options:["Did you want to come with us?","Do you want us to come?","Did he want to come with us?"],
+      answer:0
+    },
+    {
+      spoken:"We've gotta leave in ten.",
+      options:["We've got ten minutes left.","We've got to leave in ten.","We got there at ten."],
+      answer:1
+    },
+    {
+      spoken:"I hafta call Ben back.",
+      options:["I have to call Ben back.","I have called Ben back.","I had to call Ben back."],
+      answer:0
+    },
+    {
+      spoken:"Can you pick it up?",
+      options:["Can you pick it up?","Can you pick me up?","Can you put it up?"],
+      answer:0
+    }
+  ];
+
+  const deepQuestions = [
+    {
+      q:"Why doesn't Priya want to leave immediately at first?",
+      options:["She is waiting for Ben.","She wants to finish the report first.","She has already ordered food."],
+      answer:1
+    },
+    {
+      q:"What does Priya need to do before leaving?",
+      options:["Send one email.","Finish the entire report.","Call the client."],
+      answer:0
+    },
+    {
+      q:"How much extra time does Priya ask for?",
+      options:["Ten minutes","Fifteen minutes","Thirty minutes"],
+      answer:1
+    },
+    {
+      q:"Where do they decide to go?",
+      options:["A Thai restaurant","A café","An Italian restaurant"],
+      answer:0
+    },
+    {
+      q:"What does Sam plan to do while Priya finishes up?",
+      options:["Call Ben","Book a table","Finish the report"],
+      answer:1
+    }
+  ];
+
+  const dictationItems = [
+    "Did you want to grab something to eat now?",
+    "We've got to eat at some point.",
+    "I just have to send one email before we leave.",
+    "I'll pick up my stuff and meet you downstairs."
+  ];
+
+  const chunks = [
+    ["grab something to eat","have a quick informal meal","Do you want to grab something to eat?"],
+    ["at some point","at an unspecified time","We've got to eat at some point."],
+    ["pick up my stuff","collect my belongings","I'll pick up my stuff and meet you downstairs."],
+    ["call someone back","return a phone call","I need to call Ben back too."],
+    ["get a chance to","have an opportunity to","I didn't get a chance to eat there properly."],
+    ["wrap up","finish what you are doing","I'll book a table while you're wrapping up."]
+  ];
+
+  const shadowSentences = [
+    "Did you want to grab something to eat now?",
+    "We've got to eat at some point.",
+    "I just have to send one email before we leave.",
+    "Do you want to go to that Thai place?",
+    "I'll book a table while you're wrapping up."
+  ];
+
+  let speechRate = 1;
+  let listenCount = Number(localStorage.getItem("fluent30-day04-listens") || 0);
+  let recognitionScore = null;
+  let deepScore = null;
+  let dictationScores = [null,null,null,null];
+  let touchedSections = new Set();
+
+  function getUSVoice(){
+    if(!("speechSynthesis" in window)) return null;
+    const voices = speechSynthesis.getVoices();
+
+    return (
+      voices.find(v => /en-US/i.test(v.lang) && /Google|Samantha|Jenny|Aria|Guy|Joanna|Matthew/i.test(v.name)) ||
+      voices.find(v => /en-US/i.test(v.lang)) ||
+      voices.find(v => /^en/i.test(v.lang)) ||
+      null
+    );
+  }
+
+  function speak(text, rate=1, onEnd=null){
+    if(!("speechSynthesis" in window)){
+      alert("Speech synthesis is not supported in this browser.");
+      return;
+    }
+
+    speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    utterance.rate = rate;
+    utterance.pitch = 1;
+
+    const voice = getUSVoice();
+    if(voice) utterance.voice = voice;
+    if(onEnd) utterance.onend = onEnd;
+
+    speechSynthesis.speak(utterance);
+  }
+
+  document.getElementById("playMainBtn").addEventListener("click",()=>{
+    listenCount += 1;
+    localStorage.setItem("fluent30-day04-listens",String(listenCount));
+    updateListenUI();
+    markTouched("listen");
+    speak(mainScript,speechRate);
+  });
+
+  document.getElementById("stopMainBtn").addEventListener("click",()=>{
+    if("speechSynthesis" in window) speechSynthesis.cancel();
+  });
+
+  document.querySelectorAll(".speed-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      speechRate = Number(btn.dataset.rate);
+      document.querySelectorAll(".speed-btn").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+
+  function updateListenUI(){
+    document.getElementById("listenCount").textContent = listenCount;
+    document.getElementById("revealBtn").disabled = listenCount < 2;
+
+    if(listenCount >= 2){
+      const lock = document.getElementById("transcriptLock");
+      lock.querySelector("strong").textContent = "Transcript ready";
+      lock.querySelector("p").textContent =
+        "You have completed at least two listens. Now compare the compressed sounds with the written forms.";
+    }
+  }
+
+  document.getElementById("revealBtn").addEventListener("click",()=>{
+    document.getElementById("transcriptBox").classList.add("show");
+    document.getElementById("transcriptLock").style.display = "none";
+    markTouched("decode");
+  });
+
+  function checkFirstQuestion(){
+    const chosen = document.querySelector('input[name="q1"]:checked');
+    const box = document.getElementById("q1Feedback");
+    box.className = "feedback show";
+
+    if(!chosen){
+      box.classList.add("warn");
+      box.textContent = "Choose one answer first.";
+      return;
+    }
+
+    if(chosen.value === "b"){
+      box.classList.add("good");
+      box.textContent = "Correct. They are deciding whether to leave for dinner now or after Priya finishes a little more work.";
+    }else{
+      box.classList.add("warn");
+      box.textContent = "Not quite. Listen for the decision they keep negotiating throughout the conversation.";
+    }
+
+    markTouched("listen");
+  }
+
+  function playTransformDrill(){
+    markTouched("patterns");
+    let i = 0;
+
+    const next = ()=>{
+      if(i >= transformDrill.length) return;
+
+      speak(transformDrill[i],0.95,()=>{
+        i++;
+        setTimeout(next,250);
+      });
+    };
+
+    next();
+  }
+
+  function renderRecognition(){
+    const container = document.getElementById("recognitionQuiz");
+
+    container.innerHTML = recognitionQuestions.map((item,index)=>`
+      <div class="question">
+        <div class="question-title">${index+1}. Listen and choose the standard written form.</div>
+
+        <div class="btn-row" style="margin-top:0;margin-bottom:10px">
+          <button class="btn secondary" type="button" onclick="playRecognition(${index})">▶ Play</button>
+        </div>
+
+        <div class="options">
+          ${item.options.map((option,optIndex)=>`
+            <label class="option">
+              <input type="radio" name="recognition${index}" value="${optIndex}">
+              <span>${option}</span>
+            </label>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function playRecognition(index){
+    speak(recognitionQuestions[index].spoken,1);
+    markTouched("recognition");
+  }
+
+  function gradeRecognition(){
+    let correct = 0;
+    let answered = 0;
+
+    recognitionQuestions.forEach((item,index)=>{
+      const selected = document.querySelector(`input[name="recognition${index}"]:checked`);
+
+      if(selected){
+        answered++;
+        if(Number(selected.value) === item.answer) correct++;
+      }
+    });
+
+    const feedback = document.getElementById("recognitionFeedback");
+    feedback.className = "feedback show";
+
+    if(answered < recognitionQuestions.length){
+      feedback.classList.add("warn");
+      feedback.textContent = `You answered ${answered}/${recognitionQuestions.length}. Complete all questions first.`;
+      return;
+    }
+
+    recognitionScore = Math.round((correct/recognitionQuestions.length)*100);
+    document.getElementById("recognitionScoreText").textContent =
+      `${correct}/${recognitionQuestions.length} correct · ${recognitionScore}%`;
+
+    if(recognitionScore >= 75){
+      feedback.classList.add("good");
+      feedback.textContent = "Good recognition. You are starting to map compressed sounds back to their standard forms quickly.";
+    }else{
+      feedback.classList.add("warn");
+      feedback.textContent = "Repeat the transformation drill and focus on the whole phrase rather than individual consonants.";
+    }
+
+    markTouched("recognition");
+    updateResults();
+  }
+
+  function renderDeepQuestions(){
+    const container = document.getElementById("deepQuestions");
+
+    container.innerHTML = deepQuestions.map((item,index)=>`
+      <div class="question">
+        <div class="question-title">${index+1}. ${item.q}</div>
+
+        <div class="options">
+          ${item.options.map((option,optIndex)=>`
+            <label class="option">
+              <input type="radio" name="deep${index}" value="${optIndex}">
+              <span>${option}</span>
+            </label>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function gradeDeepQuiz(){
+    let correct = 0;
+    let answered = 0;
+
+    deepQuestions.forEach((item,index)=>{
+      const selected = document.querySelector(`input[name="deep${index}"]:checked`);
+
+      if(selected){
+        answered++;
+        if(Number(selected.value) === item.answer) correct++;
+      }
+    });
+
+    const feedback = document.getElementById("deepFeedback");
+    feedback.className = "feedback show";
+
+    if(answered < deepQuestions.length){
+      feedback.classList.add("warn");
+      feedback.textContent = `You answered ${answered}/${deepQuestions.length}. Complete all questions first.`;
+      return;
+    }
+
+    deepScore = Math.round((correct/deepQuestions.length)*100);
+    document.getElementById("deepScoreText").textContent =
+      `${correct}/${deepQuestions.length} correct · ${deepScore}%`;
+
+    if(deepScore >= 80){
+      feedback.classList.add("good");
+      feedback.textContent = "Strong comprehension. Now focus on hearing the exact form underneath the reductions.";
+    }else if(deepScore >= 60){
+      feedback.classList.add("info");
+      feedback.textContent = "You have the main meaning, but some detail is still getting lost when the sounds compress.";
+    }else{
+      feedback.classList.add("warn");
+      feedback.textContent = "Replay at 0.9× and identify the reduced chunks before trying natural speed again.";
+    }
+
+    markTouched("deep");
+    updateResults();
+  }
+
+  function renderDictation(){
+    const container = document.getElementById("dictationList");
+
+    container.innerHTML = dictationItems.map((sentence,index)=>`
+      <div class="dictation-item">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+          <strong>Sentence ${index+1}</strong>
+          <button class="btn secondary" type="button" onclick="speakDictation(${index})">▶ Play</button>
+        </div>
+
+        <input
+          type="text"
+          id="dictInput${index}"
+          style="margin-top:12px"
+          placeholder="Type exactly what you hear"
+          autocomplete="off"
+        >
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="checkDictation(${index})">Check</button>
+        </div>
+
+        <div class="dictation-result" id="dictResult${index}"></div>
+      </div>
+    `).join("");
+  }
+
+  function speakDictation(index){
+    speak(dictationItems[index],1);
+    markTouched("dictation");
+  }
+
+  function normalize(text){
+    return text
+      .toLowerCase()
+      .replace(/[’‘]/g,"'")
+      .replace(/[^a-z0-9'\s-]/g,"")
+      .replace(/\s+/g," ")
+      .trim();
+  }
+
+  function wordSimilarity(userText,targetText){
+    const a = normalize(userText).split(" ").filter(Boolean);
+    const b = normalize(targetText).split(" ").filter(Boolean);
+
+    const dp = Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));
+
+    for(let i=1;i<=a.length;i++){
+      for(let j=1;j<=b.length;j++){
+        if(a[i-1] === b[j-1]){
+          dp[i][j] = dp[i-1][j-1] + 1;
+        }else{
+          dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+        }
+      }
+    }
+
+    return b.length ? Math.round((dp[a.length][b.length]/b.length)*100) : 0;
+  }
+
+  function checkDictation(index){
+    const input = document.getElementById(`dictInput${index}`);
+    const result = document.getElementById(`dictResult${index}`);
+
+    if(!input.value.trim()){
+      result.className = "dictation-result show";
+      result.innerHTML = `<span class="miss">Type what you hear first.</span>`;
+      return;
+    }
+
+    const score = wordSimilarity(input.value,dictationItems[index]);
+    dictationScores[index] = score;
+
+    const label =
+      score >= 90 ? "Excellent" :
+      score >= 75 ? "Good" :
+      score >= 60 ? "Developing" :
+      "Needs work";
+
+    result.className = "dictation-result show";
+    result.innerHTML = `
+      <div><strong>${label} · ${score}% match</strong></div>
+      <div style="margin-top:6px"><span class="muted">Target:</span> ${dictationItems[index]}</div>
+    `;
+
+    markTouched("dictation");
+    updateResults();
+  }
+
+  function getAverageDictation(){
+    const scored = dictationScores.filter(v => typeof v === "number");
+    if(scored.length !== dictationScores.length) return null;
+
+    return Math.round(scored.reduce((a,b)=>a+b,0)/scored.length);
+  }
+
+  function renderChunks(){
+    const saved = JSON.parse(localStorage.getItem("fluent30-saved-chunks") || "[]");
+    const container = document.getElementById("chunkList");
+
+    container.innerHTML = chunks.map((chunk,index)=>{
+      const isSaved = saved.includes(chunk[0]);
+
+      return `
+        <div class="chunk">
+          <div>
+            <strong>${chunk[0]}</strong>
+            <div style="margin-top:5px;font-size:.82rem;color:#8b8f96">“${chunk[2]}”</div>
+          </div>
+
+          <span>${chunk[1]}</span>
+
+          <button
+            class="save-chunk ${isSaved ? "saved" : ""}"
+            type="button"
+            onclick="toggleChunk(${index},this)"
+          >${isSaved ? "Saved ✓" : "Save"}</button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function toggleChunk(index,button){
+    let saved = JSON.parse(localStorage.getItem("fluent30-saved-chunks") || "[]");
+    const phrase = chunks[index][0];
+
+    if(saved.includes(phrase)){
+      saved = saved.filter(x => x !== phrase);
+      button.classList.remove("saved");
+      button.textContent = "Save";
+    }else{
+      saved.push(phrase);
+      button.classList.add("saved");
+      button.textContent = "Saved ✓";
+    }
+
+    localStorage.setItem("fluent30-saved-chunks",JSON.stringify(saved));
+    markTouched("shadow");
+  }
+
+  function renderShadowing(){
+    const container = document.getElementById("shadowList");
+
+    container.innerHTML = shadowSentences.map((sentence,index)=>`
+      <div class="dictation-item">
+        <strong>${index+1}. ${sentence}</strong>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="playShadow(${index},0.84)">Slow model</button>
+          <button class="btn primary" type="button" onclick="playShadow(${index},1)">Natural model</button>
+          <button class="btn secondary" type="button" onclick="playShadow(${index},1.08)">Fast model</button>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function playShadow(index,rate){
+    speak(shadowSentences[index],rate);
+    markTouched("shadow");
+  }
+
+  function setupRecorder(prefix){
+    const recordBtn = document.getElementById(`${prefix}RecordBtn`);
+    const stopBtn = document.getElementById(`${prefix}StopBtn`);
+    const status = document.getElementById(`${prefix}RecordStatus`);
+    const playback = document.getElementById(`${prefix}Playback`);
+
+    let recorder = null;
+    let blobs = [];
+    let stream = null;
+    let startTime = null;
+
+    recordBtn.addEventListener("click",async()=>{
+      if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+        status.textContent = "Microphone recording is not supported in this browser.";
+        return;
+      }
+
+      try{
+        stream = await navigator.mediaDevices.getUserMedia({audio:true});
+        recorder = new MediaRecorder(stream);
+        blobs = [];
+        startTime = Date.now();
+
+        recorder.ondataavailable = event=>{
+          if(event.data.size > 0) blobs.push(event.data);
+        };
+
+        recorder.onstop = ()=>{
+          const blob = new Blob(blobs,{type:recorder.mimeType || "audio/webm"});
+          playback.src = URL.createObjectURL(blob);
+          playback.style.display = "block";
+
+          const seconds = Math.round((Date.now()-startTime)/1000);
+
+          status.textContent =
+            `Recorded ${seconds} seconds. Listen for smooth links and natural compression.`;
+
+          if(prefix === "speak") markTouched("speak");
+          if(prefix === "shadow") markTouched("shadow");
+
+          if(stream) stream.getTracks().forEach(track=>track.stop());
+        };
+
+        recorder.start();
+        recordBtn.disabled = true;
+        stopBtn.disabled = false;
+        status.textContent = "Recording…";
+
+      }catch(error){
+        status.textContent = "Microphone permission was not granted.";
+      }
+    });
+
+    stopBtn.addEventListener("click",()=>{
+      if(recorder && recorder.state !== "inactive"){
+        recorder.stop();
+      }
+
+      recordBtn.disabled = false;
+      stopBtn.disabled = true;
+    });
+  }
+
+  ["linking","reduction","natural"].forEach(name=>{
+    const range = document.getElementById(`${name}Rate`);
+    const out = document.getElementById(`${name}Out`);
+
+    range.addEventListener("input",()=>{
+      out.value = range.value;
+      markTouched("speak");
+    });
+  });
+
+  function speakingAverage(){
+    const values = [
+      Number(document.getElementById("linkingRate").value),
+      Number(document.getElementById("reductionRate").value),
+      Number(document.getElementById("naturalRate").value)
+    ];
+
+    return values.reduce((a,b)=>a+b,0)/values.length;
+  }
+
+  function updateResults(){
+    const dictAvg = getAverageDictation();
+
+    document.getElementById("recognitionResult").textContent =
+      recognitionScore === null ? "—" : `${recognitionScore}%`;
+
+    document.getElementById("deepResult").textContent =
+      deepScore === null ? "—" : `${deepScore}%`;
+
+    document.getElementById("dictationResult").textContent =
+      dictAvg === null ? "—" : `${dictAvg}%`;
+
+    if(recognitionScore !== null && deepScore !== null && dictAvg !== null){
+      const overall = Math.round(
+        recognitionScore * 0.30 +
+        deepScore * 0.30 +
+        dictAvg * 0.40
+      );
+
+      document.getElementById("overallScore").textContent = overall;
+
+      let interpretation = "";
+
+      if(overall >= 88){
+        interpretation =
+          "Excellent. You can recognize common reductions and map them back to standard phrases quickly.";
+      }else if(overall >= 75){
+        interpretation =
+          "Strong. Most linked speech is clear, though some fast transformations still reduce exact-word accuracy.";
+      }else if(overall >= 60){
+        interpretation =
+          "Developing. Meaning is mostly intact, but reductions are still hiding too many word boundaries.";
+      }else{
+        interpretation =
+          "Linking and reductions are still a major bottleneck. Repeat the transformation drill slowly, then return to full-speed listening.";
+      }
+
+      document.getElementById("scoreInterpretation").textContent = interpretation;
+    }
+  }
+
+  function markTouched(section){
+    touchedSections.add(section);
+    updateSectionProgress();
+  }
+
+  function updateSectionProgress(){
+    const count = touchedSections.size;
+    const percent = Math.round((count/8)*100);
+
+    document.getElementById("topProgress").style.width = `${percent}%`;
+    document.getElementById("sideProgress").style.width = `${percent}%`;
+    document.getElementById("topProgressText").textContent = `${percent}% complete`;
+    document.getElementById("sideProgressText").textContent = `${count}/8 sections touched`;
+  }
+
+  function getCourseProgress(){
+    try{
+      return JSON.parse(localStorage.getItem(COURSE_KEY)) || {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }catch(e){
+      return {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }
+  }
+
+  function saveDayResult(){
+    const dictAvg = getAverageDictation();
+
+    const overall = (
+      recognitionScore !== null &&
+      deepScore !== null &&
+      dictAvg !== null
+    )
+      ? Math.round(
+          recognitionScore * 0.30 +
+          deepScore * 0.30 +
+          dictAvg * 0.40
+        )
+      : null;
+
+    const result = {
+      day:4,
+      recognitionScore,
+      deepScore,
+      dictationScore:dictAvg,
+      dictationScores:[...dictationScores],
+      speakingSelf:Number(speakingAverage().toFixed(1)),
+      overall,
+      listens:listenCount,
+      savedAt:new Date().toISOString()
+    };
+
+    localStorage.setItem(DAY_KEY,JSON.stringify(result));
+  }
+
+  document.getElementById("completeDayBtn").addEventListener("click",()=>{
+    const progress = getCourseProgress();
+    const alreadyDone = progress.completed.includes(4);
+
+    if(!alreadyDone){
+      progress.completed.push(4);
+      progress.completed.sort((a,b)=>a-b);
+      progress.streak = Math.max(1,Number(progress.streak || 0)+1);
+      progress.minutes = Number(progress.minutes || 0)+90;
+      progress.lastDay = 4;
+
+      localStorage.setItem(COURSE_KEY,JSON.stringify(progress));
+    }
+
+    saveDayResult();
+
+    document.getElementById("doneBanner").classList.add("show");
+    document.getElementById("completeDayBtn").textContent = "✓ Day 04 completed";
+    document.getElementById("completeDayBtn").disabled = true;
+
+    touchedSections = new Set([
+      "listen","patterns","recognition","deep","dictation","decode","shadow","speak"
+    ]);
+
+    updateSectionProgress();
+  });
+
+  function loadSavedState(){
+    updateListenUI();
+
+    const progress = getCourseProgress();
+
+    if(progress.completed.includes(4)){
+      document.getElementById("doneBanner").classList.add("show");
+      document.getElementById("completeDayBtn").textContent = "✓ Day 04 completed";
+      document.getElementById("completeDayBtn").disabled = true;
+
+      touchedSections = new Set([
+        "listen","patterns","recognition","deep","dictation","decode","shadow","speak"
+      ]);
+
+      updateSectionProgress();
+    }
+
+    try{
+      const saved = JSON.parse(localStorage.getItem(DAY_KEY) || "null");
+
+      if(saved){
+        if(typeof saved.recognitionScore === "number") recognitionScore = saved.recognitionScore;
+        if(typeof saved.deepScore === "number") deepScore = saved.deepScore;
+        if(Array.isArray(saved.dictationScores)) dictationScores = saved.dictationScores;
+      }
+    }catch(e){}
+
+    updateResults();
+  }
+
+  renderRecognition();
+  renderDeepQuestions();
+  renderDictation();
+  renderChunks();
+  renderShadowing();
+  setupRecorder("shadow");
+  setupRecorder("speak");
+  loadSavedState();
+
+  if("speechSynthesis" in window){
+    speechSynthesis.onvoiceschanged = ()=>getUSVoice();
+  }
+</script>
+</body>
+</html>
