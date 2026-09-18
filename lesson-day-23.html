@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Fluent30 Day 23 — Social Issues" />
+  <title>Fluent30 — Day 23 Social Issues</title>
+
+  <style>
+    :root{
+      --bg:#f5f5f6; --surface:#fff; --surface-2:#fafafa; --text:#111; --muted:#6b7280;
+      --line:#e5e7eb; --red:#8f1027; --red-dark:#6f0b1e; --black:#171717;
+      --green:#166534; --green-bg:#ecfdf3; --amber:#92400e; --amber-bg:#fffbeb;
+      --blue:#1d4ed8; --blue-bg:#eff6ff; --shadow:0 18px 50px rgba(17,24,39,.08);
+      --r-xl:24px; --r-lg:17px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text)
+    }
+
+    button,input,textarea,select{font:inherit}
+    button{cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    .shell{width:min(1160px,calc(100% - 38px));margin:0 auto}
+
+    header{
+      position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);
+      border-bottom:1px solid var(--line);backdrop-filter:blur(14px)
+    }
+
+    .topnav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.04em}
+    .brand-mark{
+      width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
+      background:var(--red);color:#fff;font-size:.88rem
+    }
+    .brand span span{color:var(--red)}
+    .toplinks{display:flex;align-items:center;gap:9px}
+
+    .navbtn{
+      display:inline-flex;align-items:center;justify-content:center;padding:9px 12px;
+      border:1px solid var(--line);border-radius:10px;background:#fff;color:#333;
+      font-size:.88rem;font-weight:700
+    }
+    .navbtn:hover{border-color:#c8ccd2}
+
+    main{padding:34px 0 70px}
+
+    .phase-banner{
+      background:var(--black);color:#fff;border-radius:16px;padding:15px 18px;margin-bottom:18px;
+      display:flex;justify-content:space-between;gap:16px;align-items:center
+    }
+    .phase-banner strong{font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
+    .phase-banner span{color:#c2c6cd;font-size:.82rem}
+
+    .hero{
+      display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.55fr);gap:20px
+    }
+
+    .hero-main,.hero-side{border-radius:var(--r-xl);box-shadow:var(--shadow)}
+
+    .hero-main{
+      background:linear-gradient(135deg,#fff 0%,#fbfbfc 72%,#f2f2f3 100%);
+      border:1px solid var(--line);padding:38px
+    }
+
+    .eyebrow{
+      color:var(--red);font-weight:850;font-size:.76rem;letter-spacing:.12em;
+      text-transform:uppercase;margin-bottom:12px
+    }
+
+    h1{margin:0;font-size:clamp(2.4rem,5vw,4.8rem);line-height:.96;letter-spacing:-.06em}
+
+    .hero-copy{
+      max-width:850px;color:var(--muted);line-height:1.65;margin:18px 0 0
+    }
+
+    .hero-side{
+      background:var(--black);color:#fff;padding:28px;display:flex;
+      flex-direction:column;justify-content:space-between;gap:20px
+    }
+
+    .hero-side .muted{color:#b9bec7}
+    .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .meta-card{background:#202020;border:1px solid #343434;border-radius:12px;padding:14px}
+    .meta-card strong{display:block;font-size:1.2rem;margin-bottom:2px}
+    .meta-card span{font-size:.78rem;color:#afb4bd}
+    .progress-track{height:9px;border-radius:999px;background:#343434;overflow:hidden;margin-top:13px}
+    .progress-fill{height:100%;width:0%;background:#fff;transition:.25s ease}
+
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) 292px;gap:22px;margin-top:24px}
+
+    .lesson-card{
+      background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+      padding:26px;margin-bottom:18px
+    }
+
+    .lesson-card h2{margin:0;font-size:1.42rem;letter-spacing:-.035em}
+    .lesson-card h3{margin:18px 0 8px;font-size:1rem}
+    .lesson-card p{line-height:1.62}
+    .muted{color:var(--muted)}
+
+    .step-head{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px
+    }
+
+    .step-label{
+      color:var(--red);font-size:.74rem;font-weight:850;letter-spacing:.1em;
+      text-transform:uppercase;margin-bottom:6px
+    }
+
+    .time-pill{
+      flex:0 0 auto;padding:6px 9px;background:#f3f4f6;border-radius:999px;
+      color:#5b616c;font-size:.76rem;font-weight:750
+    }
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:43px;
+      padding:0 15px;border-radius:11px;border:1px solid transparent;font-weight:800;transition:.18s ease
+    }
+
+    .btn.primary{background:var(--red);color:#fff}
+    .btn.primary:hover{background:var(--red-dark);transform:translateY(-1px)}
+    .btn.secondary{background:#fff;border-color:var(--line);color:#222}
+    .btn.secondary:hover{border-color:#c9cdd3}
+    .btn:disabled{opacity:.45;cursor:not-allowed}
+    .btn-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+
+    .audio-panel{
+      border:1px solid var(--line);border-radius:14px;background:var(--surface-2);padding:17px
+    }
+
+    .audio-title{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      margin-bottom:10px;font-weight:800
+    }
+
+    .listen-counter{font-size:.78rem;color:var(--muted);font-weight:700}
+    .speed-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+
+    .speed-btn{
+      border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 10px;
+      font-size:.78rem;font-weight:750
+    }
+
+    .speed-btn.active{border-color:var(--red);color:var(--red);background:#fff5f6}
+
+    .question{padding:17px 0;border-top:1px solid var(--line)}
+    .question:first-of-type{border-top:0;padding-top:4px}
+    .question-title{font-weight:800;line-height:1.5;margin-bottom:10px}
+    .options{display:grid;gap:8px}
+
+    .option{
+      display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid var(--line);
+      border-radius:11px;cursor:pointer;background:#fff
+    }
+
+    .option:hover{border-color:#c9cdd3}
+    .option input{margin-top:3px}
+
+    .feedback{
+      margin-top:12px;border-radius:11px;padding:11px 13px;
+      font-size:.9rem;line-height:1.5;display:none
+    }
+
+    .feedback.show{display:block}
+    .feedback.good{background:var(--green-bg);color:var(--green)}
+    .feedback.warn{background:var(--amber-bg);color:var(--amber)}
+    .feedback.info{background:var(--blue-bg);color:var(--blue)}
+
+    textarea,input[type="text"],select{
+      width:100%;border:1px solid #d2d6dc;border-radius:11px;padding:12px 13px;
+      background:#fff;color:#111;outline:none
+    }
+
+    textarea:focus,input[type="text"]:focus,select:focus{
+      border-color:#ba6a7c;box-shadow:0 0 0 3px rgba(143,16,39,.08)
+    }
+
+    textarea{resize:vertical;min-height:105px}
+
+    .concept-grid,.view-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px
+    }
+
+    .concept-card,.view-card{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fff
+    }
+
+    .concept-card strong,.view-card strong{display:block;margin-bottom:6px}
+    .concept-card .example,.view-card .example{color:var(--red);font-weight:850;margin-bottom:6px}
+    .concept-card span,.view-card span{font-size:.86rem;color:var(--muted);line-height:1.45}
+
+    .map-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:12px
+    }
+
+    .map-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;background:#fff
+    }
+
+    .map-item label{display:block;font-weight:800;margin-bottom:8px}
+    .map-item small{display:block;color:var(--muted);line-height:1.45;margin-bottom:10px}
+
+    .dictation-item{
+      border:1px solid var(--line);border-radius:13px;padding:16px;margin-top:12px;background:#fff
+    }
+
+    .dictation-result{
+      margin-top:10px;padding:10px 12px;background:#f8f9fa;border-radius:10px;
+      line-height:1.55;display:none
+    }
+
+    .dictation-result.show{display:block}
+
+    .lockbox{
+      border:1px dashed #c8cdd3;border-radius:13px;padding:18px;background:#fafafa;text-align:center
+    }
+
+    .transcript{
+      display:none;margin-top:14px;padding:18px;border-left:4px solid var(--red);
+      border-radius:10px;background:#fafafa;line-height:1.8
+    }
+
+    .transcript.show{display:block}
+
+    .decode-grid{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px
+    }
+
+    .decode-card{
+      border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff
+    }
+
+    .decode-card strong{display:block;margin-bottom:5px}
+    .decode-card span{font-size:.88rem;color:var(--muted);line-height:1.45}
+
+    .chunk{
+      display:grid;grid-template-columns:1.2fr 1.8fr auto;gap:12px;align-items:center;
+      border-top:1px solid var(--line);padding:13px 0
+    }
+
+    .chunk:first-of-type{border-top:0}
+    .chunk strong{font-size:.92rem}
+    .chunk span{font-size:.86rem;color:var(--muted);line-height:1.45}
+
+    .save-chunk{
+      border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 9px;
+      font-size:.76rem;font-weight:750
+    }
+
+    .save-chunk.saved{background:var(--green-bg);color:var(--green);border-color:#ccebd5}
+
+    .recorder{
+      border:1px solid var(--line);border-radius:13px;padding:15px;background:#fafafa;margin-top:12px
+    }
+
+    .record-status{font-size:.84rem;color:var(--muted);margin-top:8px}
+    audio{width:100%;margin-top:12px}
+
+    .prompt-box{
+      border-left:4px solid var(--red);background:#fafafa;padding:16px 17px;
+      border-radius:10px;line-height:1.6;margin:12px 0
+    }
+
+    .rating-grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px
+    }
+
+    .rating{border:1px solid var(--line);border-radius:12px;padding:13px}
+    .rating label{display:block;font-size:.8rem;font-weight:800;margin-bottom:8px}
+    .rating output{font-weight:900;color:var(--red)}
+    input[type="range"]{width:100%}
+
+    .result-card{background:var(--black);color:#fff;border-radius:18px;padding:24px}
+    .result-score{font-size:3.2rem;font-weight:900;letter-spacing:-.05em;line-height:1;margin-top:8px}
+
+    .result-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px
+    }
+
+    .result-box{
+      background:#202020;border:1px solid #353535;border-radius:12px;padding:13px
+    }
+
+    .result-box strong{display:block;font-size:1.2rem}
+    .result-box span{color:#b8bdc6;font-size:.78rem}
+
+    .sidebar{position:sticky;top:92px;align-self:start}
+
+    .side-card{
+      background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:13px
+    }
+
+    .side-card h3{margin:0 0 10px;font-size:.96rem}
+    .toc{display:grid;gap:5px}
+    .toc a{padding:8px 9px;border-radius:9px;color:#4b5563;font-size:.84rem}
+    .toc a:hover{background:#f4f4f5;color:var(--red)}
+
+    .mini-progress{
+      height:7px;background:#eceef1;border-radius:999px;overflow:hidden;margin-top:10px
+    }
+
+    .mini-progress > div{height:100%;width:0;background:var(--red);transition:.25s ease}
+
+    .complete-box{
+      text-align:center;padding:30px 24px;border:1px solid var(--line);
+      border-radius:18px;background:#fff
+    }
+
+    .complete-box h2{font-size:1.7rem;margin-bottom:8px}
+    .complete-box p{
+      color:var(--muted);max-width:680px;margin:0 auto 18px;line-height:1.6
+    }
+
+    .done-banner{
+      display:none;background:var(--green-bg);color:var(--green);border:1px solid #ccebd5;
+      border-radius:12px;padding:12px 14px;margin-top:14px;font-weight:750
+    }
+
+    .done-banner.show{display:block}
+
+    footer{
+      border-top:1px solid var(--line);color:var(--muted);padding:28px 0 40px;font-size:.84rem
+    }
+
+    @media(max-width:980px){
+      .hero,.layout{grid-template-columns:1fr}
+      .sidebar{position:static}
+      .concept-grid,.view-grid,.map-grid,.decode-grid{grid-template-columns:1fr}
+    }
+
+    @media(max-width:720px){
+      .shell{width:min(100% - 26px,1160px)}
+      .hero-main,.hero-side{padding:25px}
+      .lesson-card{padding:20px}
+      .chunk{grid-template-columns:1fr}
+      .rating-grid,.result-grid{grid-template-columns:1fr}
+      .toplinks .hide-mobile{display:none}
+      .phase-banner{align-items:flex-start;flex-direction:column}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="shell topnav">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">F30</span>
+      <span>Fluent<span>30</span></span>
+    </a>
+
+    <div class="toplinks">
+      <a href="lesson-day-22.html" class="navbtn">← Day 22</a>
+      <a href="index.html" class="navbtn hide-mobile">Roadmap</a>
+      <a href="lesson-day-24.html" class="navbtn">Day 24 →</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="shell">
+
+  <div class="phase-banner">
+    <strong>Phase 4 · C1 Processing</strong>
+    <span>Day 23 · social issues · contrasting perspectives · qualified claims · synthesis</span>
+  </div>
+
+  <section class="hero">
+    <div class="hero-main">
+      <div class="eyebrow">Day 23 · Social Issues</div>
+
+      <h1>Two views can be true<br>at the same time.</h1>
+
+      <p class="hero-copy">
+        C1 listening often requires you to hold <b>competing perspectives</b> without collapsing the discussion
+        into a simple “for” or “against.” Today you train stance, concession, evidence boundaries,
+        interpretation and synthesis.
+      </p>
+    </div>
+
+    <aside class="hero-side">
+      <div>
+        <div class="eyebrow" style="color:#e9a6b4">Today's target</div>
+        <h2 style="margin:0;font-size:1.55rem">Follow contrasting perspectives and nuanced claims</h2>
+        <p class="muted" style="line-height:1.55">
+          stance · concession · evidence · interpretation · synthesis
+        </p>
+      </div>
+
+      <div>
+        <div class="meta-grid">
+          <div class="meta-card"><strong>90</strong><span>minutes</span></div>
+          <div class="meta-card"><strong>2</strong><span>perspectives to hold</span></div>
+        </div>
+
+        <div class="progress-track"><div class="progress-fill" id="topProgress"></div></div>
+        <div class="muted" id="topProgressText" style="font-size:.82rem;margin-top:6px">0% complete</div>
+      </div>
+    </aside>
+  </section>
+
+  <div class="layout">
+    <div>
+
+      <!-- 1 -->
+      <section class="lesson-card" id="first-listen">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 1 · First Listen</div>
+            <h2>More connected — but less socially embedded?</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <p class="muted">
+          Listen to a discussion about digital connection and everyday social life.
+          Your first task is to identify the speaker's overall position without turning it into “technology good” or “technology bad.”
+        </p>
+
+        <div class="audio-panel">
+          <div class="audio-title">
+            <span>🎧 Social issue: Connection without community?</span>
+            <span class="listen-counter">Listens: <span id="listenCount">0</span></span>
+          </div>
+
+          <button class="btn primary" id="playMainBtn" type="button">▶ Play full discussion</button>
+          <button class="btn secondary" id="stopMainBtn" type="button">■ Stop</button>
+
+          <div class="speed-row">
+            <button class="speed-btn" data-rate="0.92" type="button">0.92×</button>
+            <button class="speed-btn active" data-rate="1.00" type="button">1.00×</button>
+            <button class="speed-btn" data-rate="1.08" type="button">1.08×</button>
+          </div>
+        </div>
+
+        <div class="question">
+          <div class="question-title">Which summary best captures the speaker's position?</div>
+
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="q1" value="a">
+              <span>Digital communication has made social relationships weaker in every respect.</span>
+            </label>
+
+            <label class="option">
+              <input type="radio" name="q1" value="b">
+              <span>Digital tools can expand and maintain connection, but they do not fully replace repeated low-stakes in-person contact that helps people feel embedded in a community.</span>
+            </label>
+
+            <label class="option">
+              <input type="radio" name="q1" value="c">
+              <span>Online relationships are always stronger than local relationships.</span>
+            </label>
+          </div>
+
+          <button class="btn secondary" style="margin-top:12px" onclick="checkFirstQuestion()" type="button">Check answer</button>
+          <div class="feedback" id="q1Feedback"></div>
+        </div>
+      </section>
+
+      <!-- 2 -->
+      <section class="lesson-card" id="perspective-signals">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 2 · Perspective Signals</div>
+            <h2>Hear where the speaker stands — and where they qualify.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="concept-grid">
+          <div class="concept-card">
+            <strong>Concession</strong>
+            <div class="example">To be fair, digital connection solves a real problem.</div>
+            <span>The speaker acknowledges a valid point before adding a limitation.</span>
+          </div>
+
+          <div class="concept-card">
+            <strong>Boundary</strong>
+            <div class="example">That does not necessarily mean...</div>
+            <span>Stops the listener from drawing a stronger conclusion than the evidence supports.</span>
+          </div>
+
+          <div class="concept-card">
+            <strong>Counterpoint</strong>
+            <div class="example">On the other hand...</div>
+            <span>Introduces a meaningful opposing consideration.</span>
+          </div>
+
+          <div class="concept-card">
+            <strong>Synthesis</strong>
+            <div class="example">Both things can be true.</div>
+            <span>Combines competing views rather than choosing one as completely correct.</span>
+          </div>
+
+          <div class="concept-card">
+            <strong>Interpretation</strong>
+            <div class="example">One possible explanation is...</div>
+            <span>Offers a reading of the evidence, not a direct fact.</span>
+          </div>
+
+          <div class="concept-card">
+            <strong>Qualified claim</strong>
+            <div class="example">It may matter more for some people than others.</div>
+            <span>Limits the scope of a claim by population or context.</span>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="playPerspectiveDrill()">▶ Play stance-signal drill</button>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="lesson-card" id="viewpoint-map">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 3 · Viewpoint Map</div>
+            <h2>Hold both sides in working memory.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="map-grid" id="mapGrid"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeMap()">Check viewpoint map</button>
+          <span class="muted" id="mapScoreText"></span>
+        </div>
+
+        <div class="feedback" id="mapFeedback"></div>
+      </section>
+
+      <!-- 4 -->
+      <section class="lesson-card" id="deep-listen">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 4 · Deep Listen</div>
+            <h2>Track claims, limits and implications.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div id="deepQuestions"></div>
+
+        <div class="btn-row">
+          <button class="btn primary" type="button" onclick="gradeDeepQuiz()">Check 6 answers</button>
+          <span class="muted" id="deepScoreText"></span>
+        </div>
+
+        <div class="feedback" id="deepFeedback"></div>
+      </section>
+
+      <!-- 5 -->
+      <section class="lesson-card" id="dictation">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 5 · Dictation</div>
+            <h2>Capture nuance without flattening it.</h2>
+          </div>
+          <div class="time-pill">15 min</div>
+        </div>
+
+        <div id="dictationList"></div>
+      </section>
+
+      <!-- 6 -->
+      <section class="lesson-card" id="decode">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 6 · Decode</div>
+            <h2>Reveal the full discussion.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="lockbox" id="transcriptLock">
+          <strong>Transcript locked</strong>
+          <p class="muted" style="margin:7px 0 12px">
+            Complete at least two full listens before revealing the transcript.
+          </p>
+          <button class="btn secondary" id="revealBtn" type="button" disabled>Reveal transcript</button>
+        </div>
+
+        <div class="transcript" id="transcriptBox">
+          <strong>Transcript — Connection without community?</strong>
+
+          <p>
+            We live in a period where it is easier than ever to stay in contact with people.
+            A friend can move to another country and still remain part of our daily life.
+            Families can maintain group chats across time zones.
+            People with unusual interests can find communities that simply would not exist locally.
+          </p>
+
+          <p>
+            So it would be too simple to say that digital communication makes us less connected.
+            In many cases, it does the opposite.
+            It allows relationships to survive distance and gives people access to support they may not find nearby.
+          </p>
+
+          <p>
+            But there is another form of connection that is harder to reproduce online:
+            repeated, low-stakes contact with people we do not necessarily choose.
+            The neighbor we see in the elevator, the person at the same café,
+            the colleague we speak to for two minutes before a meeting.
+          </p>
+
+          <p>
+            These interactions are rarely deep, and that is exactly why they are easy to underestimate.
+            They create familiarity.
+            Over time, familiarity can create a sense that we belong somewhere, even when the individual relationships are weak.
+          </p>
+
+          <p>
+            Digital communication is usually more intentional.
+            We contact specific people for a reason.
+            That is efficient, but it also means fewer accidental interactions.
+            We may stay very connected to our chosen network while becoming less familiar with the people physically around us.
+          </p>
+
+          <p>
+            To be fair, this will not affect everyone in the same way.
+            Someone with strong family ties, a stable workplace and an active local community may not feel any loss at all.
+            For someone who works remotely, lives alone and has recently moved to a new city, the effect may be much stronger.
+          </p>
+
+          <p>
+            So the useful distinction may be between connection and social embeddedness.
+            Technology is extremely good at maintaining connection.
+            It is less obvious whether it can fully replace the repeated presence that makes people feel part of a place.
+          </p>
+
+          <p>
+            Both things can be true:
+            digital tools can make relationships more accessible,
+            while a decline in everyday local contact may still leave some people feeling socially unanchored.
+          </p>
+        </div>
+
+        <div class="decode-grid">
+          <div class="decode-card">
+            <strong>“too simple to say...”</strong>
+            <span>The speaker rejects an overly broad conclusion.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“low-stakes contact”</strong>
+            <span>Small interactions with little immediate importance or pressure.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“easy to underestimate”</strong>
+            <span>The importance may be greater than it first appears.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“chosen network”</strong>
+            <span>People we intentionally select and maintain relationships with.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“social embeddedness”</strong>
+            <span>A sense of being rooted in a local social environment.</span>
+          </div>
+
+          <div class="decode-card">
+            <strong>“both things can be true”</strong>
+            <span>Signals synthesis rather than a binary conclusion.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7 -->
+      <section class="lesson-card" id="shadowing">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 7 · Shadowing & Social-Issue Chunks</div>
+            <h2>Practice balanced argument language.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div id="chunkList"></div>
+
+        <h3>Shadowing lines</h3>
+        <div id="shadowList"></div>
+
+        <div class="recorder">
+          <strong>🎙 Record your shadowing</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="shadowRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="shadowStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="shadowRecordStatus">
+            Stress the contrast words clearly: but, however, to be fair, while, both.
+          </div>
+
+          <audio id="shadowPlayback" controls style="display:none"></audio>
+        </div>
+      </section>
+
+      <!-- 8 -->
+      <section class="lesson-card" id="speak-back">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Step 8 · Speak Back</div>
+            <h2>Give a balanced social-issue response.</h2>
+          </div>
+          <div class="time-pill">10 min</div>
+        </div>
+
+        <div class="prompt-box">
+          <strong>90-second response</strong><br>
+          Do digital tools strengthen or weaken social connection?
+          Give <b>one benefit, one limitation, one group that may be affected differently,
+          and one synthesis statement</b>. Avoid a simple yes/no conclusion.
+        </div>
+
+        <textarea id="speakOutline" placeholder="Keywords only: distance / chosen network / local familiarity / remote worker / depends on context / both can be true"></textarea>
+
+        <div class="recorder">
+          <strong>🎙 Record your response</strong>
+
+          <div class="btn-row">
+            <button class="btn primary" id="speakRecordBtn" type="button">Start recording</button>
+            <button class="btn secondary" id="speakStopBtn" type="button" disabled>Stop</button>
+          </div>
+
+          <div class="record-status" id="speakRecordStatus">
+            Aim for a balanced position with a qualified conclusion.
+          </div>
+
+          <audio id="speakPlayback" controls style="display:none"></audio>
+        </div>
+
+        <h3>Self-check</h3>
+
+        <div class="rating-grid">
+          <div class="rating">
+            <label>Perspective balance · <output id="balanceOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="balanceRate">
+          </div>
+
+          <div class="rating">
+            <label>Claim precision · <output id="claimOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="claimRate">
+          </div>
+
+          <div class="rating">
+            <label>Synthesis · <output id="synthesisOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="synthesisRate">
+          </div>
+
+          <div class="rating">
+            <label>Natural delivery · <output id="naturalOut">3</output>/5</label>
+            <input type="range" min="1" max="5" value="3" id="naturalRate">
+          </div>
+        </div>
+      </section>
+
+      <!-- RESULT -->
+      <section class="lesson-card" id="result">
+        <div class="step-head">
+          <div>
+            <div class="step-label">Day 23 Result</div>
+            <h2>Your perspective-tracking score</h2>
+          </div>
+        </div>
+
+        <div class="result-card">
+          <div class="muted" style="color:#b8bdc6">Viewpoint map + deep listening + dictation</div>
+
+          <div class="result-score">
+            <span id="overallScore">—</span><span style="font-size:1.3rem">%</span>
+          </div>
+
+          <div class="muted" id="scoreInterpretation" style="color:#b8bdc6;margin-top:7px">
+            Complete viewpoint map, deep listening and dictation to calculate your score.
+          </div>
+
+          <div class="result-grid">
+            <div class="result-box">
+              <strong id="mapResult">—</strong>
+              <span>Viewpoint map</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="deepResult">—</strong>
+              <span>Nuanced comprehension</span>
+            </div>
+
+            <div class="result-box">
+              <strong id="dictationResult">—</strong>
+              <span>Dictation</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPLETE -->
+      <section class="complete-box" id="complete">
+        <h2>Complete Day 23</h2>
+
+        <p>
+          Save today's result and continue to Day 24: Long-form Interviews.
+          Your roadmap progress will update automatically.
+        </p>
+
+        <button class="btn primary" id="completeDayBtn" type="button">✓ Mark Day 23 complete</button>
+        <a href="lesson-day-24.html" class="btn secondary">Go to Day 24 →</a>
+
+        <div class="done-banner" id="doneBanner">
+          Day 23 is saved as completed in this browser.
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="sidebar">
+      <div class="side-card">
+        <h3>Day 23</h3>
+        <div class="muted" style="font-size:.84rem">Social Issues</div>
+
+        <div class="mini-progress"><div id="sideProgress"></div></div>
+        <div class="muted" id="sideProgressText" style="font-size:.78rem;margin-top:7px">
+          0/8 sections touched
+        </div>
+      </div>
+
+      <div class="side-card">
+        <h3>Jump to</h3>
+
+        <nav class="toc">
+          <a href="#first-listen">1. First Listen</a>
+          <a href="#perspective-signals">2. Perspective Signals</a>
+          <a href="#viewpoint-map">3. Viewpoint Map</a>
+          <a href="#deep-listen">4. Deep Listen</a>
+          <a href="#dictation">5. Dictation</a>
+          <a href="#decode">6. Decode</a>
+          <a href="#shadowing">7. Shadowing</a>
+          <a href="#speak-back">8. Speak Back</a>
+          <a href="#result">Result</a>
+        </nav>
+      </div>
+
+      <div class="side-card">
+        <h3>Rule for today</h3>
+        <p class="muted" style="font-size:.84rem;line-height:1.55;margin:0">
+          Do not ask only “Which side is the speaker on?” Ask:
+          <b>What does each side explain well, where does it stop, and what synthesis survives both?</b>
+        </p>
+      </div>
+    </aside>
+  </div>
+</div>
+</main>
+
+<footer>
+  <div class="shell">Fluent30 · Day 23 · Social Issues</div>
+</footer>
+
+<script>
+  const COURSE_KEY = "fluent30-progress-v1";
+  const DAY_KEY = "fluent30-day-23-result";
+
+  const audioScript = `We live in a period where it is easier than ever to stay in contact with people. A friend can move to another country and still remain part of our daily life. Families can maintain group chats across time zones. People with unusual interests can find communities that simply would not exist locally.
+
+So it would be too simple to say that digital communication makes us less connected. In many cases, it does the opposite. It allows relationships to survive distance and gives people access to support they may not find nearby.
+
+But there is another form of connection that is harder to reproduce online: repeated, low-stakes contact with people we do not necessarily choose. The neighbor we see in the elevator, the person at the same café, the colleague we speak to for two minutes before a meeting.
+
+These interactions are rarely deep, and that is exactly why they are easy to underestimate. They create familiarity. Over time, familiarity can create a sense that we belong somewhere, even when the individual relationships are weak.
+
+Digital communication is usually more intentional. We contact specific people for a reason. That is efficient, but it also means fewer accidental interactions. We may stay very connected to our chosen network while becoming less familiar with the people physically around us.
+
+To be fair, this will not affect everyone in the same way. Someone with strong family ties, a stable workplace and an active local community may not feel any loss at all. For someone who works remotely, lives alone and has recently moved to a new city, the effect may be much stronger.
+
+So the useful distinction may be between connection and social embeddedness. Technology is extremely good at maintaining connection. It is less obvious whether it can fully replace the repeated presence that makes people feel part of a place.
+
+Both things can be true: digital tools can make relationships more accessible, while a decline in everyday local contact may still leave some people feeling socially unanchored.`;
+
+  const perspectiveDrill = [
+    "To be fair, digital connection solves a real problem.",
+    "That does not necessarily mean local contact no longer matters.",
+    "On the other hand, online communities can provide support that may not exist locally.",
+    "One possible explanation is that repeated contact creates familiarity.",
+    "It may matter more for some people than for others.",
+    "Both things can be true at the same time."
+  ];
+
+  const mapItems = [
+    {
+      label:"Perspective A",
+      hint:"What is the strongest case for digital connection?",
+      options:[
+        "It helps relationships survive distance and gives access to wider support networks.",
+        "It eliminates the need for local contact.",
+        "It guarantees deeper friendships."
+      ],
+      answer:0
+    },
+    {
+      label:"Perspective B",
+      hint:"What may be missing from digital connection?",
+      options:[
+        "Repeated low-stakes local contact and accidental interaction.",
+        "Any ability to maintain close relationships.",
+        "All intentional communication."
+      ],
+      answer:0
+    },
+    {
+      label:"Different impact",
+      hint:"Who may feel the loss of local contact more strongly?",
+      options:[
+        "Someone who works remotely, lives alone and recently moved.",
+        "Everyone equally.",
+        "Only people with large families."
+      ],
+      answer:0
+    },
+    {
+      label:"Synthesis",
+      hint:"What conclusion survives both perspectives?",
+      options:[
+        "Digital connection can be valuable while local social embeddedness may still matter.",
+        "Online connection is always inferior.",
+        "Local contact is unnecessary."
+      ],
+      answer:0
+    }
+  ];
+
+  const deepQuestions = [
+    {
+      q:"Why does the speaker reject the claim that digital communication simply makes people less connected?",
+      options:[
+        "Because it can maintain relationships across distance and create access to support.",
+        "Because local relationships no longer exist.",
+        "Because digital communication always creates stronger relationships."
+      ],
+      answer:0
+    },
+    {
+      q:"What does the speaker mean by “low-stakes contact”?",
+      options:[
+        "Small everyday interactions with little immediate pressure.",
+        "High-risk conversations with strangers.",
+        "Formal long-term relationships."
+      ],
+      answer:0
+    },
+    {
+      q:"Why are weak local interactions easy to underestimate?",
+      options:[
+        "They may create familiarity and a sense of belonging over time.",
+        "They are always emotionally intense.",
+        "They replace close friendships."
+      ],
+      answer:0
+    },
+    {
+      q:"What is one limitation of intentional digital communication?",
+      options:[
+        "It may reduce accidental interaction with people physically nearby.",
+        "It prevents people from contacting friends.",
+        "It makes all relationships local."
+      ],
+      answer:0
+    },
+    {
+      q:"Why does the speaker mention remote workers who live alone?",
+      options:[
+        "To show that the effect may vary significantly by context.",
+        "To claim that all remote work is harmful.",
+        "To argue that cities should ban remote work."
+      ],
+      answer:0
+    },
+    {
+      q:"What distinction does the speaker make at the end?",
+      options:[
+        "Connection versus social embeddedness.",
+        "Work versus leisure.",
+        "Friends versus family."
+      ],
+      answer:0
+    }
+  ];
+
+  const dictationItems = [
+    "It would be too simple to say that digital communication makes us less connected.",
+    "These interactions are rarely deep, and that is exactly why they are easy to underestimate.",
+    "We may stay very connected to our chosen network while becoming less familiar with the people physically around us.",
+    "Both things can be true at the same time."
+  ];
+
+  const chunks = [
+    ["it would be too simple to say","rejects an overly broad conclusion","It would be too simple to say that digital communication weakens all relationships."],
+    ["to be fair","acknowledges a valid counterpoint","To be fair, digital tools solve a real problem."],
+    ["on the other hand","introduces a contrasting perspective","On the other hand, local contact has a different function."],
+    ["easy to underestimate","more important than it first appears","Weak interactions are easy to underestimate."],
+    ["may matter more for","limits the claim by group or context","This may matter more for people who live alone."],
+    ["both things can be true","synthesizes competing views","Both things can be true at the same time."],
+    ["social embeddedness","feeling rooted in a social environment","Connection is not exactly the same as social embeddedness."]
+  ];
+
+  const shadowSentences = [
+    "It would be too simple to say that digital communication makes us less connected.",
+    "On the other hand, repeated low-stakes contact serves a different function.",
+    "These interactions are easy to underestimate.",
+    "This may matter more for some people than for others.",
+    "Both things can be true at the same time."
+  ];
+
+  let speechRate = 1.00;
+  let listenCount = Number(localStorage.getItem("fluent30-day23-listens") || 0);
+  let mapScore = null;
+  let deepScore = null;
+  let dictationScores = [null,null,null,null];
+  let touched = new Set();
+
+  function getVoices(){
+    if(!("speechSynthesis" in window)) return [];
+    return speechSynthesis.getVoices();
+  }
+
+  function getVoice(){
+    const voices = getVoices();
+    const us = voices.filter(v => /en-US/i.test(v.lang));
+    const en = voices.filter(v => /^en/i.test(v.lang));
+
+    const preferred = [
+      /Google US English/i,
+      /Samantha/i,
+      /Jenny/i,
+      /Aria/i,
+      /Joanna/i,
+      /Ava/i
+    ];
+
+    for(const pattern of preferred){
+      const match = us.find(v => pattern.test(v.name)) || en.find(v => pattern.test(v.name));
+      if(match) return match;
+    }
+
+    return us[0] || en[0] || null;
+  }
+
+  function speak(text,rate=1,onEnd=null){
+    if(!("speechSynthesis" in window)){
+      alert("Speech synthesis is not supported in this browser.");
+      return;
+    }
+
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US";
+    u.rate = rate;
+    u.pitch = 1.0;
+
+    const v = getVoice();
+    if(v) u.voice = v;
+    if(onEnd) u.onend = onEnd;
+
+    speechSynthesis.speak(u);
+  }
+
+  function stopSpeech(){
+    if("speechSynthesis" in window) speechSynthesis.cancel();
+  }
+
+  document.getElementById("playMainBtn").addEventListener("click",()=>{
+    listenCount++;
+    localStorage.setItem("fluent30-day23-listens",String(listenCount));
+    updateListenUI();
+    markTouched("listen");
+
+    stopSpeech();
+    speak(audioScript,speechRate);
+  });
+
+  document.getElementById("stopMainBtn").addEventListener("click",stopSpeech);
+
+  document.querySelectorAll(".speed-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      speechRate = Number(btn.dataset.rate);
+      document.querySelectorAll(".speed-btn").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+
+  function updateListenUI(){
+    document.getElementById("listenCount").textContent = listenCount;
+    document.getElementById("revealBtn").disabled = listenCount < 2;
+
+    if(listenCount >= 2){
+      const lock = document.getElementById("transcriptLock");
+      lock.querySelector("strong").textContent = "Transcript ready";
+      lock.querySelector("p").textContent =
+        "You have completed at least two listens. Now inspect the contrast and qualification language.";
+    }
+  }
+
+  document.getElementById("revealBtn").addEventListener("click",()=>{
+    document.getElementById("transcriptBox").classList.add("show");
+    document.getElementById("transcriptLock").style.display = "none";
+    markTouched("decode");
+  });
+
+  function checkFirstQuestion(){
+    const chosen = document.querySelector('input[name="q1"]:checked');
+    const box = document.getElementById("q1Feedback");
+    box.className = "feedback show";
+
+    if(!chosen){
+      box.classList.add("warn");
+      box.textContent = "Choose one answer first.";
+      return;
+    }
+
+    if(chosen.value === "b"){
+      box.classList.add("good");
+      box.textContent = "Correct. The speaker separates digital connection from local social embeddedness.";
+    }else{
+      box.classList.add("warn");
+      box.textContent = "Not quite. The speaker explicitly avoids a simple pro- or anti-technology position.";
+    }
+
+    markTouched("listen");
+  }
+
+  function playPerspectiveDrill(){
+    markTouched("signals");
+    stopSpeech();
+
+    let i = 0;
+    const next = ()=>{
+      if(i >= perspectiveDrill.length) return;
+      speak(perspectiveDrill[i],1.00,()=>{
+        i++;
+        setTimeout(next,220);
+      });
+    };
+    next();
+  }
+
+  function renderMap(){
+    const container = document.getElementById("mapGrid");
+
+    container.innerHTML = mapItems.map((item,index)=>`
+      <div class="map-item">
+        <label>${index+1}. ${item.label}</label>
+        <small>${item.hint}</small>
+        <select id="mapSelect${index}">
+          <option value="">Choose...</option>
+          ${item.options.map((option,optIndex)=>`
+            <option value="${optIndex}">${option}</option>
+          `).join("")}
+        </select>
+      </div>
+    `).join("");
+  }
+
+  function gradeMap(){
+    let correct = 0;
+    let answered = 0;
+
+    mapItems.forEach((item,index)=>{
+      const value = document.getElementById(`mapSelect${index}`).value;
+      if(value !== ""){
+        answered++;
+        if(Number(value) === item.answer) correct++;
+      }
+    });
+
+    const box = document.getElementById("mapFeedback");
+    box.className = "feedback show";
+
+    if(answered < mapItems.length){
+      box.classList.add("warn");
+      box.textContent = `You completed ${answered}/${mapItems.length}. Finish all four first.`;
+      return;
+    }
+
+    mapScore = Math.round((correct/mapItems.length)*100);
+    document.getElementById("mapScoreText").textContent =
+      `${correct}/${mapItems.length} correct · ${mapScore}%`;
+
+    box.classList.add(mapScore >= 75 ? "good" : "info");
+    box.textContent = mapScore >= 75
+      ? "Good. You can preserve both perspectives and the synthesis."
+      : "Replay and map Perspective A → Perspective B → different impact → synthesis.";
+
+    markTouched("map");
+    updateResults();
+  }
+
+  function renderDeepQuestions(){
+    const container = document.getElementById("deepQuestions");
+
+    container.innerHTML = deepQuestions.map((item,index)=>`
+      <div class="question">
+        <div class="question-title">${index+1}. ${item.q}</div>
+
+        <div class="options">
+          ${item.options.map((option,optIndex)=>`
+            <label class="option">
+              <input type="radio" name="deep${index}" value="${optIndex}">
+              <span>${option}</span>
+            </label>
+          `).join("")}
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function gradeDeepQuiz(){
+    let correct = 0;
+    let answered = 0;
+
+    deepQuestions.forEach((item,index)=>{
+      const selected = document.querySelector(`input[name="deep${index}"]:checked`);
+      if(selected){
+        answered++;
+        if(Number(selected.value) === item.answer) correct++;
+      }
+    });
+
+    const box = document.getElementById("deepFeedback");
+    box.className = "feedback show";
+
+    if(answered < deepQuestions.length){
+      box.classList.add("warn");
+      box.textContent = `You answered ${answered}/${deepQuestions.length}. Complete all questions first.`;
+      return;
+    }
+
+    deepScore = Math.round((correct/deepQuestions.length)*100);
+    document.getElementById("deepScoreText").textContent =
+      `${correct}/${deepQuestions.length} correct · ${deepScore}%`;
+
+    if(deepScore >= 84){
+      box.classList.add("good");
+      box.textContent = "Strong. You followed both viewpoints without flattening the conclusion.";
+    }else if(deepScore >= 67){
+      box.classList.add("info");
+      box.textContent = "Good overall. Some population-specific or synthesis detail is still getting lost.";
+    }else{
+      box.classList.add("warn");
+      box.textContent = "Replay and label every paragraph: support / limitation / example / qualification / synthesis.";
+    }
+
+    markTouched("deep");
+    updateResults();
+  }
+
+  function renderDictation(){
+    const container = document.getElementById("dictationList");
+
+    container.innerHTML = dictationItems.map((sentence,index)=>`
+      <div class="dictation-item">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+          <strong>Sentence ${index+1}</strong>
+          <button class="btn secondary" type="button" onclick="playDictation(${index})">▶ Play</button>
+        </div>
+
+        <input
+          type="text"
+          id="dictInput${index}"
+          style="margin-top:12px"
+          placeholder="Type exactly what you hear"
+          autocomplete="off"
+        >
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="checkDictation(${index})">Check</button>
+        </div>
+
+        <div class="dictation-result" id="dictResult${index}"></div>
+      </div>
+    `).join("");
+  }
+
+  function playDictation(index){
+    stopSpeech();
+    speak(dictationItems[index],1.00);
+    markTouched("dictation");
+  }
+
+  function normalize(text){
+    return text
+      .toLowerCase()
+      .replace(/[’‘]/g,"'")
+      .replace(/[^a-z0-9'\s-]/g,"")
+      .replace(/\s+/g," ")
+      .trim();
+  }
+
+  function wordSimilarity(userText,targetText){
+    const a = normalize(userText).split(" ").filter(Boolean);
+    const b = normalize(targetText).split(" ").filter(Boolean);
+
+    const dp = Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));
+
+    for(let i=1;i<=a.length;i++){
+      for(let j=1;j<=b.length;j++){
+        if(a[i-1] === b[j-1]){
+          dp[i][j] = dp[i-1][j-1] + 1;
+        }else{
+          dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+        }
+      }
+    }
+
+    return b.length ? Math.round((dp[a.length][b.length]/b.length)*100) : 0;
+  }
+
+  function checkDictation(index){
+    const input = document.getElementById(`dictInput${index}`);
+    const result = document.getElementById(`dictResult${index}`);
+
+    if(!input.value.trim()){
+      result.className = "dictation-result show";
+      result.textContent = "Type what you hear first.";
+      return;
+    }
+
+    const score = wordSimilarity(input.value,dictationItems[index]);
+    dictationScores[index] = score;
+
+    result.className = "dictation-result show";
+    result.innerHTML = `
+      <div><strong>${score}% match</strong></div>
+      <div style="margin-top:6px"><span class="muted">Target:</span> ${dictationItems[index]}</div>
+    `;
+
+    markTouched("dictation");
+    updateResults();
+  }
+
+  function getDictationAverage(){
+    if(dictationScores.some(v => typeof v !== "number")) return null;
+    return Math.round(dictationScores.reduce((a,b)=>a+b,0)/dictationScores.length);
+  }
+
+  function renderChunks(){
+    const saved = JSON.parse(localStorage.getItem("fluent30-saved-chunks") || "[]");
+    const container = document.getElementById("chunkList");
+
+    container.innerHTML = chunks.map((chunk,index)=>{
+      const isSaved = saved.includes(chunk[0]);
+
+      return `
+        <div class="chunk">
+          <div>
+            <strong>${chunk[0]}</strong>
+            <div style="margin-top:5px;font-size:.82rem;color:#8b8f96">“${chunk[2]}”</div>
+          </div>
+
+          <span>${chunk[1]}</span>
+
+          <button
+            class="save-chunk ${isSaved ? "saved" : ""}"
+            type="button"
+            onclick="toggleChunk(${index},this)"
+          >${isSaved ? "Saved ✓" : "Save"}</button>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function toggleChunk(index,button){
+    let saved = JSON.parse(localStorage.getItem("fluent30-saved-chunks") || "[]");
+    const phrase = chunks[index][0];
+
+    if(saved.includes(phrase)){
+      saved = saved.filter(x=>x!==phrase);
+      button.classList.remove("saved");
+      button.textContent = "Save";
+    }else{
+      saved.push(phrase);
+      button.classList.add("saved");
+      button.textContent = "Saved ✓";
+    }
+
+    localStorage.setItem("fluent30-saved-chunks",JSON.stringify(saved));
+    markTouched("shadow");
+  }
+
+  function renderShadowing(){
+    const container = document.getElementById("shadowList");
+
+    container.innerHTML = shadowSentences.map((sentence,index)=>`
+      <div class="dictation-item">
+        <strong>${index+1}. ${sentence}</strong>
+
+        <div class="btn-row">
+          <button class="btn secondary" type="button" onclick="playShadow(${index},0.92)">Slow</button>
+          <button class="btn primary" type="button" onclick="playShadow(${index},1.00)">Natural</button>
+          <button class="btn secondary" type="button" onclick="playShadow(${index},1.08)">Fast</button>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  function playShadow(index,rate){
+    stopSpeech();
+    speak(shadowSentences[index],rate);
+    markTouched("shadow");
+  }
+
+  function setupRecorder(prefix){
+    const recordBtn = document.getElementById(`${prefix}RecordBtn`);
+    const stopBtn = document.getElementById(`${prefix}StopBtn`);
+    const status = document.getElementById(`${prefix}RecordStatus`);
+    const playback = document.getElementById(`${prefix}Playback`);
+
+    let recorder = null;
+    let blobs = [];
+    let stream = null;
+    let startTime = null;
+
+    recordBtn.addEventListener("click",async()=>{
+      if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+        status.textContent = "Microphone recording is not supported in this browser.";
+        return;
+      }
+
+      try{
+        stream = await navigator.mediaDevices.getUserMedia({audio:true});
+        recorder = new MediaRecorder(stream);
+        blobs = [];
+        startTime = Date.now();
+
+        recorder.ondataavailable = e=>{
+          if(e.data.size > 0) blobs.push(e.data);
+        };
+
+        recorder.onstop = ()=>{
+          const blob = new Blob(blobs,{type:recorder.mimeType || "audio/webm"});
+          playback.src = URL.createObjectURL(blob);
+          playback.style.display = "block";
+
+          const seconds = Math.round((Date.now()-startTime)/1000);
+          status.textContent =
+            `Recorded ${seconds} seconds. Check whether you represented both sides before giving your conclusion.`;
+
+          if(stream) stream.getTracks().forEach(track=>track.stop());
+
+          if(prefix === "speak") markTouched("speak");
+          if(prefix === "shadow") markTouched("shadow");
+        };
+
+        recorder.start();
+        recordBtn.disabled = true;
+        stopBtn.disabled = false;
+        status.textContent = "Recording…";
+
+      }catch(e){
+        status.textContent = "Microphone permission was not granted.";
+      }
+    });
+
+    stopBtn.addEventListener("click",()=>{
+      if(recorder && recorder.state !== "inactive") recorder.stop();
+      recordBtn.disabled = false;
+      stopBtn.disabled = true;
+    });
+  }
+
+  ["balance","claim","synthesis","natural"].forEach(name=>{
+    const range = document.getElementById(`${name}Rate`);
+    const out = document.getElementById(`${name}Out`);
+
+    range.addEventListener("input",()=>{
+      out.value = range.value;
+      markTouched("speak");
+    });
+  });
+
+  function speakingAverage(){
+    const values = [
+      Number(document.getElementById("balanceRate").value),
+      Number(document.getElementById("claimRate").value),
+      Number(document.getElementById("synthesisRate").value),
+      Number(document.getElementById("naturalRate").value)
+    ];
+
+    return values.reduce((a,b)=>a+b,0)/values.length;
+  }
+
+  function updateResults(){
+    const dictAvg = getDictationAverage();
+
+    document.getElementById("mapResult").textContent =
+      mapScore === null ? "—" : `${mapScore}%`;
+
+    document.getElementById("deepResult").textContent =
+      deepScore === null ? "—" : `${deepScore}%`;
+
+    document.getElementById("dictationResult").textContent =
+      dictAvg === null ? "—" : `${dictAvg}%`;
+
+    if(mapScore !== null && deepScore !== null && dictAvg !== null){
+      const overall = Math.round(
+        mapScore * 0.30 +
+        deepScore * 0.40 +
+        dictAvg * 0.30
+      );
+
+      document.getElementById("overallScore").textContent = overall;
+
+      let interpretation = "";
+
+      if(overall >= 88){
+        interpretation =
+          "Excellent. You can hold competing perspectives and preserve the qualified synthesis.";
+      }else if(overall >= 75){
+        interpretation =
+          "Strong. You follow nuanced social-issue reasoning well, with occasional loss of scope or population-specific qualification.";
+      }else if(overall >= 60){
+        interpretation =
+          "Developing. You understand both sides, but some claims are still becoming more absolute than the speaker intended.";
+      }else{
+        interpretation =
+          "Perspective tracking is still unstable. Label each claim as support, limitation, population effect or synthesis.";
+      }
+
+      document.getElementById("scoreInterpretation").textContent = interpretation;
+    }
+  }
+
+  function markTouched(section){
+    touched.add(section);
+    updateProgress();
+  }
+
+  function updateProgress(){
+    const count = touched.size;
+    const percent = Math.round((count/8)*100);
+
+    document.getElementById("topProgress").style.width = `${percent}%`;
+    document.getElementById("sideProgress").style.width = `${percent}%`;
+    document.getElementById("topProgressText").textContent = `${percent}% complete`;
+    document.getElementById("sideProgressText").textContent = `${count}/8 sections touched`;
+  }
+
+  function getCourseProgress(){
+    try{
+      return JSON.parse(localStorage.getItem(COURSE_KEY)) || {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }catch(e){
+      return {
+        completed:[],streak:0,minutes:0,lastDay:null
+      };
+    }
+  }
+
+  function saveDayResult(){
+    const dictAvg = getDictationAverage();
+
+    const overall = (
+      mapScore !== null &&
+      deepScore !== null &&
+      dictAvg !== null
+    ) ? Math.round(
+      mapScore * 0.30 +
+      deepScore * 0.40 +
+      dictAvg * 0.30
+    ) : null;
+
+    const result = {
+      day:23,
+      mapScore,
+      deepScore,
+      dictationScore:dictAvg,
+      dictationScores:[...dictationScores],
+      speakingSelf:Number(speakingAverage().toFixed(1)),
+      overall,
+      listens:listenCount,
+      savedAt:new Date().toISOString()
+    };
+
+    localStorage.setItem(DAY_KEY,JSON.stringify(result));
+  }
+
+  document.getElementById("completeDayBtn").addEventListener("click",()=>{
+    const progress = getCourseProgress();
+    const alreadyDone = progress.completed.includes(23);
+
+    if(!alreadyDone){
+      progress.completed.push(23);
+      progress.completed.sort((a,b)=>a-b);
+      progress.streak = Math.max(1,Number(progress.streak || 0)+1);
+      progress.minutes = Number(progress.minutes || 0)+90;
+      progress.lastDay = 23;
+
+      localStorage.setItem(COURSE_KEY,JSON.stringify(progress));
+    }
+
+    saveDayResult();
+
+    document.getElementById("doneBanner").classList.add("show");
+    document.getElementById("completeDayBtn").textContent = "✓ Day 23 completed";
+    document.getElementById("completeDayBtn").disabled = true;
+
+    touched = new Set([
+      "listen","signals","map","deep","dictation","decode","shadow","speak"
+    ]);
+
+    updateProgress();
+  });
+
+  function loadSavedState(){
+    updateListenUI();
+
+    const progress = getCourseProgress();
+
+    if(progress.completed.includes(23)){
+      document.getElementById("doneBanner").classList.add("show");
+      document.getElementById("completeDayBtn").textContent = "✓ Day 23 completed";
+      document.getElementById("completeDayBtn").disabled = true;
+
+      touched = new Set([
+        "listen","signals","map","deep","dictation","decode","shadow","speak"
+      ]);
+
+      updateProgress();
+    }
+
+    try{
+      const saved = JSON.parse(localStorage.getItem(DAY_KEY) || "null");
+
+      if(saved){
+        if(typeof saved.mapScore === "number") mapScore = saved.mapScore;
+        if(typeof saved.deepScore === "number") deepScore = saved.deepScore;
+        if(Array.isArray(saved.dictationScores)) dictationScores = saved.dictationScores;
+      }
+    }catch(e){}
+
+    updateResults();
+  }
+
+  renderMap();
+  renderDeepQuestions();
+  renderDictation();
+  renderChunks();
+  renderShadowing();
+  setupRecorder("shadow");
+  setupRecorder("speak");
+  loadSavedState();
+
+  if("speechSynthesis" in window){
+    speechSynthesis.onvoiceschanged = ()=>getVoice();
+  }
+</script>
+</body>
+</html>
