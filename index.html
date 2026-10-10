@@ -685,6 +685,7 @@
       </a>
 
       <div class="nav-actions">
+        <a class="ghost-btn" href="assessment.html">Assessment Center</a>
         <button class="ghost-btn" id="scrollRoadmapBtn" type="button">30-Day Roadmap</button>
         <button class="small-btn" id="resetBtn" type="button" title="Reset local progress">Reset Progress</button>
       </div>
@@ -709,6 +710,7 @@
             <a id="continueBtn" class="primary-btn" href="lesson-day-01.html">
               Continue Day 01 →
             </a>
+            <a href="assessment.html?tab=initial" class="secondary-btn">Take Initial Assessment</a>
             <button id="roadmapBtn" class="secondary-btn" type="button">
               View 30-day roadmap
             </button>
@@ -1018,8 +1020,8 @@
       },
       {
         day: 30,
-        title: "Final C1 Challenge",
-        desc: "Complete the final listening and communication task."
+        title: "Final Assessment",
+        desc: "Full-length final assessment and before/after skills comparison."
       }
     ];
 
@@ -1242,7 +1244,7 @@
 
     function resetProgress(){
       const ok = confirm(
-        "Reset all Fluent30 progress stored in this browser?"
+        "Reset lesson roadmap progress? Your assessment reports will stay saved."
       );
 
       if(!ok) return;
