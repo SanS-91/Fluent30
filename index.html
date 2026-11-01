@@ -652,6 +652,10 @@
       main{padding-top:24px}
       .hero-main{padding:28px}
       .nav-actions .ghost-btn{display:none}
+      .nav-actions .topic-link{display:inline-flex;padding:8px 10px;white-space:nowrap}
+      .topnav{gap:10px}
+      .nav-actions{gap:5px}
+      #resetBtn{font-size:.72rem;padding:8px 9px}
       .phase-grid,
       .info-panel{grid-template-columns:1fr}
       .roadmap{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -685,6 +689,7 @@
       </a>
 
       <div class="nav-actions">
+        <a class="ghost-btn topic-link" href="topics.html">90 Topics</a>
         <a class="ghost-btn" href="assessment.html">Assessment Center</a>
         <button class="ghost-btn" id="scrollRoadmapBtn" type="button">30-Day Roadmap</button>
         <button class="small-btn" id="resetBtn" type="button" title="Reset local progress">Reset Progress</button>
@@ -710,6 +715,7 @@
             <a id="continueBtn" class="primary-btn" href="lesson-day-01.html">
               Continue Day 01 →
             </a>
+            <a href="topics.html" class="secondary-btn">Explore 90 Topic Lessons</a>
             <a href="assessment.html?tab=initial" class="secondary-btn">Take Cambridge C1 Initial Assessment</a>
             <button id="roadmapBtn" class="secondary-btn" type="button">
               View 30-day roadmap
@@ -741,6 +747,33 @@
             </div>
           </div>
         </aside>
+      </section>
+
+      <section class="section" id="topic-learning">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">90 Topic Lessons · Speak, Write & Think in English</h2>
+            <p class="section-copy">An additional learning track with 90 real-life and business topics. Practice through connected listening scenes, explained answers, vocabulary and phrases, short writing drills and timed speaking reflexes.</p>
+          </div>
+          <a href="topics.html" class="primary-btn">Browse all 90 Topics →</a>
+        </div>
+        <div class="phase-grid">
+          <article class="phase-card">
+            <div class="phase-no">Topics 01–30 · B1+</div>
+            <h3>Natural communication</h3>
+            <p>Daily conversations, practical situations, sentence building and short speaking responses.</p>
+          </article>
+          <article class="phase-card">
+            <div class="phase-no">Topics 31–60 · B2</div>
+            <h3>Professional fluency</h3>
+            <p>Explain problems, reason through choices, write naturally and handle workplace discussions.</p>
+          </article>
+          <article class="phase-card">
+            <div class="phase-no">Topics 61–90 · C1</div>
+            <h3>Advanced & executive English</h3>
+            <p>Nuanced arguments, deeper contexts, executive questions and spontaneous responses.</p>
+          </article>
+        </div>
       </section>
 
       <section class="section">
